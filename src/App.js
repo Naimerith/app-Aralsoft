@@ -1,8 +1,10 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './shared/Home';
+import Home from './views/Home';
 import CreateReport from './views/CreateReport';
 import ListReport from './views/ListReport';
+
+
 
 function App() {
   return (
@@ -11,7 +13,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/new-report' element={<CreateReport></CreateReport>}></Route>
-          <Route path='/list-report' element={<ListReport></ListReport>}></Route>
+          <Route path='/lists-report' element={<ListReport></ListReport>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

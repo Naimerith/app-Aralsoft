@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
-import { getData } from '../functions/functions';
+//import { getData } from '../functions/functions';
+import Header from '../shared/Header';
 
 const Home = () => {
   useEffect(() => {
     // postData()
-    getData()
-
-
+    //getData()
   }, [])
 
   return (
-    <div>home</div>
+    <div>
+      <Header />
+    </div>
   )
 }
 
