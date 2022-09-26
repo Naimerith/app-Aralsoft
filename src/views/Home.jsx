@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
+import Login from '../components/Login';
 //import { getData } from '../functions/functions';
-import Header from '../shared/Header';
 
 const Home = () => {
   useEffect(() => {
@@ -10,7 +10,8 @@ const Home = () => {
 
   return (
     <div>
-      <Header />
+      <br />
+      <Login />
     </div>
   )
 }
