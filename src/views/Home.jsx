@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 
 const Home = () => {
-  useEffect(() => {
-    //postData()
-    //getData()
-  }, [])
+
 
   return (
     <div >
-
 
       <div>
         {/* <Login /> */}

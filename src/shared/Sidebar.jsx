@@ -13,16 +13,16 @@ const Sidebar = () => {
         <Header />
         <div className='goBack'>
           <span>
-            <i class="bi bi-arrow-left-circle"></i>
+            <i className="bi bi-arrow-left-circle"></i>
             <a href='/'>Inicio</a>
           </span>
         </div>
         <br />
-        <div className='sidebar-content'>
+        <div className='sidebar-content' onClick={() => setActive(!active)}>
           <span>
             <i className="bi bi-columns-gap"></i>          Informes
           </span>
-          <i className="bi bi-chevron-compact-right" onClick={() => setActive(!active)}></i>
+          <i className="bi bi-chevron-compact-right" ></i>
         </div>
         <div className='sidebar-subMenu'>
           <ul>
