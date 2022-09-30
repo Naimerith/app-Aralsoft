@@ -4,7 +4,7 @@ import OptionContainer from '../components/OptionContainer'
 
 const CreateReport = () => {
   return (
-    <div>
+    <div className='container-createReport'>
       <section>
         <ButtonContainer />
       </section>
@@ -15,4 +15,4 @@ const CreateReport = () => {
   )
 }
 
-export default CreateReport
+export default CreateReport;

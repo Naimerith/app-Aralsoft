@@ -1,14 +1,14 @@
 .container{
-  margin-top: -130px;
- display: flex;
- margin-right: 300px;
-  flex-direction: column;
+  width: 80%;
+  align-content: flex-end;
+  margin-top: 10%;
 }
 
+/*********Contenedor de Botones*************/
 .itemSelect{
 border: 1px solid #0E3A73;
 height: 150px;
-width: 50rem;
+width: 98%;
 overflow-y: auto;
 margin: 10px;
 padding: 2px;
@@ -34,7 +34,9 @@ padding: 2px;
 .itemSelect::-webkit-scrollbar-track {
     border-radius: 10px;
 }
+/*****************************************************/
 
+/********* Botones *************/
 .btnSelect{
   background: #D9ECD8;
   border-radius: 10px;
@@ -45,22 +47,4 @@ padding: 2px;
   cursor: pointer;
   border: none;
 }
-.itemsSelected{
- display: flex;
 
-}
-.container_col_val{
-  display: flex;
-  flex-direction: column;
-}
-.rows{
-  width: 185px;
-  height: 316px;
-  border: 1px solid #0E3A73;
-}
-.columns, .values{
- width: 492px;
-height: 130px;
-  border: 1px solid #0E3A73;
-margin: 5px;
-}

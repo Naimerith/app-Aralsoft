@@ -1,55 +1,82 @@
+/*contenedor del sidebar*/
 .sidebar{
-  height: 100%;
-  width: 250px;
+  min-height: 89vh;
+  width: 20%;
   background-color: #038C33;
   color: #fff;
-  margin-top: 4rem;
+  margin-top: 3.8rem;
+  padding: 5px;
 }
 
+/*clase para mostrar y ocultar el subMenu*/
 .sidebar-item{
-  padding: 15px;
   display: block;
   color: #fff;
   text-decoration: none;
 }
-
-/* .sidebar-item:hover{
-background-color: aqua;
-} */
-
-.container-fluid span{
+ 
+/*Section del usuario activo en el sidebar*/
+.userActive{
 display: flex;
-font-size: 30px;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+.nameUserActive{
+  display: flex;
+  align-items: flex-end;
 }
 
-.sidebar-content, .sidebar-content-static, .goBack{
+.nameUserActive p{
+margin: 0;
+font-style: italic;
+font-size: 12px;
+}
+.emailUserActive p{
+  margin: 0;
+font-style: italic;
+font-size: 12px;
+}
+
+hr{
+  margin: 0 !important;
+}
+/**********************************************/
+
+/********* Boton de volver al Home ************/
+.goBack{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
   cursor: pointer;
+  margin-top: 5px;
+}
+.goBack a{
+  color: #fff;
+  margin-left: 5px;
+  margin-top: 2px;
+}
+
+/********* Menu principal ************/
+.sidebar-content, .sidebar-content-static{
+ display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  cursor: pointer;
+}
+.sidebar-text{
+  font-weight: 500;
+  margin-left: 5px;
 }
 
 .sidebar-content span{
   display: flex;
 }
-
-.sidebar-content i{
-  display: inline-block;
-  width: 25px;
-}
-
-
-.goBack span{
-  display: flex;
-}
-
-.goBack i{
-  display: inline-block;
-  width: 25px;
+.sidebar-content-static span{
+display: flex;
 }
 
 .sidebar-content i{
-  cursor:pointer ;
+  cursor:pointer;
   transition: transform 0.5s;
 }
 
@@ -57,36 +84,63 @@ font-size: 30px;
   transform: rotate(90deg);
 }
 
+.sidebar-content-static{
+  padding: 0; 
+  margin: 0;
+}
+/**********************************/
+
+
+/*********** SubMenu **************/
 .sidebar-subMenu{
   height: 0;
   overflow: hidden;
   transform: all 0.5s;
-  
 }
-
 .sidebar-subMenu a {
-text-decoration: none; 
+  text-decoration: none; 
   outline: none;
   color: #fff;
 }
-
+.sidebar-subMenu ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 a:link {
    color: #fff; 
    text-decoration: none;
   }
-
-
 .sidebar-item.active .sidebar-subMenu {
   height: auto;
   display: flex;
   flex-direction: column;
 }
 
-.sidebar-content-static{
-  padding: 0; 
-  margin: 0;
+.listReport{
+    margin: 5px 10px;
+}
+.listReport a{
+margin-left: 5px;
 }
 
+.newReport{
+  margin-left: -28px;
+}
+
+.newReport a{
+margin-left: 5px;
+}
+ .config{
+  margin-left: 15px;
+ }
 
 
-
+ /************FooterSidebar***************/
+ .containerFooterSidebar {
+  display: flex;
+   position: relative;
+  top: 130px;
+ }

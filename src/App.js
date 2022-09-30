@@ -9,16 +9,13 @@ import Footer from './shared/Footer';
 import Sidebar from './shared/Sidebar';
 
 
-
-
 function App() {
   return (
     <div className="App">
       <div className='sidebar'>
         <Sidebar />
       </div>
-      {/* <Footer /> */}
-      {/* <Home></Home> */}
+      <Footer />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />}></Route>

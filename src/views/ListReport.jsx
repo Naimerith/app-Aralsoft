@@ -1,10 +1,27 @@
 
-import React from 'react'
+import React, { useState } from "react";
+import { ReactSortable } from "react-sortablejs";
 
-const ListReport = () => {
+const ListReport = (props) => {
+  const [state, setState] = useState(['hola', 'maria', 'que tal']);
+
+
   return (
-    <div>ListReport</div>
+    <ReactSortable tag="ul" list={state} setList={setState}>
+      {state.map((item, index) => (
+        <li
+          key={index}
+          options={{
+            animation: 150,
+            group: {
+              name: 'lista',
+              pull: 'clone'
+            }
+          }}
+        >{item}</li>
+      ))}
+    </ReactSortable>
   )
-}
+};
 
-export default ListReport
+export default ListReport;

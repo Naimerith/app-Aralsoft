@@ -1,0 +1,35 @@
+.rows, .columns, .values{
+  border: 1px solid #0E3A73;
+}
+.rows{
+width: 185px;
+height: 270px;
+}
+
+.columns, .values{
+margin: 5px;
+width: 492px;
+height: 130px;
+}
+
+.itemsSelected{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container_col_val{
+  display: flex;
+  flex-direction: column;
+}
+
+.generateReport{
+background: #0E3A73;
+border-radius: 10px;
+border: none;
+color: #fff;
+width: 113px;
+height: 52px;
+font-size: 14px;
+margin-left: 20px;
+cursor: pointer;
+}
