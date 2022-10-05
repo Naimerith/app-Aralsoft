@@ -34,10 +34,11 @@ export const getData = (state) => {
   };
 
   axios(config)
-    .then(response => state(response.data.data))
+    .then(response => console.log(response.data.data))
     .catch(error => console.error(error));
 
 }
+
 
 
 

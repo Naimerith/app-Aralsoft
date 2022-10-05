@@ -34,7 +34,8 @@ const Sidebar = () => {
       </div>
       <div className='sidebar-subMenu'>
         <ul>
-          <li >● Avance de Ventas
+          <li >● Avance de Ventas </li>
+          <ol>
             <li className='newReport'>
               <Icon icon="carbon:new-tab" height="20" width="18" />
               <a href='/new-report'>Crear Reporte</a>
@@ -43,7 +44,7 @@ const Sidebar = () => {
               <Icon icon="fluent:collections-24-regular" height="22" width="22" inline={true} />
               <a href='/lists-report'>Lista de Reportes</a>
             </li>
-          </li>
+          </ol>
           <li className='config'>● Configuración</li>
         </ul>
       </div>

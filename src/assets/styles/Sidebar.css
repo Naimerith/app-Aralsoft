@@ -70,6 +70,7 @@ hr{
 
 .sidebar-content span{
   display: flex;
+  margin: 0;
 }
 .sidebar-content-static span{
 display: flex;
@@ -120,13 +121,15 @@ a:link {
 }
 
 .listReport{
-    margin: 5px 10px;
+  list-style-type:none;
+  margin: 5px 10px;
 }
 .listReport a{
-margin-left: 5px;
+margin-left: 5px 0 10px 0;
 }
 
 .newReport{
+  list-style-type:none;
   margin-left: -28px;
 }
 
@@ -134,7 +137,8 @@ margin-left: 5px;
 margin-left: 5px;
 }
  .config{
-  margin-left: 15px;
+  list-style-type:none;
+  margin: 0 0 5px 0;
  }
 
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Icon } from '@iconify/react';
 import '../assets/styles/Sidebar.css';
 
 
@@ -11,5 +10,4 @@ const FooterSidebar = (props) => {
     </span>
   )
 }
-
 export default FooterSidebar

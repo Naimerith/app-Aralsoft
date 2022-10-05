@@ -17,7 +17,7 @@ const ButtonContainer = () => {
     const response = await axios(config)
     const responseData = await response.data.data
     const arrOfArray = Object.entries(responseData);
-    const arraOfKeys = Object.keys(arrOfArray[1][1])
+    const arraOfKeys = Object.keys(arrOfArray[0][1]);
     setData(arraOfKeys)
   }
   useEffect(() => {
@@ -26,20 +26,22 @@ const ButtonContainer = () => {
   return (
     <div className='container'>
       <div className='itemSelect'>
-        {<ReactSortable tag="div" list={data} setList={setData}>
+        <ReactSortable
+          tag="div"
+          list={data}
+          setList={setData}
+          group="groupName"
+          animation={150}
+          sort={false}
+          pull="clone"
+        >
           {!data ? 'Cargando...' : data.map((item, index) => (
             <button className='btnSelect'
               key={index}
-              options={{
-                animation: 150,
-                group: {
-                  name: 'lista',
-                  pull: 'clone',
-                }
-              }}
-            >{item}</button>
+            ><a href={`/lists-report/${index}`}>{item}</a>
+            </button>
           ))}
-        </ReactSortable>}
+        </ReactSortable>
       </div>
     </div>
   )
