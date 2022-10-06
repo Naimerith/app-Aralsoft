@@ -23,7 +23,7 @@ export const postData = () => {
     .catch(error => console.error(error));
 }
 
-export const getData = (state) => {
+export const getData = () => {
 
   const config = {
     method: 'get',
@@ -38,11 +38,5 @@ export const getData = (state) => {
     .catch(error => console.error(error));
 
 }
-
-
-
-
-
-
 
 

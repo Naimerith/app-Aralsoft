@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import '../assets/styles/ReportGenerated.css';
 
 const ReportGenerated = () => {
-  const params = useParams();
-
-
-
-
   return (
-    <div>Boton en la posicion {params.id}</div>
+    <div className='container'>
+     <p className='successMsg'>Su reporte fue generado satisfactoriamente!</p>
+    </div>
   )
 }
 
-export default ReportGenerated;
+export default ReportGenerated

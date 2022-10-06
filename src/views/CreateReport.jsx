@@ -1,6 +1,8 @@
-import React from 'react'
-import ButtonContainer from '../components/ButtonContainer'
-import OptionContainer from '../components/OptionContainer'
+import React from 'react';
+import ButtonContainer from '../components/ButtonContainer';
+import OptionContainer from '../components/OptionContainer';
+import ButtonGenerateReport from '../components/ButtonGenerateReport';
+import '../assets/styles/CreateReport.css';
 
 const CreateReport = () => {
   return (
@@ -8,9 +10,14 @@ const CreateReport = () => {
       <section>
         <ButtonContainer />
       </section>
-      <section>
-        <OptionContainer />
-      </section>
+      <div className='container-generate-report'>
+        <section>
+          <OptionContainer />
+        </section>
+        <section>
+          <ButtonGenerateReport />
+        </section>
+      </div>
     </div>
   )
 }

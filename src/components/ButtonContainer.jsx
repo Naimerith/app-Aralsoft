@@ -3,7 +3,6 @@ import axios from 'axios';
 import '../assets/styles/ButtonContainer.css';
 import { ReactSortable } from "react-sortablejs";
 
-
 const ButtonContainer = () => {
   const [data, setData] = useState([]);
   const getData_api = async () => {
@@ -18,8 +17,10 @@ const ButtonContainer = () => {
     const responseData = await response.data.data
     const arrOfArray = Object.entries(responseData);
     const arraOfKeys = Object.keys(arrOfArray[0][1]);
+    //console.log(arraOfKeys)
     setData(arraOfKeys)
   }
+
   useEffect(() => {
     getData_api()
   }, [])
@@ -37,9 +38,7 @@ const ButtonContainer = () => {
         >
           {!data ? 'Cargando...' : data.map((item, index) => (
             <button className='btnSelect'
-              key={index}
-            ><a href={`/lists-report/${index}`}>{item}</a>
-            </button>
+              key={index}>{item}</button>
           ))}
         </ReactSortable>
       </div>
