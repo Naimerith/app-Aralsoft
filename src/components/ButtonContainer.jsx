@@ -5,6 +5,8 @@ import { ReactSortable } from "react-sortablejs";
 
 const ButtonContainer = () => {
   const [data, setData] = useState([]);
+  const [valueBtn, setValueBtn] = useState(null)
+
   const getData_api = async () => {
     const config = {
       method: 'get',
@@ -19,6 +21,11 @@ const ButtonContainer = () => {
     const arraOfKeys = Object.keys(arrOfArray[0][1]);
     //console.log(arraOfKeys)
     setData(arraOfKeys)
+  }
+
+  const valueButton = (e) => {
+    const resultValue = e.target.innerHTML;
+    setValueBtn(resultValue)
   }
 
   useEffect(() => {
@@ -38,7 +45,7 @@ const ButtonContainer = () => {
         >
           {!data ? 'Cargando...' : data.map((item, index) => (
             <button className='btnSelect'
-              key={index}>{item}</button>
+              key={index} onClick={valueButton}>{item}</button>
           ))}
         </ReactSortable>
       </div>

@@ -6,6 +6,7 @@
   color: #fff;
   margin-top: 3.8rem;
   padding: 5px;
+  user-select: none;
 }
 
 /*clase para mostrar y ocultar el subMenu*/
