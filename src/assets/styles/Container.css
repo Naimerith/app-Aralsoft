@@ -4,12 +4,15 @@
 .rows{
 width: 185px;
 height: 270px;
+cursor: pointer;
 }
+
 
 .columns, .values{
 margin: 5px;
 width: 492px;
 height: 130px;
+cursor: pointer;
 }
 
 .itemsSelected{
@@ -22,14 +25,29 @@ height: 130px;
   flex-direction: column;
 }
 
+/*********Boton para Generar Reporte*************/
 .generateReport{
 background: #0E3A73;
 border-radius: 10px;
 border: none;
-color: #fff;
 width: 113px;
 height: 52px;
 font-size: 14px;
 margin-left: 20px;
 cursor: pointer;
 }
+
+.generateReport a{
+color: #fff;
+}
+.containerR.active {
+  border: 2px solid #0E3A73;
+}
+
+/* .columns .active {
+  border: 2px solid #0E3A73;
+}
+
+.values .active {
+  border: 2px solid #0E3A73;
+} */

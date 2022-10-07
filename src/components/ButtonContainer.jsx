@@ -1,39 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../assets/styles/ButtonContainer.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../assets/styles/ButtonContainer.css";
+import ButtonGenerateReport from "../components/ButtonGenerateReport";
 import { ReactSortable } from "react-sortablejs";
+import Container from "./Container";
 
 const ButtonContainer = () => {
   const [data, setData] = useState([]);
-  const [valueBtn, setValueBtn] = useState(null)
+  const [valueBtn, setValueBtn] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const getData_api = async () => {
     const config = {
-      method: 'get',
-      url: 'http://148.102.54.82:8088/cubo/api/ventas?empresa=63&periodo=202202',
+      method: "get",
+      url: "http://148.102.54.82:8088/cubo/api/ventas?empresa=63&periodo=202202",
       headers: {
-        'token': 'a2ca9ff273fd7a4c0b0dadce6d076524c28f6675d262acfa4738c90caa8b8f40'
-      }
+        token:
+          "a2ca9ff273fd7a4c0b0dadce6d076524c28f6675d262acfa4738c90caa8b8f40",
+      },
     };
-    const response = await axios(config)
-    const responseData = await response.data.data
+    const response = await axios(config);
+    const responseData = await response.data.data;
     const arrOfArray = Object.entries(responseData);
     const arraOfKeys = Object.keys(arrOfArray[0][1]);
-    //console.log(arraOfKeys)
-    setData(arraOfKeys)
-  }
+    setData(arraOfKeys);
+  };
 
   const valueButton = (e) => {
     const resultValue = e.target.innerHTML;
-    setValueBtn(resultValue)
-  }
+    setValueBtn(resultValue);
+    console.log(resultValue);
+  };
+
+  const onClickHandler = (index) => {
+    setActiveIndex(index);
+  };
 
   useEffect(() => {
-    getData_api()
-  }, [])
+    getData_api();
+  }, []);
+
   return (
-    <div className='container'>
-      <div className='itemSelect'>
+    <div className="container">
+      <div className="itemSelect">
         <ReactSortable
           tag="div"
           list={data}
@@ -43,14 +52,47 @@ const ButtonContainer = () => {
           sort={false}
           pull="clone"
         >
-          {!data ? 'Cargando...' : data.map((item, index) => (
-            <button className='btnSelect'
-              key={index} onClick={valueButton}>{item}</button>
-          ))}
+          {!data
+            ? "Cargando..."
+            : data.map((item, index) => (
+                <button className="btnSelect" key={index} onClick={valueButton}>
+                  {item}
+                </button>
+              ))}
         </ReactSortable>
       </div>
+      <div className="bottomContainer">
+        <section className="itemsSelected">
+          <div className="rows">
+            <Container
+              active={activeIndex === 0}
+              onClick={() => onClickHandler(0)}
+              name="Filas"
+            />
+          </div>
+          <article className="container_col_val">
+            <div className="columns">
+              <Container
+                active={activeIndex === 1}
+                onClick={() => onClickHandler(1)}
+                name="Columnas"
+              />
+            </div>
+            <div className="values">
+              <Container
+                active={activeIndex === 2}
+                onClick={() => onClickHandler(2)}
+                name="Valores"
+              />
+            </div>
+          </article>
+        </section>
+        <section>
+          <ButtonGenerateReport />
+        </section>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default ButtonContainer;

@@ -1,3 +1,4 @@
+/*********Contenedor Superior *************/
 .container{
   width: 80%;
   align-content: flex-end;
@@ -46,5 +47,12 @@ padding: 2px;
   font-size: 13px;
   cursor: pointer;
   border: none;
+}
+
+/********* Contenedor Inferior de columnas, filas y valores *************/
+.bottomContainer{
+display: flex;
+justify-content: center;
+align-items: center;
 }
 

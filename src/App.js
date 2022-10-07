@@ -10,8 +10,13 @@ import ReportGenerated from './views/ReportGenerated';
 import Footer from './shared/Footer';
 import Sidebar from './shared/Sidebar';
 
+import { useFirebaseApp } from 'reactfire';
+
 
 function App() {
+  const firebase = useFirebaseApp();
+  console.log(firebase)
+
   return (
     <div className="App">
        <div className='sidebar'>
