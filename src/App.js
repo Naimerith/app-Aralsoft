@@ -8,9 +8,9 @@ import ListReport from './views/ListReport';
 import ReportGenerated from './views/ReportGenerated';
 
 import Footer from './shared/Footer';
-import Sidebar from './shared/Sidebar';
 
 import { useFirebaseApp } from 'reactfire';
+import Header from './shared/Header';
 
 
 function App() {
@@ -19,8 +19,8 @@ function App() {
 
   return (
     <div className="App">
-       <div className='sidebar'>
-        <Sidebar />
+       <div>
+        <Header />
       </div>
       <Footer />
       <BrowserRouter>

@@ -1,84 +1,102 @@
-/*contenedor del sidebar*/
-.sidebar{
-  min-height: 89vh;
-  width: 20%;
+/*contenedor Principal del sidebar*/
+.containerSidebar {
+  display: flex;
+  flex-direction: column;
+  /* min-height: 80vh;
+  width: 80px;
   background-color: #038C33;
   color: #fff;
-  margin-top: 3.8rem;
-  padding: 5px;
-  user-select: none;
+  margin-top: 3.8rem; 
+  padding: 5px; */
+}
+.contenedor-Static {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
 }
 
+/************FooterSidebar***************/
+.containerFooterSidebar {
+  display: flex;
+  position: relative;
+  color: #fff;
+}
+
+/****************************************/
+
 /*clase para mostrar y ocultar el subMenu*/
-.sidebar-item{
+.sidebar-item {
   display: block;
   color: #fff;
   text-decoration: none;
 }
- 
+
 /*Section del usuario activo en el sidebar*/
-.userActive{
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+.userActive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.nameUserActive{
+.nameUserActive {
   display: flex;
   align-items: flex-end;
 }
 
-.nameUserActive p{
-margin: 0;
-font-style: italic;
-font-size: 12px;
-}
-.emailUserActive p{
+.nameUserActive p {
   margin: 0;
-font-style: italic;
-font-size: 12px;
+  font-style: italic;
+  font-size: 12px;
+}
+.emailUserActive p {
+  margin: 0;
+  font-style: italic;
+  font-size: 12px;
 }
 
-hr{
+hr {
   margin: 0 !important;
 }
 /**********************************************/
 
 /********* Boton de volver al Home ************/
-.goBack{
+.goBack {
   display: flex;
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 5px;
 }
-.goBack a{
+.goBack a {
   color: #fff;
   margin-left: 5px;
   margin-top: 2px;
 }
 
 /********* Menu principal ************/
-.sidebar-content, .sidebar-content-static{
- display: flex;
+.sidebar-content,
+.sidebar-content-static {
+  display: flex;
   justify-content: space-between;
   align-items: stretch;
   cursor: pointer;
+  color: #fff;
 }
-.sidebar-text{
+.sidebar-text {
   font-weight: 500;
   margin-left: 5px;
 }
 
-.sidebar-content span{
+.sidebar-content span {
   display: flex;
   margin: 0;
 }
-.sidebar-content-static span{
-display: flex;
+.sidebar-content-static span {
+  display: flex;
 }
 
-.sidebar-content i{
-  cursor:pointer;
+.sidebar-content i {
+  cursor: pointer;
   transition: transform 0.5s;
 }
 
@@ -86,66 +104,57 @@ display: flex;
   transform: rotate(90deg);
 }
 
-.sidebar-content-static{
-  padding: 0; 
+.sidebar-content-static {
+  padding: 0;
   margin: 0;
 }
 /**********************************/
 
-
 /*********** SubMenu **************/
-.sidebar-subMenu{
+.sidebar-subMenu {
   height: 0;
   overflow: hidden;
   transform: all 0.5s;
 }
 .sidebar-subMenu a {
-  text-decoration: none; 
+  text-decoration: none;
   outline: none;
   color: #fff;
 }
 .sidebar-subMenu ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 a:link {
-   color: #fff; 
-   text-decoration: none;
-  }
+  color: #fff;
+  text-decoration: none;
+}
 .sidebar-item.active .sidebar-subMenu {
   height: auto;
   display: flex;
   flex-direction: column;
 }
 
-.listReport{
-  list-style-type:none;
+.listReport {
+  list-style-type: none;
   margin: 5px 10px;
 }
-.listReport a{
-margin-left: 5px 0 10px 0;
+.listReport a {
+  margin-left: 5px 0 10px 0;
 }
 
-.newReport{
-  list-style-type:none;
+.newReport {
+  list-style-type: none;
   margin-left: -28px;
 }
 
-.newReport a{
-margin-left: 5px;
+.newReport a {
+  margin-left: 5px;
 }
- .config{
-  list-style-type:none;
+.config {
+  list-style-type: none;
   margin: 0 0 5px 0;
- }
-
-
- /************FooterSidebar***************/
- .containerFooterSidebar {
-  display: flex;
-   position: relative;
-  top: 130px;
- }
+}

@@ -1,27 +1,31 @@
-import React from 'react';
-import Logo from '../assets/img/logo.png';
+import React, { useState } from "react";
+import Logo from "../assets/img/logo.png";
+import Sidebar from "../components/Sidebar.jsx";
 
-import '../assets/styles/Header.css';
-
+import "../assets/styles/Header.css";
+import ButtonHamburger from "../components/ButtonHamburger";
 
 const Header = () => {
+  const [menu, setMenu] = useState(true);
+  console.log(menu);
 
-
-
+  const handleClick = () => {
+    setMenu(!menu);
+  };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg fixed-top navbar-scroll">
-        <div className="container-fluid">
-          <span>
-            <i className="fas fa-bars"></i>
-          </span>
-
-          <img className='navbar-nav flex-end center' src={Logo} alt="" />
+    <>
+      <div className="navbar">
+        <div className="BtnMenuHamburger">
+          <ButtonHamburger click={menu} handleClick={handleClick} />
         </div>
-      </nav>
-    </div>
-  )
-}
+        <img className="navbar-nav flex-end center" src={Logo} alt="logo" />
+      </div>
+      <div className={`sidebar ${menu ? "active" : "inactive"}`}>
+        <Sidebar />
+      </div>
+    </>
+  );
+};
 
-export default Header
+export default Header;
