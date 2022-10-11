@@ -29,7 +29,7 @@ const ButtonContainer = () => {
   const valueButton = (e) => {
     const resultValue = e.target.innerHTML;
     setValueBtn(resultValue);
-    console.log(resultValue);
+    //console.log(resultValue);
   };
 
   const onClickHandler = (index) => {
@@ -68,7 +68,9 @@ const ButtonContainer = () => {
               active={activeIndex === 0}
               onClick={() => onClickHandler(0)}
               name="Filas"
+              value={() => valueButton()}
             />
+            <p>{activeIndex === 0 ? valueBtn : ""}</p>
           </div>
           <article className="container_col_val">
             <div className="columns">
@@ -77,6 +79,7 @@ const ButtonContainer = () => {
                 onClick={() => onClickHandler(1)}
                 name="Columnas"
               />
+              <p>{activeIndex === 1 ? valueBtn : ""}</p>
             </div>
             <div className="values">
               <Container
@@ -84,6 +87,7 @@ const ButtonContainer = () => {
                 onClick={() => onClickHandler(2)}
                 name="Valores"
               />
+              <p>{activeIndex === 2 ? valueBtn : ""}</p>
             </div>
           </article>
         </section>

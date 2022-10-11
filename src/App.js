@@ -19,10 +19,11 @@ function App() {
 
   return (
     <div className="App">
-       <div>
+      <div>
         <Header />
       </div>
       <Footer />
+
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />}></Route>

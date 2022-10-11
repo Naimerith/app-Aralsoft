@@ -1,5 +1,11 @@
-.container-generate-report{
-      display: flex;
-      align-items: center;
-      justify-content: center;
+.container-createReport {
+  margin-top: -46%;
+  margin-left: 18%;
+  display: block;
+}
+
+.container-generate-report {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

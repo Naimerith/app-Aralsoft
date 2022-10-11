@@ -19,9 +19,9 @@ const ButtonGenerateReport = () => {
   return (
     <div className="container">
       <button className="generateReport" onClick={hola}>
-        <a href={"/report-generated"}>
-          Generar <br /> Reporte
-        </a>
+        {/* <a href={"/report-generated"}> */}
+        Generar <br /> Reporte
+        {/* </a> */}
       </button>
     </div>
   );
