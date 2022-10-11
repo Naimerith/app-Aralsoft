@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "../assets/styles/ButtonContainer.css";
 import ButtonGenerateReport from "../components/ButtonGenerateReport";
 import { ReactSortable } from "react-sortablejs";
 import Container from "./Container";
+import { getData } from "../services/api_aralsoft";
 
 const ButtonContainer = () => {
   const [data, setData] = useState([]);
-  const [valueBtn, setValueBtn] = useState(null);
+  const [valueBtn, setValueBtn] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
 
   const getData_api = async () => {
-    const config = {
-      method: "get",
-      url: "http://148.102.54.82:8088/cubo/api/ventas?empresa=63&periodo=202202",
-      headers: {
-        token:
-          "a2ca9ff273fd7a4c0b0dadce6d076524c28f6675d262acfa4738c90caa8b8f40",
-      },
-    };
-    const response = await axios(config);
-    const responseData = await response.data.data;
-    const arrOfArray = Object.entries(responseData);
+    const res = await getData();
+    const arrOfArray = Object.entries(res);
     const arraOfKeys = Object.keys(arrOfArray[0][1]);
     setData(arraOfKeys);
   };
@@ -29,11 +20,17 @@ const ButtonContainer = () => {
   const valueButton = (e) => {
     const resultValue = e.target.innerHTML;
     setValueBtn(resultValue);
-    //console.log(resultValue);
   };
 
   const onClickHandler = (index) => {
     setActiveIndex(index);
+  };
+
+  const handleBtn = async (valueBtn) => {
+    console.log("diste click...", valueBtn);
+    /*const responseJson = await getData(valueBtn);
+    console.log(responseJson);
+    setValueBtn(responseJson);*/
   };
 
   useEffect(() => {
@@ -92,7 +89,11 @@ const ButtonContainer = () => {
           </article>
         </section>
         <section>
-          <ButtonGenerateReport />
+          <ButtonGenerateReport
+            click={() => {
+              handleBtn(valueBtn);
+            }}
+          />
         </section>
       </div>
     </div>

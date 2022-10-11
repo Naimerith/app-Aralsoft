@@ -23,8 +23,7 @@ export const postData = () => {
     .catch(error => console.error(error));
 }
 
-export const getData = () => {
-
+export const getData = async () => {
   const config = {
     method: 'get',
     url: 'http://148.102.54.82:8088/cubo/api/ventas?empresa=63&periodo=202202',
@@ -33,10 +32,7 @@ export const getData = () => {
     }
   };
 
-  axios(config)
-    .then(response => console.log(response.data.data))
-    .catch(error => console.error(error));
-
+  const response = await axios(config);
+  const responseData = await response.data.data;
+  return responseData
 }
-
-
