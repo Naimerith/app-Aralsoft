@@ -6,8 +6,14 @@ import Container from "./Container";
 import { getData } from "../services/api_aralsoft";
 
 const ButtonContainer = () => {
+  /*Array con los keys del objeto para los botones */
   const [data, setData] = useState([]);
+
+  /*Aqui esta el valor de boton clickeado*/
   const [valueBtn, setValueBtn] = useState([]);
+
+  /*Esto es temporal, luego lo elimino*/
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const getData_api = async () => {
     const res = await getData();
@@ -16,23 +22,28 @@ const ButtonContainer = () => {
     setData(arraOfKeys);
   };
 
-  /*Evento para detectar el boton clickeado */
-  const valueButton = async (e) => {
-    const resultValue = e.target.innerHTML;
-    console.log("diste click al boton...", resultValue);
-    const responseJson = await getData(resultValue);
-    console.log("y esta es la respuesta de la api", responseJson);
-
-    setValueBtn(responseJson);
+  /*Funcion temporal para imprimir en el contenedero el valor seleccionado */
+  const onClickHandler = (index) => {
+    setActiveIndex(index);
+    console.log(index);
   };
-  const handleBtn = async (valueBtn) => {
-    console.log("diste click a generar reporte...", valueBtn);
 
-    setValueBtn(valueBtn);
+  const handleBtns = async (e) => {
+    const selectedButtonValue = e.target.innerHTML;
+    const resApi = await getData();
+    const consultApiSelection = resApi.map((el) => {
+      const convertObjectToArray = Object.entries(el);
+      return convertObjectToArray.filter((key) =>
+        key.includes(selectedButtonValue)
+      );
+    });
+    setValueBtn(consultApiSelection);
+    console.log("veamos", consultApiSelection);
   };
 
   useEffect(() => {
     getData_api();
+    //filterResult();
   }, []);
 
   return (
@@ -50,7 +61,7 @@ const ButtonContainer = () => {
           {!data
             ? "Cargando..."
             : data.map((item, index) => (
-                <button className="btnSelect" key={index} onClick={valueButton}>
+                <button className="btnSelect" key={index} onClick={handleBtns}>
                   {item}
                 </button>
               ))}
@@ -66,7 +77,8 @@ const ButtonContainer = () => {
               group="groupName"
               animation={150}
             >
-              <Container name="Filas" value={valueBtn} />
+              <Container name="Filas" onClick={() => onClickHandler(0)} />
+              <p>{activeIndex === 0 ? "filas" : ""}</p>
             </ReactSortable>
           </div>
           <article className="container_col_val">
@@ -78,7 +90,8 @@ const ButtonContainer = () => {
                 group="groupName"
                 animation={150}
               >
-                <Container name="Columnas" />
+                <Container name="Columnas" onClick={() => onClickHandler(1)} />
+                <p>{activeIndex === 1 ? "columnas" : ""}</p>
               </ReactSortable>
             </div>
             <div className="values">
@@ -89,17 +102,14 @@ const ButtonContainer = () => {
                 group="groupName"
                 animation={150}
               >
-                <Container name="Valores" />
+                <Container name="Valores" onClick={() => onClickHandler(2)} />
+                <p>{activeIndex === 2 ? "valores" : ""}</p>
               </ReactSortable>
             </div>
           </article>
         </section>
         <section>
-          <ButtonGenerateReport
-            click={() => {
-              handleBtn(valueBtn);
-            }}
-          />
+          <ButtonGenerateReport />
         </section>
       </div>
     </div>
