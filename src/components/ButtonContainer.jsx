@@ -12,6 +12,9 @@ const ButtonContainer = () => {
   /*Aqui esta el valor de boton clickeado*/
   const [valueBtn, setValueBtn] = useState([]);
 
+  /*Aqui esta el valor de boton clickeado*/
+  const [btn, setBtn] = useState([]);
+
   /*Esto es temporal, luego lo elimino*/
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -30,6 +33,7 @@ const ButtonContainer = () => {
 
   const handleBtns = async (e) => {
     const selectedButtonValue = e.target.innerHTML;
+    setBtn(selectedButtonValue);
     const resApi = await getData();
     const consultApiSelection = resApi.map((el) => {
       const convertObjectToArray = Object.entries(el);
@@ -43,7 +47,6 @@ const ButtonContainer = () => {
 
   useEffect(() => {
     getData_api();
-    //filterResult();
   }, []);
 
   return (
@@ -78,7 +81,7 @@ const ButtonContainer = () => {
               animation={150}
             >
               <Container name="Filas" onClick={() => onClickHandler(0)} />
-              <p>{activeIndex === 0 ? "filas" : ""}</p>
+              <p>{activeIndex === 0 ? btn : ""}</p>
             </ReactSortable>
           </div>
           <article className="container_col_val">
@@ -91,7 +94,7 @@ const ButtonContainer = () => {
                 animation={150}
               >
                 <Container name="Columnas" onClick={() => onClickHandler(1)} />
-                <p>{activeIndex === 1 ? "columnas" : ""}</p>
+                <p>{activeIndex === 1 ? btn : ""}</p>
               </ReactSortable>
             </div>
             <div className="values">
@@ -103,7 +106,7 @@ const ButtonContainer = () => {
                 animation={150}
               >
                 <Container name="Valores" onClick={() => onClickHandler(2)} />
-                <p>{activeIndex === 2 ? "valores" : ""}</p>
+                <p>{activeIndex === 2 ? btn : ""}</p>
               </ReactSortable>
             </div>
           </article>
