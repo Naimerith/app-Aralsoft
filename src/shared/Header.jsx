@@ -7,7 +7,6 @@ import ButtonHamburger from "../components/ButtonHamburger";
 
 const Header = () => {
   const [menu, setMenu] = useState(true);
-  console.log(menu);
 
   const handleClick = () => {
     setMenu(!menu);

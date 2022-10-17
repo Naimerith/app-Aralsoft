@@ -1,45 +1,45 @@
 /*********Contenedor Superior *************/
-.container{
+.container {
   width: 80%;
   align-content: flex-end;
   margin-top: 10%;
 }
 
 /*********Contenedor de Botones*************/
-.itemSelect{
-border: 1px solid #0E3A73;
-height: 150px;
-width: 98%;
-overflow-y: auto;
-margin: 10px;
-padding: 2px;
+.itemSelect {
+  border: 1px solid #0e3a73;
+  height: 150px;
+  width: 98%;
+  overflow-y: auto;
+  margin: 10px;
+  padding: 2px;
 }
 
 .itemSelect::-webkit-scrollbar {
-    -webkit-appearance: none;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
 }
 
 .itemSelect::-webkit-scrollbar:horizontal {
-    height: 8px;
+  height: 8px;
 }
 
-.itemSelect::-webkit-scrollbar:vertical{
-    width: 8px;
+.itemSelect::-webkit-scrollbar:vertical {
+  width: 8px;
 }
 
 .itemSelect::-webkit-scrollbar-thumb {
-    background-color: #D9ECD8;
-    border-radius: 20px;
+  background-color: #d9ecd8;
+  border-radius: 20px;
 }
 
 .itemSelect::-webkit-scrollbar-track {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 /*****************************************************/
 
 /********* Botones *************/
-.btnSelect{
-  background: #D9ECD8;
+.btnSelect {
+  background: #d9ecd8;
   border-radius: 10px;
   margin: 5px;
   width: 130px;
@@ -50,9 +50,8 @@ padding: 2px;
 }
 
 /********* Contenedor Inferior de columnas, filas y valores *************/
-.bottomContainer{
-display: flex;
-justify-content: center;
-align-items: center;
+.bottomContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-

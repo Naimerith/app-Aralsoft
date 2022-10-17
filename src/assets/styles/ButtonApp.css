@@ -1,0 +1,16 @@
+/*********Boton para Generar Reporte*************/
+.generateReport {
+  background: #0e3a73;
+  border-radius: 10px;
+  border: none;
+  width: 113px;
+  height: 52px;
+  font-size: 14px;
+  margin-left: 20px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.generateReport a {
+  color: #fff;
+}

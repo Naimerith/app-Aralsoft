@@ -27,22 +27,8 @@
   flex-direction: column;
 }
 
-/*********Boton para Generar Reporte*************/
-.generateReport {
-  background: #0e3a73;
-  border-radius: 10px;
-  border: none;
-  width: 113px;
-  height: 52px;
-  font-size: 14px;
-  margin-left: 20px;
-  cursor: pointer;
-  color: #fff;
-}
+/* Clase para activar el titulo de cada contenedor inferior (filas, columns y valores)*/
 
-.generateReport a {
-  color: #fff;
-}
 .containerR.active {
   border: 2px solid #0e3a73;
 }

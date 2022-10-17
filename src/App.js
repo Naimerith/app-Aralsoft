@@ -15,7 +15,7 @@ import Header from './shared/Header';
 
 function App() {
   const firebase = useFirebaseApp();
-  console.log(firebase)
+  //console.log(firebase)
 
   return (
     <div className="App">

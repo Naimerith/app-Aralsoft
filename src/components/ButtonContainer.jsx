@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../assets/styles/ButtonContainer.css";
-import ButtonGenerateReport from "../components/ButtonGenerateReport";
 import { ReactSortable } from "react-sortablejs";
-import Container from "./Container";
 import { getData } from "../services/api_aralsoft";
+import ButtonApp from "./ButtonApp";
+import Container from "./Container";
 
 const ButtonContainer = () => {
   /*Array con los keys del objeto para los botones */
@@ -56,7 +56,7 @@ const ButtonContainer = () => {
           tag="div"
           list={data}
           setList={setData}
-          group="groupName"
+          group="groupBtn"
           animation={150}
           sort={false}
           pull="clone"
@@ -77,7 +77,7 @@ const ButtonContainer = () => {
               tag="div"
               list={data}
               setList={setData}
-              group="groupName"
+              group="groupBtn"
               animation={150}
             >
               <Container name="Filas" onClick={() => onClickHandler(0)} />
@@ -90,7 +90,7 @@ const ButtonContainer = () => {
                 tag="div"
                 list={data}
                 setList={setData}
-                group="groupName"
+                group="groupBtn"
                 animation={150}
               >
                 <Container name="Columnas" onClick={() => onClickHandler(1)} />
@@ -102,17 +102,17 @@ const ButtonContainer = () => {
                 tag="div"
                 list={data}
                 setList={setData}
-                group="groupName"
+                group="groupBtn"
                 animation={150}
               >
                 <Container name="Valores" onClick={() => onClickHandler(2)} />
-                <p>{activeIndex === 2 ? btn : ""}</p>
+                <p>{activeIndex === 2 ? "valores" : ""}</p>
               </ReactSortable>
             </div>
           </article>
         </section>
         <section>
-          <ButtonGenerateReport />
+          <ButtonApp name="Generar Reporte" />
         </section>
       </div>
     </div>

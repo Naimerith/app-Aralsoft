@@ -1,6 +1,21 @@
-.successMsg{
-  margin-top: -40px;
+/******Contenedor de la vista*******/
+.container-ReportGenerated {
+  margin-top: -46%;
+  margin-left: 18%;
+  display: block;
+}
+
+/******Notificación del Reporte Generado*******/
+.successMsg {
+  /* margin-top: -40px; */
+  margin-top: 10%;
   width: 100%;
-  background: #D9ECD8;
-  color: #0E3A73;
+  background: #d9ecd8;
+  color: #0e3a73;
+}
+
+/******Contenedor de botones para guardar y exportar la tabla generada*******/
+.containerBtns {
+  display: flex;
+  justify-content: space-evenly;
 }
