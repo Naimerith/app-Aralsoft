@@ -1,7 +1,7 @@
 .container-createReport {
   margin-top: -46%;
   margin-left: 18%;
-  display: block;
+  display: flex;
 }
 
 /* .container-generate-report {

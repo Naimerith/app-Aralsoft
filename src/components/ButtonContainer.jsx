@@ -9,7 +9,7 @@ const ButtonContainer = () => {
   /*Array con los keys del objeto para los botones */
   const [data, setData] = useState([]);
 
-  /*Aqui esta el valor de boton clickeado*/
+  /*Aqui esta el valor filtrado de boton clickeado*/
   const [valueBtn, setValueBtn] = useState([]);
 
   /*Aqui esta el valor de boton clickeado*/
@@ -106,7 +106,7 @@ const ButtonContainer = () => {
                 animation={150}
               >
                 <Container name="Valores" onClick={() => onClickHandler(2)} />
-                <p>{activeIndex === 2 ? "valores" : ""}</p>
+                <p>{activeIndex === 2 ? btn : ""}</p>
               </ReactSortable>
             </div>
           </article>

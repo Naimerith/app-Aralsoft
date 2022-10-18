@@ -9,12 +9,12 @@ import ReportGenerated from './views/ReportGenerated';
 
 import Footer from './shared/Footer';
 
-import { useFirebaseApp } from 'reactfire';
+//import { useFirebaseApp } from 'reactfire';
 import Header from './shared/Header';
 
 
 function App() {
-  const firebase = useFirebaseApp();
+  //const firebase = useFirebaseApp();
   //console.log(firebase)
 
   return (
