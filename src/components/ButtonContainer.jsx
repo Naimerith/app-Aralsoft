@@ -53,13 +53,10 @@ const ButtonContainer = () => {
     <div className="container">
       <div className="itemSelect">
         <ReactSortable
-          tag="div"
           list={data}
           setList={setData}
-          group="groupBtn"
+          group={{ name: "groupName", pull: "clone" }}
           animation={150}
-          sort={false}
-          pull="clone"
         >
           {!data
             ? "Cargando..."
@@ -72,9 +69,8 @@ const ButtonContainer = () => {
       </div>
       <div className="bottomContainer">
         <section className="itemsSelected">
-          <div className="rows">
+          <div className="containerVertical">
             <ReactSortable
-              tag="div"
               list={data}
               setList={setData}
               group="groupBtn"
@@ -85,9 +81,8 @@ const ButtonContainer = () => {
             </ReactSortable>
           </div>
           <article className="container_col_val">
-            <div className="columns">
+            <div className="containerHorizontal">
               <ReactSortable
-                tag="div"
                 list={data}
                 setList={setData}
                 group="groupBtn"
@@ -97,9 +92,8 @@ const ButtonContainer = () => {
                 <p>{activeIndex === 1 ? btn : ""}</p>
               </ReactSortable>
             </div>
-            <div className="values">
+            <div className="containerHorizontal">
               <ReactSortable
-                tag="div"
                 list={data}
                 setList={setData}
                 group="groupBtn"

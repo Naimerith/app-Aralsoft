@@ -1,7 +1,7 @@
 import React from "react";
 
 const ListReport = () => {
-  return <div>ListReport</div>;
+  return <></>;
 };
 
 export default ListReport;

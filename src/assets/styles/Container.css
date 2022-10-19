@@ -1,16 +1,14 @@
-.rows,
-.columns,
-.values {
+.containerVertical,
+.containerHorizontal {
   border: 1px solid #0e3a73;
 }
-.rows {
+.containerVertical {
   width: 185px;
   height: 270px;
   cursor: pointer;
 }
 
-.columns,
-.values {
+.containerHorizontal {
   margin: 5px;
   width: 492px;
   height: 130px;
@@ -25,10 +23,4 @@
 .container_col_val {
   display: flex;
   flex-direction: column;
-}
-
-/* Clase para activar el titulo de cada contenedor inferior (filas, columns y valores)*/
-
-.containerR.active {
-  border: 2px solid #0e3a73;
 }
