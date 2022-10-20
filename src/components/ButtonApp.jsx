@@ -1,9 +1,9 @@
 import React from "react";
 import "../assets/styles/ButtonApp.css";
 
-const ButtonApp = ({ name, icon }) => {
+const ButtonApp = ({ name, icon, onClick }) => {
   return (
-    <button className="generateReport">
+    <button className="generateReport" onClick={onClick}>
       {/* <a href={"/report-generated"}> */}
       {icon}
       {name}

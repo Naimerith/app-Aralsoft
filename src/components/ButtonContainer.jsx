@@ -4,6 +4,7 @@ import { ReactSortable } from "react-sortablejs";
 import { getData } from "../services/api_aralsoft";
 import ButtonApp from "./ButtonApp";
 import Container from "./Container";
+import { useNavigate } from "react-router-dom";
 
 const ButtonContainer = () => {
   /*Array con los keys del objeto para los botones */
@@ -17,6 +18,8 @@ const ButtonContainer = () => {
 
   /*Esto es temporal, luego lo elimino*/
   const [activeIndex, setActiveIndex] = useState(null);
+
+  const navigate = useNavigate();
 
   const getData_api = async () => {
     const res = await getData();
@@ -33,7 +36,13 @@ const ButtonContainer = () => {
 
   const handleBtns = async (e) => {
     const selectedButtonValue = e.target.innerHTML;
-    setBtn(selectedButtonValue);
+    // console.log(selectedButtonValue);
+    return setBtn(selectedButtonValue);
+  };
+
+  const generateReport = async () => {
+    const selectedButtonValue = btn;
+    console.log(selectedButtonValue);
     const resApi = await getData();
     const consultApiSelection = resApi.map((el) => {
       const convertObjectToArray = Object.entries(el);
@@ -43,6 +52,7 @@ const ButtonContainer = () => {
     });
     setValueBtn(consultApiSelection);
     console.log("veamos", consultApiSelection);
+    navigate("/report-generated");
   };
 
   useEffect(() => {
@@ -55,7 +65,8 @@ const ButtonContainer = () => {
         <ReactSortable
           list={data}
           setList={setData}
-          group={{ name: "groupName", pull: "clone" }}
+          group="groupName"
+          pull="clone"
           animation={150}
         >
           {!data
@@ -75,6 +86,7 @@ const ButtonContainer = () => {
               setList={setData}
               group="groupBtn"
               animation={150}
+              put={true}
             >
               <Container name="Filas" onClick={() => onClickHandler(0)} />
               <p>{activeIndex === 0 ? btn : ""}</p>
@@ -106,7 +118,7 @@ const ButtonContainer = () => {
           </article>
         </section>
         <section>
-          <ButtonApp name="Generar Reporte" />
+          <ButtonApp name="Generar Reporte" onClick={generateReport} />
         </section>
       </div>
     </div>
