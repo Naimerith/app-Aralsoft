@@ -1,11 +1,13 @@
 import React from "react";
-import ButtonContainer from "../components/ButtonContainer";
+import ButtonListContainer from "../components/ButtonListContainer";
 import "../assets/styles/CreateReport.css";
+import Container from "../components/Container";
 
 const CreateReport = () => {
   return (
     <div className="container-createReport">
-      <ButtonContainer />
+      <ButtonListContainer />
+      <Container />
     </div>
   );
 };
