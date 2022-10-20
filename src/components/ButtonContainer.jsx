@@ -10,6 +10,11 @@ const ButtonContainer = () => {
   /*Array con los keys del objeto para los botones */
   const [data, setData] = useState([]);
 
+  /*contenedores vacios*/
+  const [container, setContainer] = useState([]);
+  const [columnas, setColumnas] = useState([]);
+  const [valores, setValores] = useState([]);
+
   /*Aqui esta el valor filtrado de boton clickeado*/
   const [valueBtn, setValueBtn] = useState([]);
 
@@ -81,39 +86,80 @@ const ButtonContainer = () => {
       <div className="bottomContainer">
         <section className="itemsSelected">
           <div className="containerVertical">
-            <ReactSortable
-              list={data}
-              setList={setData}
-              group="groupBtn"
-              animation={150}
-              put={true}
-            >
-              <Container name="Filas" onClick={() => onClickHandler(0)} />
-              <p>{activeIndex === 0 ? btn : ""}</p>
-            </ReactSortable>
+            <div className="containerR">
+              {" "}
+              Filas
+              <ReactSortable
+                list={container}
+                setList={setContainer}
+                group="groupName"
+                animation={150}
+              >
+                {!data
+                  ? "Cargando..."
+                  : container.map((item, index) => (
+                      <button
+                        className="btnSelect"
+                        key={index}
+                        onClick={handleBtns}
+                      >
+                        {item}
+                      </button>
+                    ))}
+
+                {/* <Container name="Filas" onClick={() => onClickHandler(0)} /> */}
+                {/* <p>{activeIndex === 0 ? btn : ""}</p> */}
+              </ReactSortable>
+            </div>
           </div>
           <article className="container_col_val">
             <div className="containerHorizontal">
-              <ReactSortable
-                list={data}
-                setList={setData}
-                group="groupBtn"
-                animation={150}
-              >
-                <Container name="Columnas" onClick={() => onClickHandler(1)} />
-                <p>{activeIndex === 1 ? btn : ""}</p>
-              </ReactSortable>
+              <div className="containerR">
+                {" "}
+                Columnas
+                <ReactSortable
+                  list={columnas}
+                  setList={setColumnas}
+                  group="groupName"
+                  animation={150}
+                >
+                  {!data
+                    ? "Cargando..."
+                    : columnas.map((item, index) => (
+                        <button
+                          className="btnSelect"
+                          key={index}
+                          onClick={handleBtns}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                </ReactSortable>
+              </div>
             </div>
             <div className="containerHorizontal">
-              <ReactSortable
-                list={data}
-                setList={setData}
-                group="groupBtn"
-                animation={150}
-              >
-                <Container name="Valores" onClick={() => onClickHandler(2)} />
-                <p>{activeIndex === 2 ? btn : ""}</p>
-              </ReactSortable>
+              <div className="containerR">
+                {" "}
+                Valores
+                <ReactSortable
+                  list={valores}
+                  setList={setValores}
+                  group="groupName"
+                  animation={150}
+                >
+                  {!data
+                    ? "Cargando..."
+                    : valores.map((item, index) => (
+                        <button
+                          className="btnSelect"
+                          key={index}
+                          onClick={handleBtns}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                </ReactSortable>
+              </div>
             </div>
           </article>
         </section>
