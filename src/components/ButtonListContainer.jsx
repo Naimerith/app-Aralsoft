@@ -24,9 +24,8 @@ const ButtonListContainer = () => {
         <ReactSortable
           list={data}
           setList={setData}
-          group={{ name: "selectedButton", pull: "clone" }}
+          group={{ name: "selectedButton" }}
           animation={150}
-          sort={false}
         >
           {!data
             ? "Cargando..."
