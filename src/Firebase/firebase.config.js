@@ -1,9 +1,22 @@
- /*const firebase = {
- apiKey: "AIzaSyAEo9pJR11nCfHfa4oe9UmVe6iTXCisym0",
- authDomain: "aralsoft-3611b.firebaseapp.com",
- projectId: "aralsoft-3611b",
- storageBucket: "aralsoft-3611b.appspot.com",
- messagingSenderId: "535897145212",
- appId: "1:535897145212:web:af227f23d435a0f8c1aef9"
+
+import { initializeApp } from "firebase/app";
+import { getAuth } from 'firebase/auth';
+import { getStorage, ref } from 'firebase/storage';
+import {
+  getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, setDoc, getDoc
+} from 'firebase/firestore';
+
+
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_APIKEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_APPID
 };
-export default firebase;*/
+
+export const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
