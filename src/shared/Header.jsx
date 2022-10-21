@@ -13,7 +13,7 @@ const Header = () => {
   };
 
   return (
-    <>
+    <div>
       <div className="navbar">
         <div className="BtnMenuHamburger">
           <ButtonHamburger click={menu} handleClick={handleClick} />
@@ -23,7 +23,7 @@ const Header = () => {
       <div className={`sidebar ${menu ? "active" : "inactive"}`}>
         <Sidebar />
       </div>
-    </>
+    </div>
   );
 };
 

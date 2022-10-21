@@ -32,7 +32,7 @@ const Login = () => {
   }
 
   return (
-    <>
+    <div>
       {success ? (
         <section className='signInSuccessful '>
           <h1>Haz iniciado sesión satisfactoriamente</h1>
@@ -80,7 +80,7 @@ const Login = () => {
           </form>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

@@ -9,7 +9,7 @@ const Container = () => {
   const [values, setValues] = useState([]);
 
   return (
-    <>
+    <div>
       <div className="bottomContainer">
         <section className="itemsSelected">
           <div className="containerVertical">
@@ -73,7 +73,7 @@ const Container = () => {
           <ButtonApp name="Generar Reporte" />
         </section>
       </div>
-    </>
+    </div>
   );
 };
 
