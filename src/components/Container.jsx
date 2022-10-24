@@ -3,14 +3,15 @@ import "../assets/styles/Container.css";
 import { ReactSortable } from "react-sortablejs";
 import ButtonApp from "./ButtonApp";
 import { consultValuesInTheApi } from "../Functions/functions";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../Firebase/firebase.config";
 
 const Container = () => {
+  let ArrayOfSelectedButtons = [];
+
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
-
-  let ArrayOfSelectedButtons = [];
-  let apiConsultation = [];
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -19,26 +20,49 @@ const Container = () => {
     return ArrayOfSelectedButtons;
   };
   const consultValues = async () => {
+    const array1 = [];
+    const array2 = [];
+    const array3 = [];
     const consultApiSelectionRow = await consultValuesInTheApi(
       ArrayOfSelectedButtons[0]
     );
+    consultApiSelectionRow.map((el) => {
+      return el.map((h) => {
+        const arrayFinal = h[1];
+        return array1.push(arrayFinal);
+      });
+    });
+
     const consultApiSelectionColumn = await consultValuesInTheApi(
       ArrayOfSelectedButtons[1]
     );
+    consultApiSelectionColumn.map((el) => {
+      return el.map((h) => {
+        const arrayFinal = h[1];
+        return array2.push(arrayFinal);
+      });
+    });
     const consultApiSelectionValues = await consultValuesInTheApi(
       ArrayOfSelectedButtons[2]
     );
-    return (apiConsultation = {
-      filas: consultApiSelectionRow,
-      columnas: consultApiSelectionColumn,
-      valores: consultApiSelectionValues,
+    consultApiSelectionValues.map((el) => {
+      return el.map((h) => {
+        const arrayFinal = h[1];
+        return array3.push(arrayFinal);
+      });
+    });
+
+    await addDoc(collection(db, "tables"), {
+      fecha: "",
+      filas: array1,
+      columnas: array2,
+      valores: array3,
+      usuario: "",
     });
   };
 
   const generateReport = async () => {
-    console.log("diste click");
-    const valuesForTable = await consultValues();
-    console.log("veamos", valuesForTable);
+    consultValues();
   };
 
   return (

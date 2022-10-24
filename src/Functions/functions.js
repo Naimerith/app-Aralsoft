@@ -9,5 +9,7 @@ export const consultValuesInTheApi = async (position) => {
       key.includes(position)
     );
   });
-  return consultApiSelectionBtn
+
+
+  return consultApiSelectionBtn;
 }
