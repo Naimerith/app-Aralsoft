@@ -5,10 +5,14 @@ import ButtonApp from "./ButtonApp";
 import { consultValuesInTheApi } from "../Functions/functions";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../Firebase/firebase.config";
+import { useNavigate } from "react-router-dom";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
-
+  const navigate = useNavigate();
+  const date = Date.now();
+  const newDate = new Date(date);
+  const converteDate = newDate.toLocaleString();
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
@@ -19,6 +23,7 @@ const Container = () => {
     }
     return ArrayOfSelectedButtons;
   };
+
   const consultValues = async () => {
     const array1 = [];
     const array2 = [];
@@ -53,7 +58,7 @@ const Container = () => {
     });
 
     await addDoc(collection(db, "tables"), {
-      fecha: "",
+      fecha: converteDate,
       filas: array1,
       columnas: array2,
       valores: array3,
@@ -63,6 +68,7 @@ const Container = () => {
 
   const generateReport = async () => {
     consultValues();
+    navigate("/report-generated");
   };
 
   return (
