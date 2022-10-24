@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../assets/styles/Container.css";
 import { ReactSortable } from "react-sortablejs";
 import ButtonApp from "./ButtonApp";
-import { getData } from "../services/api_aralsoft";
+import { consultValuesInTheApi } from "../Functions/functions";
 
 const Container = () => {
   const [row, setRow] = useState([]);
@@ -10,7 +10,7 @@ const Container = () => {
   const [values, setValues] = useState([]);
 
   let ArrayOfSelectedButtons = [];
-  let apiConsultation = {};
+  let apiConsultation = [];
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -18,26 +18,16 @@ const Container = () => {
     }
     return ArrayOfSelectedButtons;
   };
-  const generateReport = async () => {
-    const resApi = await getData();
-    const consultApiSelectionRow = resApi.map((el) => {
-      const convertObjectToArray = Object.entries(el);
-      return convertObjectToArray.filter((key) =>
-        key.includes(ArrayOfSelectedButtons[0])
-      );
-    });
-    const consultApiSelectionColumn = resApi.map((el) => {
-      const convertObjectToArray = Object.entries(el);
-      return convertObjectToArray.filter((key) =>
-        key.includes(ArrayOfSelectedButtons[1])
-      );
-    });
-    const consultApiSelectionValues = resApi.map((el) => {
-      const convertObjectToArray = Object.entries(el);
-      return convertObjectToArray.filter((key) =>
-        key.includes(ArrayOfSelectedButtons[2])
-      );
-    });
+  const consultValues = async () => {
+    const consultApiSelectionRow = await consultValuesInTheApi(
+      ArrayOfSelectedButtons[0]
+    );
+    const consultApiSelectionColumn = await consultValuesInTheApi(
+      ArrayOfSelectedButtons[1]
+    );
+    const consultApiSelectionValues = await consultValuesInTheApi(
+      ArrayOfSelectedButtons[2]
+    );
     return (apiConsultation = {
       filas: consultApiSelectionRow,
       columnas: consultApiSelectionColumn,
@@ -45,14 +35,10 @@ const Container = () => {
     });
   };
 
-  /*Asi voy a impirmir en la tabla los valores-----Esto es un ejemplo, practicando */
-  const prueba = async () => {
-    const hola = await generateReport();
-    hola.filas.map((el) => {
-      el.map((h) => {
-        console.log(h[1]);
-      });
-    });
+  const generateReport = async () => {
+    console.log("diste click");
+    const valuesForTable = await consultValues();
+    console.log("veamos", valuesForTable);
   };
 
   return (
@@ -129,7 +115,7 @@ const Container = () => {
           </article>
         </section>
         <section>
-          <ButtonApp name="Generar Reporte" onClick={prueba} />
+          <ButtonApp name="Generar Reporte" onClick={generateReport} />
         </section>
       </div>
     </div>
