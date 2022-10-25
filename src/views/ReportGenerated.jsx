@@ -24,42 +24,17 @@ const ReportGenerated = () => {
       <p className="successMsg">Su reporte fue generado satisfactoriamente!</p>
       <div className="table">
         <table>
-          <tr>
-            <td>
-              <strong>Filas</strong>
-            </td>
-          </tr>
-          {!table.filas
-            ? "Cargando..."
-            : table.filas.map((el, index) => (
-                <tr>
-                  <td key={index}>{el}</td>
-                </tr>
-              ))}
-        </table>
-        <table>
-          <tr>
-            <td>
-              <strong>Columnas</strong>
-            </td>
-          </tr>
+          <th>vacio</th>
           {!table.columnas
             ? "Cargando..."
             : table.columnas.map((el, index) => (
-                <tr>
-                  <td key={index}>{el}</td>
-                </tr>
+                <td>
+                  <th key={index}>{el}</th>
+                </td>
               ))}
-        </table>
-        <table>
-          <tr>
-            <td>
-              <strong>Valores</strong>
-            </td>
-          </tr>
-          {!table.valores
+          {!table.filas
             ? "Cargando..."
-            : table.valores.map((el, index) => (
+            : table.filas.map((el, index) => (
                 <tr>
                   <td key={index}>{el}</td>
                 </tr>
