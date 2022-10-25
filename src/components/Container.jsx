@@ -25,16 +25,16 @@ const Container = () => {
   };
 
   const consultValues = async () => {
-    const array1 = [];
-    const array2 = [];
-    const array3 = [];
+    const arrayRow = [];
+    const arrayColumn = [];
+    const arrayValue = [];
     const consultApiSelectionRow = await consultValuesInTheApi(
       ArrayOfSelectedButtons[0]
     );
     consultApiSelectionRow.map((el) => {
       return el.map((h) => {
         const arrayFinal = h[1];
-        return array1.push(arrayFinal);
+        return arrayRow.push(arrayFinal);
       });
     });
 
@@ -44,7 +44,7 @@ const Container = () => {
     consultApiSelectionColumn.map((el) => {
       return el.map((h) => {
         const arrayFinal = h[1];
-        return array2.push(arrayFinal);
+        return arrayColumn.push(arrayFinal);
       });
     });
     const consultApiSelectionValues = await consultValuesInTheApi(
@@ -53,15 +53,15 @@ const Container = () => {
     consultApiSelectionValues.map((el) => {
       return el.map((h) => {
         const arrayFinal = h[1];
-        return array3.push(arrayFinal);
+        return arrayValue.push(arrayFinal);
       });
     });
 
     await addDoc(collection(db, "tables"), {
       fecha: converteDate,
-      filas: array1,
-      columnas: array2,
-      valores: array3,
+      filas: arrayRow,
+      columnas: arrayColumn,
+      valores: arrayValue,
       usuario: "",
     });
   };

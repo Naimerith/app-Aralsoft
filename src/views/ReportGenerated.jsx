@@ -6,18 +6,17 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../Firebase/firebase.config";
 
 const ReportGenerated = () => {
-  const [midatos, setMisDatos] = useState([]);
-  console.log(midatos);
+  const [table, setTable] = useState([]);
 
-  const nai = async () => {
+  const getCollection = async () => {
     const querySnapshot = await getDocs(collection(db, "tables"));
     querySnapshot.forEach((doc) => {
-      setMisDatos(doc.data());
+      setTable(doc.data());
     });
   };
 
   useEffect(() => {
-    nai();
+    getCollection();
   }, []);
 
   return (
@@ -30,9 +29,9 @@ const ReportGenerated = () => {
               <strong>Filas</strong>
             </td>
           </tr>
-          {!midatos.filas
+          {!table.filas
             ? "Cargando..."
-            : midatos.filas.map((el, index) => (
+            : table.filas.map((el, index) => (
                 <tr>
                   <td key={index}>{el}</td>
                 </tr>
@@ -44,9 +43,9 @@ const ReportGenerated = () => {
               <strong>Columnas</strong>
             </td>
           </tr>
-          {!midatos.columnas
+          {!table.columnas
             ? "Cargando..."
-            : midatos.columnas.map((el, index) => (
+            : table.columnas.map((el, index) => (
                 <tr>
                   <td key={index}>{el}</td>
                 </tr>
@@ -58,9 +57,9 @@ const ReportGenerated = () => {
               <strong>Valores</strong>
             </td>
           </tr>
-          {!midatos.valores
+          {!table.valores
             ? "Cargando..."
-            : midatos.valores.map((el, index) => (
+            : table.valores.map((el, index) => (
                 <tr>
                   <td key={index}>{el}</td>
                 </tr>
