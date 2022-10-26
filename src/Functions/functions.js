@@ -9,7 +9,17 @@ export const consultValuesInTheApi = async (position) => {
       key.includes(position)
     );
   });
-
-
   return consultApiSelectionBtn;
 }
+
+export const getArrObjetc = (arrProveedor, arrProductos, arrSoles) => {
+  let arr = [];
+  for (let i in arrProveedor) {
+    arr.push({
+      proveedor: arrProveedor[i],
+      producto: arrProductos[i],
+      soles: arrSoles[i],
+    });
+  }
+  return arr;
+};
