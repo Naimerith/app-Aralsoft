@@ -11,14 +11,14 @@ export const consultValuesInTheApi = async (position) => {
   });
   return consultApiSelectionBtn;
 }
-
-export const getArrObjetc = (arrProveedor, arrProductos, arrSoles) => {
+/*Crea un objeto con el resultado obtenidos para la fila, la columna y el campo valores */
+export const getArrObject = (arrRow, arrColumn, arrValue) => {
   let arr = [];
-  for (let i in arrProveedor) {
+  for (let i in arrRow) {
     arr.push({
-      proveedor: arrProveedor[i],
-      producto: arrProductos[i],
-      soles: arrSoles[i],
+      filas: arrRow[i],
+      columnas: arrColumn[i],
+      valores: arrValue[i],
     });
   }
   return arr;

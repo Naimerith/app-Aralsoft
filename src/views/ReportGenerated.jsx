@@ -2,28 +2,28 @@ import React, { useEffect, useState } from "react";
 import "../assets/styles/ReportGenerated.css";
 import ButtonApp from "../components/ButtonApp";
 import { Icon } from "@iconify/react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../Firebase/firebase.config";
+//import { collection, getDocs } from "firebase/firestore";
+//import { db } from "../Firebase/firebase.config";
 
 const ReportGenerated = () => {
-  const [table, setTable] = useState([]);
+  //const [table, setTable] = useState([]);
 
-  const getCollection = async () => {
+  /*const getCollection = async () => {
     const querySnapshot = await getDocs(collection(db, "tables"));
     querySnapshot.forEach((doc) => {
       setTable(doc.data());
     });
-  };
+  };*/
 
   useEffect(() => {
-    getCollection();
+    // getCollection();
   }, []);
 
   return (
     <div className="container-ReportGenerated">
       <p className="successMsg">Su reporte fue generado satisfactoriamente!</p>
       <div className="table">
-        <table>
+        {/* <table>
           <th>vacio</th>
           {!table.columnas
             ? "Cargando..."
@@ -39,7 +39,7 @@ const ReportGenerated = () => {
                   <td key={index}>{el}</td>
                 </tr>
               ))}
-        </table>
+        </table> */}
       </div>
       <div className="containerBtns">
         <ButtonApp

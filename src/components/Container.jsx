@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import "../assets/styles/Container.css";
 import { ReactSortable } from "react-sortablejs";
 import ButtonApp from "./ButtonApp";
-import { consultValuesInTheApi } from "../Functions/functions";
+import { consultValuesInTheApi, getArrObject } from "../Functions/functions";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../Firebase/firebase.config";
 import { useNavigate } from "react-router-dom";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
+  const arrayRow = [];
+  const arrayColumn = [];
+  const arrayValue = [];
   const navigate = useNavigate();
   const date = Date.now();
   const newDate = new Date(date);
@@ -25,9 +28,6 @@ const Container = () => {
   };
 
   const consultValues = async () => {
-    const arrayRow = [];
-    const arrayColumn = [];
-    const arrayValue = [];
     const consultApiSelectionRow = await consultValuesInTheApi(
       ArrayOfSelectedButtons[0]
     );
@@ -57,18 +57,32 @@ const Container = () => {
       });
     });
 
-    await addDoc(collection(db, "tables"), {
-      fecha: converteDate,
-      filas: arrayRow,
-      columnas: arrayColumn,
-      valores: arrayValue,
-      usuario: "",
+    return getArrObject(arrayRow, arrayColumn, arrayValue);
+  };
+
+  const addResultMatches = async () => {
+    const objArray = await consultValues();
+    const resultObjArray = [];
+
+    objArray.forEach((el) => {
+      const objectIndex = resultObjArray.findIndex(
+        (obj) => obj.filas === el.filas && obj.columnas === el.columnas
+      );
+
+      if (objectIndex === -1) {
+        resultObjArray.push(el);
+      } else {
+        resultObjArray[objectIndex].valores += el.valores;
+      }
     });
+
+    //console.log("prueba correcta", resultObjArray);
   };
 
   const generateReport = async () => {
-    consultValues();
-    navigate("/report-generated");
+    console.log("click a generar reporte");
+    addResultMatches();
+    //navigate("/report-generated");
   };
 
   return (
