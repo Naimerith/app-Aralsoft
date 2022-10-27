@@ -1,7 +1,9 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
+
+
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -16,10 +18,22 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export const addCollectionResult = async (obj) => {
+const date = Date.now();
+const newDate = new Date(date);
+const converteDate = newDate.toLocaleString();
+
+export const addCollectionResult = async (key, value) => {
   return await addDoc(collection(db, "tables"), {
-    fecha: Date.now(),
-    consultApi: obj,
+    report: key,
+    fecha: converteDate,
+    consultApi: value,
     usuario: "",
   });
 }
+
+export const getLastDocumentOfTheCollection = async (state) => {
+  const querySnapshot = await getDocs(collection(db, "tables"));
+  querySnapshot.forEach((doc) => {
+    state(doc.data());
+  });
+};

@@ -11,6 +11,18 @@ export const consultValuesInTheApi = async (position) => {
   });
   return consultApiSelectionBtn;
 }
+
+/*Extraemos solo el value de la api*/
+export const getTheValueOfSelectedButton = (getArr, newArr) => {
+  getArr.map((el) => {
+    return el.map((h) => {
+      const arrayFinal = h[1];
+      return newArr.push(arrayFinal);
+    });
+  });
+  return newArr
+}
+
 /*Crea un objeto con el resultado obtenidos para la fila, la columna y el campo valores */
 export const getArrObject = (arrRow, arrColumn, arrValue) => {
   let arr = [];
@@ -23,4 +35,5 @@ export const getArrObject = (arrRow, arrColumn, arrValue) => {
   }
   return arr;
 };
+
 
