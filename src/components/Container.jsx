@@ -57,32 +57,36 @@ const Container = () => {
       });
     });
 
+    //console.log("aquiii", getArrObject(arrayRow, arrayColumn, arrayValue));
     return getArrObject(arrayRow, arrayColumn, arrayValue);
   };
 
   const addResultMatches = async () => {
     const objArray = await consultValues();
     const resultObjArray = [];
-
     objArray.forEach((el) => {
       const objectIndex = resultObjArray.findIndex(
         (obj) => obj.filas === el.filas && obj.columnas === el.columnas
       );
-
       if (objectIndex === -1) {
         resultObjArray.push(el);
       } else {
         resultObjArray[objectIndex].valores += el.valores;
       }
     });
+    await addDoc(collection(db, "tables"), {
+      fecha: converteDate,
+      consultApi: resultObjArray,
+      usuario: "",
+    });
 
-    //console.log("prueba correcta", resultObjArray);
+    console.log("prueba correcta", resultObjArray);
   };
 
   const generateReport = async () => {
     console.log("click a generar reporte");
     addResultMatches();
-    //navigate("/report-generated");
+    navigate("/report-generated");
   };
 
   return (
