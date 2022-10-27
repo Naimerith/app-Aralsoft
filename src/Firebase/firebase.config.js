@@ -1,8 +1,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -17,3 +16,10 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
+export const addCollectionResult = async (obj) => {
+  return await addDoc(collection(db, "tables"), {
+    fecha: Date.now(),
+    consultApi: obj,
+    usuario: "",
+  });
+}

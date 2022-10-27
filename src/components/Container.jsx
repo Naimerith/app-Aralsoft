@@ -3,9 +3,8 @@ import "../assets/styles/Container.css";
 import { ReactSortable } from "react-sortablejs";
 import ButtonApp from "./ButtonApp";
 import { consultValuesInTheApi, getArrObject } from "../Functions/functions";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../Firebase/firebase.config";
 import { useNavigate } from "react-router-dom";
+import { addCollectionResult } from "../Firebase/firebase.config";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
@@ -13,9 +12,7 @@ const Container = () => {
   const arrayColumn = [];
   const arrayValue = [];
   const navigate = useNavigate();
-  const date = Date.now();
-  const newDate = new Date(date);
-  const converteDate = newDate.toLocaleString();
+
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
@@ -56,12 +53,10 @@ const Container = () => {
         return arrayValue.push(arrayFinal);
       });
     });
-
-    //console.log("aquiii", getArrObject(arrayRow, arrayColumn, arrayValue));
     return getArrObject(arrayRow, arrayColumn, arrayValue);
   };
 
-  const addResultMatches = async () => {
+  const generateReport = async () => {
     const objArray = await consultValues();
     const resultObjArray = [];
     objArray.forEach((el) => {
@@ -74,18 +69,7 @@ const Container = () => {
         resultObjArray[objectIndex].valores += el.valores;
       }
     });
-    await addDoc(collection(db, "tables"), {
-      fecha: converteDate,
-      consultApi: resultObjArray,
-      usuario: "",
-    });
-
-    console.log("prueba correcta", resultObjArray);
-  };
-
-  const generateReport = async () => {
-    console.log("click a generar reporte");
-    addResultMatches();
+    addCollectionResult(resultObjArray);
     navigate("/report-generated");
   };
 
@@ -169,5 +153,4 @@ const Container = () => {
     </div>
   );
 };
-
 export default Container;
