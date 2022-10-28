@@ -53,9 +53,7 @@ const ReportGenerated = () => {
   return (
     <div className="container-ReportGenerated">
       <p className="successMsg">Su reporte fue generado satisfactoriamente!</p>
-      <div className="table">
-        <Table table={addValuesToTheTable} />
-      </div>
+      <Table table={addValuesToTheTable} />
       <div className="containerBtns">
         <ButtonApp
           icon={

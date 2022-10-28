@@ -1,6 +1,6 @@
 /******Contenedor de la vista*******/
 .container-ReportGenerated {
-  margin-top: -46%;
+  margin-top: -48%;
   margin-left: 18%;
   display: block;
 }
@@ -18,8 +18,4 @@
 .containerBtns {
   display: flex;
   justify-content: space-evenly;
-}
-
-.table {
-  display: flex;
 }
