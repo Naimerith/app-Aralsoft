@@ -4,18 +4,11 @@ import ButtonApp from "../components/ButtonApp";
 import { Icon } from "@iconify/react";
 import { db } from "../Firebase/firebase.config";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import Table from "../components/Table.jsx";
 
 const ReportGenerated = () => {
-  const [table, setTable] = useState([]);
-
-  const data = [
-    ["", "Tesla", "Nissan", "Toyota", "Honda", "Mazda", "Ford"],
-    ["2017", 10, 11, 12, 13, 15, 16],
-    ["2018", 10, 11, 12, 13, 15, 16],
-    ["2019", 10, 11, 12, 13, 15, 16],
-    ["2020", 10, 11, 12, 13, 15, 16],
-    ["2021", 10, 11, 12, 13, 15, 16],
-  ];
+  const [data, setData] = useState([]);
+  console.log("probando", data);
 
   const getLastDocumentOfTheCollection = async () => {
     const q = query(
@@ -25,9 +18,33 @@ const ReportGenerated = () => {
     );
     const lastDocument = await getDocs(q);
     lastDocument.forEach((doc) => {
-      console.log("data", doc.data());
+      const dat = doc.data().consultApi;
+      setData(dat);
     });
   };
+
+  const addValuesToTheTable = data.reduce(
+    (acc, data) => {
+      if (!acc.filas.includes(data.filas)) {
+        acc.filas.push(data.filas);
+      }
+      if (!acc.columnas.includes(data.columnas)) {
+        acc.columnas.push(data.columnas);
+      }
+
+      const idxFila = acc.filas.indexOf(data.filas);
+      const idxColumna = acc.columnas.indexOf(data.columnas);
+
+      acc.data[idxFila] = acc.data[idxFila] || [data.filas];
+      acc.data[idxFila][idxColumna] = data.valores;
+      return acc;
+    },
+    {
+      filas: [null],
+      columnas: [null],
+      data: [],
+    }
+  );
 
   useEffect(() => {
     getLastDocumentOfTheCollection();
@@ -37,23 +54,7 @@ const ReportGenerated = () => {
     <div className="container-ReportGenerated">
       <p className="successMsg">Su reporte fue generado satisfactoriamente!</p>
       <div className="table">
-        {/* <table>
-          <th>vacio</th>
-          {!table.columnas
-            ? "Cargando..."
-            : table.columnas.map((el, index) => (
-                <td>
-                  <th key={index}>{el}</th>
-                </td>
-              ))}
-          {!table.filas
-            ? "Cargando..."
-            : table.filas.map((el, index) => (
-                <tr>
-                  <td key={index}>{el}</td>
-                </tr>
-              ))}
-        </table> */}
+        <Table table={addValuesToTheTable} />
       </div>
       <div className="containerBtns">
         <ButtonApp
