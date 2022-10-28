@@ -18,22 +18,20 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-const date = Date.now();
-const newDate = new Date(date);
-const converteDate = newDate.toLocaleString();
+
 
 export const addCollectionResult = async (key, value) => {
   return await addDoc(collection(db, "tables"), {
     report: key,
-    fecha: converteDate,
+    fecha: Date.now(),
     consultApi: value,
     usuario: "",
   });
 }
 
-export const getLastDocumentOfTheCollection = async (state) => {
+/*export const getLastDocumentOfTheCollection = async (state) => {
   const querySnapshot = await getDocs(collection(db, "tables"));
   querySnapshot.forEach((doc) => {
     state(doc.data());
   });
-};
+};*/

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../assets/styles/ReportGenerated.css";
 import ButtonApp from "../components/ButtonApp";
-import { getLastDocumentOfTheCollection } from "../Firebase/firebase.config";
 import { Icon } from "@iconify/react";
+import { db } from "../Firebase/firebase.config";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 const ReportGenerated = () => {
   const [table, setTable] = useState([]);
-  console.log("stado", table);
+
   const data = [
     ["", "Tesla", "Nissan", "Toyota", "Honda", "Mazda", "Ford"],
     ["2017", 10, 11, 12, 13, 15, 16],
@@ -16,13 +17,20 @@ const ReportGenerated = () => {
     ["2021", 10, 11, 12, 13, 15, 16],
   ];
 
-  const getCollection = async () => {
-    const hola = await getLastDocumentOfTheCollection(setTable);
-    console.log("firebase", hola);
+  const getLastDocumentOfTheCollection = async () => {
+    const q = query(
+      collection(db, "tables"),
+      limit(1),
+      orderBy("fecha", "desc")
+    );
+    const lastDocument = await getDocs(q);
+    lastDocument.forEach((doc) => {
+      console.log("data", doc.data());
+    });
   };
 
   useEffect(() => {
-    getCollection();
+    getLastDocumentOfTheCollection();
   }, []);
 
   return (
