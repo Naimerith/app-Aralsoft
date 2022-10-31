@@ -37,14 +37,14 @@ const ListReport = () => {
       <div className="container-Report">
         {listTable.map((el) => {
           return (
-            <div className="report" key={el.id}>
+            <div className="report">
               <Icon
                 icon="icon-park-outline:table-report"
                 width={50}
                 height={50}
                 color="#0e3a73"
               />
-              <p className="dateTable">fecha de creación:{el.fecha}</p>
+              <p className="dateTable">Creado el: {el.fecha}</p>
               <div className="icons-bottoms">
                 <Icon icon="ant-design:folder-open-outlined" />
                 <Icon icon="akar-icons:edit" />
