@@ -1,10 +1,10 @@
 import React from "react";
 import "../assets/styles/Table.css";
 
-const Table = ({ table }) => {
+const Table = ({ table, id }) => {
   return (
     <div className="table-wrapper">
-      <table className="containerTable">
+      <table className="containerTable" id={id}>
         <thead>
           {/*Creamos la fila de las columnas con sus valores*/}
           <tr>

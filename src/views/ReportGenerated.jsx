@@ -5,10 +5,10 @@ import { Icon } from "@iconify/react";
 import { db } from "../Firebase/firebase.config";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import Table from "../components/Table.jsx";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 const ReportGenerated = () => {
   const [data, setData] = useState([]);
-  console.log("probando", data);
 
   const getLastDocumentOfTheCollection = async () => {
     const q = query(
@@ -53,7 +53,7 @@ const ReportGenerated = () => {
   return (
     <div className="container-ReportGenerated">
       <p className="successMsg">Su reporte fue generado satisfactoriamente!</p>
-      <Table table={addValuesToTheTable} />
+      <Table table={addValuesToTheTable} id={"table-to-xls"} />
       <div className="containerBtns">
         <ButtonApp
           icon={
@@ -65,9 +65,13 @@ const ReportGenerated = () => {
           }
           name="Guardar"
         />
-        <ButtonApp
-          icon={<Icon icon="fa6-solid:download" width="20" height="20" />}
-          name="Exportar"
+        <ReactHTMLTableToExcel
+          id="table-xls-button"
+          className="generateReport"
+          table="table-to-xls"
+          filename="table"
+          sheet="report"
+          buttonText="Exportar"
         />
       </div>
     </div>
