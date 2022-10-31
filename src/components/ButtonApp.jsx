@@ -4,10 +4,8 @@ import "../assets/styles/ButtonApp.css";
 const ButtonApp = ({ name, icon, onClick }) => {
   return (
     <button className="generateReport" onClick={onClick}>
-      {/* <a href={"/report-generated"}> */}
       {icon}
       {name}
-      {/* </a> */}
     </button>
   );
 };

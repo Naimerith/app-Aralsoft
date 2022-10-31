@@ -1,0 +1,26 @@
+/******Contenedor de la vista*******/
+.container-ListReport {
+  margin-top: -48%;
+  margin-left: 18%;
+  display: block;
+}
+
+.container-Report {
+  display: flex;
+}
+
+.report {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+  padding: 3px;
+  background: #ffffff;
+  border: 1px solid #0e3a73;
+  border-radius: 5px;
+}
+
+.dateTable {
+  font-size: 10px;
+  margin: 0;
+}

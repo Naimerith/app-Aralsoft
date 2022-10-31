@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../assets/styles/ButtonListContainer.css";
 import { ReactSortable } from "react-sortablejs";
 import { getData } from "../services/api_aralsoft";
+import "../assets/styles/ButtonListContainer.css";
 
 const ButtonListContainer = () => {
-  /*Array con los keys del objeto para los botones */
   const [data, setData] = useState([]);
 
   const getData_api = async () => {

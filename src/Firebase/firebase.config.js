@@ -26,6 +26,7 @@ export const addCollectionResult = async (key, value) => {
     fecha: Date.now(),
     consultApi: value,
     usuario: "",
+    estatus: 'Reporte generado'
   });
 }
 
@@ -35,3 +36,4 @@ export const addCollectionResult = async (key, value) => {
     state(doc.data());
   });
 };*/
+

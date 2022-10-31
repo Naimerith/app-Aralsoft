@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import "../assets/styles/Container.css";
 import { ReactSortable } from "react-sortablejs";
-import ButtonApp from "./ButtonApp";
 import {
   consultValuesInTheApi,
   getArrObject,
@@ -9,6 +7,8 @@ import {
 } from "../Functions/functions";
 import { useNavigate } from "react-router-dom";
 import { addCollectionResult } from "../Firebase/firebase.config";
+import ButtonApp from "./ButtonApp";
+import "../assets/styles/Container.css";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import "../assets/styles/ReportGenerated.css";
-import ButtonApp from "../components/ButtonApp";
 import { Icon } from "@iconify/react";
 import { db } from "../Firebase/firebase.config";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import Table from "../components/Table.jsx";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import ButtonApp from "../components/ButtonApp";
+import "../assets/styles/ReportGenerated.css";
 
 const ReportGenerated = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   const getLastDocumentOfTheCollection = async () => {
@@ -18,8 +20,7 @@ const ReportGenerated = () => {
     );
     const lastDocument = await getDocs(q);
     lastDocument.forEach((doc) => {
-      const dat = doc.data().consultApi;
-      setData(dat);
+      return setData(doc.data().consultApi);
     });
   };
 
@@ -31,10 +32,8 @@ const ReportGenerated = () => {
       if (!acc.columnas.includes(data.columnas)) {
         acc.columnas.push(data.columnas);
       }
-
       const idxFila = acc.filas.indexOf(data.filas);
       const idxColumna = acc.columnas.indexOf(data.columnas);
-
       acc.data[idxFila] = acc.data[idxFila] || [data.filas];
       acc.data[idxFila][idxColumna] = data.valores;
       return acc;
@@ -45,6 +44,10 @@ const ReportGenerated = () => {
       data: [],
     }
   );
+
+  const saveReport = async () => {
+    console.log("diste click a guardar");
+  };
 
   useEffect(() => {
     getLastDocumentOfTheCollection();
@@ -57,6 +60,13 @@ const ReportGenerated = () => {
       <div className="containerBtns">
         <ButtonApp
           icon={
+            <Icon icon="fluent:form-new-20-regular" width="23" height="23" />
+          }
+          name="Nuevo Reporte"
+          onClick={() => navigate("/new-report")}
+        />
+        <ButtonApp
+          icon={
             <Icon
               icon="fluent:document-save-24-filled"
               width="20"
@@ -64,6 +74,7 @@ const ReportGenerated = () => {
             />
           }
           name="Guardar"
+          onClick={saveReport}
         />
         <ReactHTMLTableToExcel
           id="table-xls-button"
@@ -71,7 +82,7 @@ const ReportGenerated = () => {
           table="table-to-xls"
           filename="table"
           sheet="report"
-          buttonText="Exportar"
+          buttonText="⇯ Exportar"
         />
       </div>
     </div>
