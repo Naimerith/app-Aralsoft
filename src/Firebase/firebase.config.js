@@ -1,9 +1,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
-
-
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, limit } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -17,11 +15,10 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-
-
+const collectionRef = collection(db, "tables");
 
 export const addCollectionResult = async (key, value) => {
-  return await addDoc(collection(db, "tables"), {
+  return await addDoc(collectionRef, {
     report: key,
     fecha: Date.now(),
     consultApi: value,
@@ -30,10 +27,35 @@ export const addCollectionResult = async (key, value) => {
   });
 }
 
-/*export const getLastDocumentOfTheCollection = async (state) => {
-  const querySnapshot = await getDocs(collection(db, "tables"));
-  querySnapshot.forEach((doc) => {
-    state(doc.data());
+export const getLastDocumentOfTheCollection = async (state) => {
+  const q = query(
+    collectionRef,
+    limit(1),
+    orderBy("fecha", "desc")
+  );
+  const lastDocument = await getDocs(q);
+  lastDocument.forEach((doc) => {
+    return state(doc.data().consultApi);
   });
-};*/
+};
+
+export const getCollectionTables = async (state) => {
+  const tables = [];
+  const q = query(collectionRef, orderBy("fecha", "desc"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    const newDate = new Date(doc.data().fecha);
+    const converteDate = newDate.toLocaleString();
+    tables.push({
+      ...doc.data(),
+      id: doc.id,
+      fecha: converteDate,
+    });
+    return state(tables);
+  });
+};
+
+export const deleteReport = async (id) => {
+  await deleteDoc(doc(collectionRef, id));
+}
 

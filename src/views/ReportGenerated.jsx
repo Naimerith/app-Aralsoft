@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import { db } from "../Firebase/firebase.config";
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { getLastDocumentOfTheCollection } from "../Firebase/firebase.config";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table.jsx";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
@@ -11,18 +10,6 @@ import "../assets/styles/ReportGenerated.css";
 const ReportGenerated = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-
-  const getLastDocumentOfTheCollection = async () => {
-    const q = query(
-      collection(db, "tables"),
-      limit(1),
-      orderBy("fecha", "desc")
-    );
-    const lastDocument = await getDocs(q);
-    lastDocument.forEach((doc) => {
-      return setData(doc.data().consultApi);
-    });
-  };
 
   const addValuesToTheTable = data.reduce(
     (acc, data) => {
@@ -50,7 +37,7 @@ const ReportGenerated = () => {
   };
 
   useEffect(() => {
-    getLastDocumentOfTheCollection();
+    getLastDocumentOfTheCollection(setData);
   }, []);
 
   return (
@@ -74,7 +61,7 @@ const ReportGenerated = () => {
             />
           }
           name="Guardar"
-          onClick={saveReport}
+          onClick={() => saveReport()}
         />
         <ReactHTMLTableToExcel
           id="table-xls-button"
