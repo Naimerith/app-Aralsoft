@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { db } from "../Firebase/firebase.config";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, deleteDoc, getDocs, doc } from "firebase/firestore";
 import "../assets/styles/ListReport.css";
 
 const ListReport = () => {
-  const tables = [];
   const [listTable, setListTable] = useState([]);
 
   const listTables = async () => {
+    const tables = [];
     const querySnapshot = await getDocs(collection(db, "tables"));
     querySnapshot.forEach((doc) => {
-      console.log("id", doc.id);
       const date = doc.data().fecha;
       const newDate = new Date(date);
       const converteDate = newDate.toLocaleString();
@@ -23,8 +22,9 @@ const ListReport = () => {
       return setListTable(tables);
     });
   };
-  const deleteReport = async () => {
-    console.log("eliminar reporte");
+  const deleteReport = async (id) => {
+    const colRef = collection(db, "tables");
+    await deleteDoc(doc(colRef, id));
   };
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const ListReport = () => {
       <div className="container-Report">
         {listTable.map((el) => {
           return (
-            <div className="report">
+            <div className="report" key={el.id}>
               <Icon
                 icon="icon-park-outline:table-report"
                 width={50}
@@ -50,7 +50,9 @@ const ListReport = () => {
                 <Icon icon="akar-icons:edit" />
                 <Icon
                   icon="ant-design:delete-outlined"
-                  onClick={deleteReport}
+                  onClick={() => {
+                    deleteReport(el.id);
+                  }}
                 />
               </div>
             </div>
