@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-export const postData = () => {
+export const postData = async () => {
   const data = JSON.stringify({
     "empresa": "63",
     "password": "s3cr3t0"
@@ -18,9 +18,9 @@ export const postData = () => {
     data: data
   };
 
-  axios(config)
-    .then(response => console.log(JSON.stringify(response.data)))
-    .catch(error => console.error(error));
+  const response = await axios(config);
+  const responseData = await response.data;
+  return responseData
 }
 
 export const getData = async () => {
