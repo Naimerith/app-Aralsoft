@@ -3,6 +3,15 @@
   margin-top: -48%;
   margin-left: 18%;
   display: block;
+  height: 600px;
+}
+
+/******Notificación del Reporte Generado*******/
+.successMsg {
+  margin-top: 10%;
+  width: 100%;
+  background: #d9ecd8;
+  color: #0e3a73;
 }
 
 .container-Report {

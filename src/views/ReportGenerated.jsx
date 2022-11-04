@@ -42,7 +42,6 @@ const ReportGenerated = () => {
 
   return (
     <div className="container-ReportGenerated">
-      <p className="successMsg">Su reporte fue generado satisfactoriamente!</p>
       <Table table={addValuesToTheTable} id={"table-to-xls"} />
       <div className="containerBtns">
         <ButtonApp

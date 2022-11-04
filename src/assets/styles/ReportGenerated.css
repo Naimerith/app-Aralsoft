@@ -3,19 +3,12 @@
   margin-top: -48%;
   margin-left: 18%;
   display: block;
-}
-
-/******Notificación del Reporte Generado*******/
-.successMsg {
-  /* margin-top: -40px; */
-  margin-top: 10%;
-  width: 100%;
-  background: #d9ecd8;
-  color: #0e3a73;
+  height: 600px;
 }
 
 /******Contenedor de botones para guardar y exportar la tabla generada*******/
 .containerBtns {
+  margin-top: 5%;
   display: flex;
   justify-content: space-evenly;
 }

@@ -1,31 +1,23 @@
 .containerTable {
-  border-bottom: none;
-  border-left: none;
+  margin-top: 10%;
   width: 100%;
-  margin: 5px;
 }
 
 .table-wrapper {
   width: 100%;
-  height: 400px;
+  height: 500px;
   padding: 10px;
   overflow: auto;
   font-size: 15px;
 }
 
-.table-wrapper table {
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
 .table-wrapper table thead th,
 .table-wrapper table tbody td {
-  border-bottom: 0.1px solid #0e3a73;
-  border-left: 0.1px solid #0e3a73;
-
-  background-color: #fff;
+  border: 0.1px solid #0e3a73;
+  empty-cells: show;
   padding: 3px;
 }
+
 .table-wrapper table thead {
   font-size: 10px;
   padding: 0 5px;
