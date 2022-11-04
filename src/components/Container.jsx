@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { addCollectionResult } from "../Firebase/firebase.config";
 import ButtonApp from "./ButtonApp";
 import "../assets/styles/Container.css";
+import { alertSuccess } from "../Functions/sweetAlert";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
@@ -62,6 +63,7 @@ const Container = () => {
       }
     });
     addCollectionResult(ArrayOfSelectedButtons, resultObjArray);
+    alertSuccess("Reporte Generado satisfactoriamente");
     navigate("/report-generated");
   };
 

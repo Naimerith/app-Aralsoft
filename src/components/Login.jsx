@@ -1,38 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonApp from "../components/ButtonApp";
+import CreateReport from "../views/CreateReport";
 import { postData } from "../services/api_aralsoft";
-import { useNavigate } from "react-router-dom";
-
+import { alertSuccess, alertError } from "../Functions/sweetAlert";
 import "../assets/styles/Login.css";
 
 const Login = () => {
-  const navigate = useNavigate();
-
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
-  const [success, setSuccess] = useState(false); //Mensaje de exito cuando inicie sesion
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     e.preventDefault();
-    //console.log({ user, pwd });
   };
 
   const handlebtn = () => {
-    console.log("enviado");
     if (user === "63" && pwd === "s3cr3t0") {
       postData();
       setSuccess(true);
-      navigate("/new-report");
+      alertSuccess("Haz iniciado sesión");
     } else {
-      console.log("hubo un error");
       setSuccess(false);
+      alertError("Los datos ingresados son incorrectos");
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <div>
       {success ? (
-        <h5>Haz iniciado sesión correctamente</h5>
+        <CreateReport></CreateReport>
       ) : (
         <div className="containerLogin">
           <h3>Login</h3>

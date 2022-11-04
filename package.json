@@ -25,6 +25,8 @@
     "react-sortablejs": "^6.1.4",
     "react-uuid": "^1.0.3",
     "sortablejs": "^1.15.0",
+    "sweetalert2": "^11.6.5",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
