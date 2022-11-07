@@ -1,11 +1,9 @@
 .containerTable {
-  margin-top: 10%;
   width: 100%;
 }
 
 .table-wrapper {
-  width: 100%;
-  height: 500px;
+  width: 95%;
   padding: 10px;
   overflow: auto;
   font-size: 15px;

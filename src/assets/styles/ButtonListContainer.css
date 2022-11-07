@@ -1,8 +1,7 @@
 /*********Contenedor Superior *************/
 .container {
   width: 80%;
-  align-content: flex-end;
-  margin-top: 10%;
+  margin-top: 10px;
 }
 
 /*********Contenedor de Botones*************/
@@ -11,7 +10,7 @@
   height: 150px;
   width: 98%;
   overflow-y: auto;
-  margin: 10px;
+  margin: 10px 40px;
   padding: 2px;
 }
 

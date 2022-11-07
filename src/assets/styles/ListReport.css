@@ -1,14 +1,13 @@
 /******Contenedor de la vista*******/
 .container-ListReport {
-  margin-top: -48%;
-  margin-left: 18%;
-  display: block;
-  height: 600px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
 }
 
 /******Notificación del Reporte Generado*******/
 .successMsg {
-  margin-top: 10%;
+  margin-top: 5px;
   width: 100%;
   background: #d9ecd8;
   color: #0e3a73;
@@ -18,7 +17,7 @@
   display: flex;
   flex-wrap: wrap;
   overflow: auto;
-  height: 400px;
+  margin-left: 5%;
 }
 
 .container-Report::-webkit-scrollbar {
