@@ -5,3 +5,17 @@ Sidenav {
 a {
   color: #fff !important;
 }
+
+.sidenav---sidenav-subnav---1EN61 {
+  background-color: #038c33;
+  color: #fff !important;
+}
+
+.sidenav---sidenav-subnav---1EN61 :hover {
+  color: rgb(24, 21, 21) !important;
+  font-weight: 600;
+}
+
+.iconify iconify--ant-design {
+  cursor: pointer;
+}

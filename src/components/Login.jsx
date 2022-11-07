@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ButtonApp from "../components/ButtonApp";
 import CreateReport from "../views/CreateReport";
-import { postData } from "../services/api_aralsoft";
 import { alertSuccess, alertError } from "../Functions/sweetAlert";
 import "../assets/styles/Login.css";
 
@@ -15,8 +14,7 @@ const Login = () => {
   };
 
   const handlebtn = () => {
-    if (user === "63" && pwd === "s3cr3t0") {
-      postData();
+    if (user && pwd) {
       setSuccess(true);
       alertSuccess("Haz iniciado sesión");
     } else {

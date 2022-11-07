@@ -1,11 +1,5 @@
 import React from "react";
-import SideNav, {
-  Toggle,
-  Nav,
-  NavItem,
-  NavIcon,
-  NavText,
-} from "@trendmicro/react-sidenav";
+import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { Icon } from "@iconify/react";
 
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
@@ -19,10 +13,18 @@ const Sidenav = () => {
         <SideNav.Nav defaultSelected="home">
           <NavItem eventKey="home">
             <NavIcon>
-              <Icon icon="ant-design:home-outlined" color="white" height="22" />
+              <a className="home" href="/">
+                <Icon
+                  icon="ant-design:home-outlined"
+                  color="white"
+                  height="22"
+                />
+              </a>
             </NavIcon>
             <NavText>
-              <a href="/">Inicio</a>
+              <a className="home" href="/">
+                Inicio
+              </a>
             </NavText>
           </NavItem>
           <NavItem eventKey="charts">
