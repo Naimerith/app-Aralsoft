@@ -12,3 +12,21 @@
   display: flex;
   justify-content: space-evenly;
 }
+
+@media screen and (max-width: 767px) {
+  .container-ReportGenerated {
+    width: 80%;
+    margin-left: 20%;
+    margin-top: 3%;
+    height: 800px;
+  }
+  .containerBtns {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .generateReport {
+    margin-top: 5%;
+  }
+}

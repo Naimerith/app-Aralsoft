@@ -35,11 +35,11 @@ const Login = () => {
           <form className="formLogin" onSubmit={handleChange}>
             <input
               type="text"
-              id="empresa"
+              id="user"
               autoComplete="off"
               required
-              placeholder="empresa"
-              name="empresa"
+              placeholder="usuario"
+              name="user"
               value={user}
               onChange={(e) => setUser(e.target.value)}
             />

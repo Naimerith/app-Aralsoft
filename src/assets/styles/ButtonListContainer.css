@@ -54,3 +54,20 @@
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 767px) {
+  .itemSelect {
+    display: flex;
+    width: 80%;
+    margin-left: 20%;
+  }
+  .btnSelect {
+    width: 90px;
+    font-size: 10px;
+  }
+  .bottomContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+  }
+}

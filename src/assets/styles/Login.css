@@ -27,3 +27,13 @@
 .notification {
   font-size: 12px;
 }
+
+@media screen and (max-width: 767px) {
+  .containerLogin {
+    margin-top: 20%;
+    width: 60%;
+  }
+  .formLogin input {
+    width: 80%;
+  }
+}
