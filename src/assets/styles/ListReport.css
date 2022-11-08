@@ -84,3 +84,13 @@
     margin: 0;
   }
 }
+
+@media screen and (max-width: 1023px) {
+  .container-ListReport {
+    margin-left: 5%;
+  }
+  .report {
+    padding: 1px;
+    width: 115px;
+  }
+}

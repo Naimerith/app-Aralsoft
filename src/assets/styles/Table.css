@@ -44,6 +44,3 @@
 .table-wrapper::-webkit-scrollbar-track {
   border-radius: 10px;
 }
-
-@media screen and (max-width: 767px) {
-}

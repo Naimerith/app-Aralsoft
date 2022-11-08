@@ -30,3 +30,10 @@
     margin-top: 5%;
   }
 }
+
+@media screen and (max-width: 1023px) {
+  .container-ReportGenerated {
+    margin-top: 3%;
+    height: 750px;
+  }
+}
