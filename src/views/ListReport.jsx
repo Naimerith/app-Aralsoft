@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import { getCollectionTables, deleteReport } from "../Firebase/firebase.config";
+import {
+  getCollectionTables,
+  deleteReportFb,
+} from "../Firebase/firebase.config";
 import "../assets/styles/ListReport.css";
 
 const ListReport = () => {
   const [listTable, setListTable] = useState([]);
+
+  const deleteReport = async (id) => {
+    await deleteReportFb(id);
+    getCollectionTables(setListTable);
+  };
 
   useEffect(() => {
     getCollectionTables(setListTable);

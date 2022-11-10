@@ -55,7 +55,7 @@ export const getCollectionTables = async (state) => {
   });
 };
 
-export const deleteReport = async (id) => {
+export const deleteReportFb = async (id) => {
   await deleteDoc(doc(collectionRef, id));
 }
 

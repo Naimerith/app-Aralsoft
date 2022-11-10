@@ -32,6 +32,10 @@ const ReportGenerated = () => {
     }
   );
 
+  for (const fila of addValuesToTheTable.data) {
+    fila.length = addValuesToTheTable.columnas.length;
+  }
+
   const saveReport = async () => {
     console.log("diste click a guardar");
   };

@@ -43,7 +43,7 @@ const Sidenav = () => {
               </NavText>
             </NavItem>
           </NavItem>
-          <NavItem eventKey="charts">
+          <NavItem>
             <NavIcon>
               <Icon
                 icon="carbon:license-maintenance"
@@ -53,7 +53,7 @@ const Sidenav = () => {
             </NavIcon>
             <NavText>Mantenimiento</NavText>
           </NavItem>
-          <NavItem eventKey="charts">
+          <NavItem>
             <NavIcon>
               <Icon
                 icon="fluent-mdl2:server-processes"
