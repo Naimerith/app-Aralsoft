@@ -1,7 +1,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, limit } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, limit, getDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -57,5 +57,10 @@ export const getCollectionTables = async (state) => {
 
 export const deleteReportFb = async (id) => {
   await deleteDoc(doc(collectionRef, id));
+}
+
+export const getReport = async (id) => {
+  const result = await getDoc(doc(collectionRef, id));
+  return result.data();
 }
 

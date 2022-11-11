@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import {
   getCollectionTables,
   deleteReportFb,
+  getReport,
 } from "../Firebase/firebase.config";
 import "../assets/styles/ListReport.css";
 
@@ -12,6 +13,10 @@ const ListReport = () => {
   const deleteReport = async (id) => {
     await deleteReportFb(id);
     getCollectionTables(setListTable);
+  };
+
+  const openReport = async (id) => {
+    await getReport(id);
   };
 
   useEffect(() => {
@@ -37,6 +42,9 @@ const ListReport = () => {
                   icon="ant-design:folder-open-outlined"
                   color="#0e3a73"
                   cursor="pointer"
+                  onClick={() => {
+                    openReport(el.id);
+                  }}
                 />
                 <Icon icon="akar-icons:edit" color="#0e3a73" cursor="pointer" />
                 <Icon
