@@ -6,35 +6,13 @@ import Table from "../components/Table.jsx";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import ButtonApp from "../components/ButtonApp";
 import "../assets/styles/ReportGenerated.css";
+import { getCollectionDataForTheTable } from "../Functions/functions";
 
 const ReportGenerated = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
 
-  const addValuesToTheTable = data.reduce(
-    (acc, data) => {
-      if (!acc.filas.includes(data.filas)) {
-        acc.filas.push(data.filas);
-      }
-      if (!acc.columnas.includes(data.columnas)) {
-        acc.columnas.push(data.columnas);
-      }
-      const idxFila = acc.filas.indexOf(data.filas);
-      const idxColumna = acc.columnas.indexOf(data.columnas);
-      acc.data[idxFila] = acc.data[idxFila] || [data.filas];
-      acc.data[idxFila][idxColumna] = data.valores;
-      return acc;
-    },
-    {
-      filas: [null],
-      columnas: [null],
-      data: [],
-    }
-  );
-
-  /* for (const fila of addValuesToTheTable.data) {
-    fila.length = addValuesToTheTable.columnas.length;
-  }*/
+  const reportGenerated = getCollectionDataForTheTable(data);
 
   const saveReport = async () => {
     console.log("diste click a guardar");
@@ -46,7 +24,7 @@ const ReportGenerated = () => {
 
   return (
     <div className="container-ReportGenerated">
-      <Table table={addValuesToTheTable} id={"table-to-xls"} />
+      <Table table={reportGenerated} id={"table-to-xls"} />
       <div className="containerBtns">
         <ButtonApp
           icon={

@@ -36,4 +36,29 @@ export const getArrObject = (arrRow, arrColumn, arrValue) => {
   return arr;
 };
 
+/*Pintamos los datos guardados en la colección dentro de la tabla  */
+export const getCollectionDataForTheTable = (state) => {
+  const addValuesToTheTable = state.reduce(
+    (acc, data) => {
+      if (!acc.filas.includes(data.filas)) {
+        acc.filas.push(data.filas);
+      }
+      if (!acc.columnas.includes(data.columnas)) {
+        acc.columnas.push(data.columnas);
+      }
+      const idxFila = acc.filas.indexOf(data.filas);
+      const idxColumna = acc.columnas.indexOf(data.columnas);
+      acc.data[idxFila] = acc.data[idxFila] || [data.filas];
+      acc.data[idxFila][idxColumna] = data.valores;
+      return acc;
+    },
+    {
+      filas: [null],
+      columnas: [null],
+      data: [],
+    }
+  );
+  return addValuesToTheTable;
+}
+
 

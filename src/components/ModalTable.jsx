@@ -1,19 +1,26 @@
 import React from "react";
 
-const ModalTable = ({ props }) => {
-  console.log(onclick);
+const ModalTable = ({ table }) => {
   return (
-    <div>
-      <h2>Hello</h2>
-      <button onClick={props.onclick}>close</button>
-      <div>I am a modal</div>
-      <form>
-        <input />
-        <button>tab navigation</button>
-        <button>stays</button>
-        <button>inside</button>
-        <button>the modal</button>
-      </form>
+    <div className="table-wrapper">
+      <table className="containerTable">
+        <thead>
+          <tr>
+            {table.columnas.map((columns, i) =>
+              columns === "" ? <td key={i}></td> : <td key={i}>{columns}</td>
+            )}
+          </tr>
+        </thead>
+        <tbody>
+          {table.data.map((rows, i) => (
+            <tr key={i}>
+              {[...rows].map((values, i) =>
+                values === "" ? <td key={i}></td> : <td key={i}>{values}</td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

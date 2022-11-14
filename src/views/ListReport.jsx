@@ -5,8 +5,11 @@ import {
   deleteReportFb,
   getReport,
 } from "../Firebase/firebase.config";
-import "../assets/styles/ListReport.css";
+import { getCollectionDataForTheTable } from "../Functions/functions";
 import Modal from "react-modal";
+import Table from "../components/Table";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import "../assets/styles/ListReport.css";
 
 const customStyles = {
   content: {
@@ -26,6 +29,8 @@ const ListReport = () => {
 
   const [modalIsOpen, setIsOpen] = useState(false);
 
+  const [data, setData] = useState([]);
+
   const deleteReport = async (id) => {
     await deleteReportFb(id);
     getCollectionTables(setListTable);
@@ -36,9 +41,8 @@ const ListReport = () => {
   };
 
   const openModal = async (id) => {
-    console.log("clikckckc");
-    const hola = await openReport(id);
-    console.log("525452545255", hola);
+    const reportselected = await openReport(id);
+    setData(reportselected.consultApi);
     setIsOpen(true);
   };
 
@@ -50,6 +54,8 @@ const ListReport = () => {
     console.log("diste click a cerrar");
     setIsOpen(false);
   };
+
+  const seeReport = getCollectionDataForTheTable(data);
 
   useEffect(() => {
     getCollectionTables(setListTable);
@@ -99,10 +105,17 @@ const ListReport = () => {
           contentLabel="Example Modal"
           ariaHideApp={false} /*Esto no se recomienda hacer, revisar doc*/
         >
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+          <h5 ref={(_subtitle) => (subtitle = _subtitle)}>Reporte de Ventas</h5>
           <button onClick={closeModal}>close</button>
-          <div>Aqui va la tabla</div>
-          <button>Descargar Reporte</button>
+          <Table table={seeReport} id={"download-saved-report"}></Table>
+          <ReactHTMLTableToExcel
+            id="download-saved-report"
+            className="generateReport"
+            table="download-saved-report"
+            filename="table"
+            sheet="report"
+            buttonText="⇯ Exportar"
+          />
         </Modal>
       </div>
     </div>
