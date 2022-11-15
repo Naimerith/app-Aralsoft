@@ -17,7 +17,7 @@
   display: flex;
   flex-wrap: wrap;
   overflow: auto;
-  margin-left: 5%;
+  margin-left: 6%;
 }
 
 .container-Report::-webkit-scrollbar {
@@ -53,10 +53,11 @@
   background: #ffffff;
   border: 1px solid #0e3a73;
   border-radius: 5px;
+  width: 150px;
 }
 
 .dateTable {
-  font-size: 10px;
+  font-size: 9px;
   margin: 0;
 }
 

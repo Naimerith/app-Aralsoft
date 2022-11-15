@@ -9,8 +9,12 @@ import { getCollectionDataForTheTable } from "../Functions/functions";
 import Modal from "react-modal";
 import Table from "../components/Table";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 import "../assets/styles/ListReport.css";
 
+const MySwal = withReactContent(Swal);
 const customStyles = {
   content: {
     top: "50%",
@@ -24,16 +28,28 @@ const customStyles = {
 
 const ListReport = () => {
   let subtitle;
-
   const [listTable, setListTable] = useState([]);
-
   const [modalIsOpen, setIsOpen] = useState(false);
-
   const [data, setData] = useState([]);
 
   const deleteReport = async (id) => {
-    await deleteReportFb(id);
-    getCollectionTables(setListTable);
+    MySwal.fire({
+      title: "Está seguro?",
+      text: "No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#038c33",
+      cancelButtonColor: "#d33",
+      iconColor: "#d33",
+      confirmButtonText: "Si, eliminar!",
+      cancelButtonText: "No, cancelar!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteReportFb(id);
+        getCollectionTables(setListTable);
+        MySwal.fire("Eliminado!", "Su reporte ha sido eliminado.", "success");
+      }
+    });
   };
 
   const openReport = async (id) => {
