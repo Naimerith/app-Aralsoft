@@ -23,6 +23,8 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    height: "60%",
+    width: "70%",
   },
 };
 
@@ -31,6 +33,7 @@ const ListReport = () => {
   const [listTable, setListTable] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [report, setReport] = useState([]);
 
   const deleteReport = async (id) => {
     MySwal.fire({
@@ -58,12 +61,13 @@ const ListReport = () => {
 
   const openModal = async (id) => {
     const reportselected = await openReport(id);
+    setReport(reportselected.report);
     setData(reportselected.consultApi);
     setIsOpen(true);
   };
 
   const afterOpenModal = () => {
-    subtitle.style.color = "#f00";
+    subtitle.style.color = "#0e3a73";
   };
 
   const closeModal = () => {
@@ -121,17 +125,36 @@ const ListReport = () => {
           contentLabel="Example Modal"
           ariaHideApp={false} /*Esto no se recomienda hacer, revisar doc*/
         >
-          <h5 ref={(_subtitle) => (subtitle = _subtitle)}>Reporte de Ventas</h5>
-          <button onClick={closeModal}>close</button>
-          <Table table={seeReport} id={"download-saved-report"}></Table>
-          <ReactHTMLTableToExcel
-            id="download-saved-report"
-            className="generateReport"
-            table="download-saved-report"
-            filename="table"
-            sheet="report"
-            buttonText="⇯ Exportar"
-          />
+          <div className="containerModal">
+            <h5
+              className="titletable"
+              ref={(_subtitle) => (subtitle = _subtitle)}
+            >
+              Reporte de Ventas
+            </h5>
+            <div className="relationshipReport">
+              Relación:
+              {report.map((el, i) => (
+                <p className="textRelationshipReport" key={i}>
+                  {el}
+                </p>
+              ))}
+            </div>
+            <Icon
+              icon="mdi:close-circle-outline"
+              className="close"
+              onClick={closeModal}
+            />
+            <Table table={seeReport} id={"download-saved-report"}></Table>
+            <ReactHTMLTableToExcel
+              id="download-saved-report"
+              className="generateReport"
+              table="download-saved-report"
+              filename="table"
+              sheet="report"
+              buttonText="⇯ Exportar"
+            />
+          </div>
         </Modal>
       </div>
     </div>
