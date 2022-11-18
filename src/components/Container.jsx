@@ -67,6 +67,10 @@ const Container = () => {
     navigate("/report-generated");
   };
 
+  const btnToSelectOptions = () => {
+    console.log("aqui muestra el select de opciones");
+  };
+
   return (
     <div className="bottomContainer">
       <section className="itemsSelected">
@@ -85,6 +89,7 @@ const Container = () => {
                       className="btnSelect"
                       key={index}
                       ref={(button) => addToArrayOfSelectedButtons(button)}
+                      onClick={btnToSelectOptions}
                     >
                       {item}
                     </button>
@@ -108,6 +113,7 @@ const Container = () => {
                         className="btnSelect"
                         key={index}
                         ref={(button) => addToArrayOfSelectedButtons(button)}
+                        onClick={btnToSelectOptions}
                       >
                         {item}
                       </button>

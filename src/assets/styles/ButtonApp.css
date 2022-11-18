@@ -13,3 +13,7 @@
 .generateReport a {
   color: #fff;
 }
+
+.generateReport:hover {
+  background-color: #038c33;
+}
