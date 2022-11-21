@@ -5,6 +5,7 @@ import {
   consultValuesInTheApi,
   getArrObject,
   getTheValueOfSelectedButton,
+  getValuesForCheckbox,
 } from "../Functions/functions";
 import { useNavigate } from "react-router-dom";
 import { addCollectionResult } from "../Firebase/firebase.config";
@@ -12,6 +13,7 @@ import { alertSuccess } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
 import Modal from "react-modal";
 import "../assets/styles/Container.css";
+import Checkbox from "./Checkbox";
 
 const customStyles = {
   content: {
@@ -22,14 +24,13 @@ const customStyles = {
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
     height: "30%",
-    width: "20%",
-    padding: "0",
+    width: "auto",
+    padding: "20px",
   },
 };
 const Container = () => {
   let subtitle;
   let ArrayOfSelectedButtons = [];
-  let arrayOfValues = [];
   const arrayRow = [];
   const arrayColumn = [];
   const arrayValue = [];
@@ -40,7 +41,6 @@ const Container = () => {
   const [values, setValues] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [dataCheck, setDataCheck] = useState([]);
-  console.log(dataCheck);
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -96,8 +96,8 @@ const Container = () => {
   };
 
   const closeModal = () => {
-    console.log("diste click a cerrar");
     setIsOpen(false);
+    setDataCheck([]);
   };
 
   const btnToSelectOptions = async (state) => {
@@ -105,20 +105,12 @@ const Container = () => {
       const fila = state.toString();
       openModal();
       const resultApiRow = await consultValuesInTheApi(fila);
-      resultApiRow.map((el) => {
-        arrayOfValues.push(el[0][1]);
-        const arrayChekbook = new Set(arrayOfValues);
-        return setDataCheck(arrayChekbook);
-      });
+      getValuesForCheckbox(resultApiRow, setDataCheck);
     } else {
       const columna = state.toString();
       openModal();
       const resultApiColumn = await consultValuesInTheApi(columna);
-      resultApiColumn.map((el) => {
-        arrayOfValues.push(el[0][1]);
-        const arrayChekbook = new Set(arrayOfValues);
-        return setDataCheck(arrayChekbook);
-      });
+      getValuesForCheckbox(resultApiColumn, setDataCheck);
     }
   };
   return (
@@ -207,13 +199,14 @@ const Container = () => {
               className="titletable"
               ref={(_subtitle) => (subtitle = _subtitle)}
             >
-              Filtrar elementos
+              Hola
             </h5>
             <Icon
               icon="mdi:close-circle-outline"
               className="close"
               onClick={closeModal}
             />
+            <Checkbox state={dataCheck}></Checkbox>
           </div>
         </Modal>
       </section>

@@ -12,6 +12,8 @@ export const consultValuesInTheApi = async (position) => {
   return consultApiSelectionBtn;
 }
 
+
+
 /*Extraemos solo el value de la api*/
 export const getTheValueOfSelectedButton = (getArr, newArr) => {
   getArr.map((el) => {
@@ -61,4 +63,14 @@ export const getCollectionDataForTheTable = (state) => {
   return addValuesToTheTable;
 }
 
+/********************Funciones nuevas*********************************/
+export const getValuesForCheckbox = (values, state) => {
+  let arrayOfValues = [];
+  values.map((el) => {
+    arrayOfValues.push(el[0][1]);
+    const arrayChekbook = [...new Set(arrayOfValues)];
+    arrayChekbook.sort()
+    return state(arrayChekbook);
+  });
+}
 
