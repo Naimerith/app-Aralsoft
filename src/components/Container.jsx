@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
+import { Icon } from "@iconify/react";
 import {
   consultValuesInTheApi,
   getArrObject,
@@ -7,12 +8,28 @@ import {
 } from "../Functions/functions";
 import { useNavigate } from "react-router-dom";
 import { addCollectionResult } from "../Firebase/firebase.config";
-import ButtonApp from "./ButtonApp";
-import "../assets/styles/Container.css";
 import { alertSuccess } from "../Functions/sweetAlert";
+import ButtonApp from "./ButtonApp";
+import Modal from "react-modal";
+import "../assets/styles/Container.css";
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    height: "30%",
+    width: "20%",
+    padding: "0",
+  },
+};
 const Container = () => {
+  let subtitle;
   let ArrayOfSelectedButtons = [];
+  let arrayOfValues = [];
   const arrayRow = [];
   const arrayColumn = [];
   const arrayValue = [];
@@ -21,6 +38,9 @@ const Container = () => {
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [dataCheck, setDataCheck] = useState([]);
+  console.log(dataCheck);
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -67,10 +87,40 @@ const Container = () => {
     navigate("/report-generated");
   };
 
-  const btnToSelectOptions = () => {
-    console.log("aqui muestra el select de opciones");
+  const openModal = async () => {
+    setIsOpen(true);
   };
 
+  const afterOpenModal = () => {
+    subtitle.style.color = "#0e3a73";
+  };
+
+  const closeModal = () => {
+    console.log("diste click a cerrar");
+    setIsOpen(false);
+  };
+
+  const btnToSelectOptions = async (state) => {
+    if (state === row) {
+      const fila = state.toString();
+      openModal();
+      const resultApiRow = await consultValuesInTheApi(fila);
+      resultApiRow.map((el) => {
+        arrayOfValues.push(el[0][1]);
+        const arrayChekbook = new Set(arrayOfValues);
+        return setDataCheck(arrayChekbook);
+      });
+    } else {
+      const columna = state.toString();
+      openModal();
+      const resultApiColumn = await consultValuesInTheApi(columna);
+      resultApiColumn.map((el) => {
+        arrayOfValues.push(el[0][1]);
+        const arrayChekbook = new Set(arrayOfValues);
+        return setDataCheck(arrayChekbook);
+      });
+    }
+  };
   return (
     <div className="bottomContainer">
       <section className="itemsSelected">
@@ -89,7 +139,7 @@ const Container = () => {
                       className="btnSelect"
                       key={index}
                       ref={(button) => addToArrayOfSelectedButtons(button)}
-                      onClick={btnToSelectOptions}
+                      onClick={() => btnToSelectOptions(row)}
                     >
                       {item}
                     </button>
@@ -113,7 +163,7 @@ const Container = () => {
                         className="btnSelect"
                         key={index}
                         ref={(button) => addToArrayOfSelectedButtons(button)}
-                        onClick={btnToSelectOptions}
+                        onClick={() => btnToSelectOptions(column)}
                       >
                         {item}
                       </button>
@@ -144,6 +194,28 @@ const Container = () => {
             </div>
           </div>
         </article>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          onAfterOpen={afterOpenModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+          ariaHideApp={false} /*Esto no se recomienda hacer, revisar doc*/
+        >
+          <div className="containerModal">
+            <h5
+              className="titletable"
+              ref={(_subtitle) => (subtitle = _subtitle)}
+            >
+              Filtrar elementos
+            </h5>
+            <Icon
+              icon="mdi:close-circle-outline"
+              className="close"
+              onClick={closeModal}
+            />
+          </div>
+        </Modal>
       </section>
       <section>
         <ButtonApp name="Generar Reporte" onClick={generateReport} />
