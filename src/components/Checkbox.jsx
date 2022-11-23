@@ -2,6 +2,22 @@ import React, { useState } from "react";
 
 const Checkbox = ({ state }) => {
   const [select, setSelect] = useState([]);
+  const [search, setSearch] = useState([]);
+
+  const handleChangeSearch = (e) => {
+    setSearch(e.target.value);
+    filterSearch(e.target.value);
+  };
+
+  const filterSearch = (searchTerm) => {
+    let resSearch = state.filter((el) => {
+      if (el.toString().includes(searchTerm)) {
+        return el;
+      }
+    });
+    console.log("aquiii", resSearch);
+  };
+
   const handleSelect = (e) => {
     const valueCheckbox = e.target.value;
     if (select.includes(valueCheckbox)) {
@@ -10,28 +26,29 @@ const Checkbox = ({ state }) => {
       setSelect([...select, valueCheckbox]);
     }
   };
-  console.log(select);
-  const handleSelectAll = (e) => {
-    console.log("seleccionar todo");
-  };
 
   return (
     <div>
-      <input name="checkbox" type="checkbox" onChange={handleSelectAll} />
-      SELECCIONAR TODO
-      {state.map((el, i) => {
-        return (
-          <div key={i}>
-            <input
-              name="checkbox"
-              type="checkbox"
-              value={el}
-              onChange={handleSelect}
-            />
-            {el}
-          </div>
-        );
-      })}
+      <form action="">
+        <input type="search" value={search} onChange={handleChangeSearch} />
+        <br />
+
+        <label htmlFor="">Seleccionar Todo</label>
+        <input name="selectAll" type="checkbox" />
+        {state.map((el, i) => {
+          return (
+            <div key={i}>
+              <input
+                name={el}
+                type="checkbox"
+                value={el}
+                onChange={handleSelect}
+              />
+              <label htmlFor="">{el}</label>
+            </div>
+          );
+        })}
+      </form>
     </div>
   );
 };
