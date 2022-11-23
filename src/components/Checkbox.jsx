@@ -1,36 +1,23 @@
 import React, { useState } from "react";
 
 const Checkbox = ({ state }) => {
-  const arrayCheckbox = [];
-  const [isChecked, setIsChecked] = useState(false);
-
   const [select, setSelect] = useState([]);
   const handleSelect = (e) => {
     const valueCheckbox = e.target.value;
-    //console.log(valueCheckbox);
-    if (e.target.checked) {
-      arrayCheckbox.push(valueCheckbox);
-      console.log("agrega", arrayCheckbox);
+    if (select.includes(valueCheckbox)) {
+      setSelect(select.filter((sel) => sel !== valueCheckbox));
     } else {
-      arrayCheckbox.pop(valueCheckbox);
-      console.log("elimina", arrayCheckbox);
+      setSelect([...select, valueCheckbox]);
     }
   };
+  console.log(select);
   const handleSelectAll = (e) => {
-    setIsChecked(!isChecked);
-    /*const valueCheckbox = e.target.value;
-    arrayCheckbox.push(valueCheckbox);
-    setSelect(arrayCheckbox);*/
+    console.log("seleccionar todo");
   };
 
   return (
     <div>
-      <input
-        name="checkbox"
-        type="checkbox"
-        checked={isChecked}
-        onChange={handleSelectAll}
-      />
+      <input name="checkbox" type="checkbox" onChange={handleSelectAll} />
       SELECCIONAR TODO
       {state.map((el, i) => {
         return (
