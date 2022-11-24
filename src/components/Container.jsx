@@ -3,12 +3,9 @@ import { ReactSortable } from "react-sortablejs";
 import { Icon } from "@iconify/react";
 import {
   consultValuesInTheApi,
-  getArrObject,
-  getTheValueOfSelectedButton,
   getValuesForCheckbox,
 } from "../Functions/functions";
 import { useNavigate } from "react-router-dom";
-import { addCollectionResult } from "../Firebase/firebase.config";
 import { alertSuccess } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
 import Modal from "react-modal";
@@ -31,60 +28,20 @@ const customStyles = {
 const Container = () => {
   let subtitle;
   let ArrayOfSelectedButtons = [];
-  const arrayRow = [];
-  const arrayColumn = [];
-  const arrayValue = [];
   const navigate = useNavigate();
-  const [disabledBtn, setDisableBtn] = useState(false);
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [dataCheck, setDataCheck] = useState([]);
+  const [select, setSelect] = useState([]);
+  const [search, setSearch] = useState("");
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
       ArrayOfSelectedButtons.push(button.textContent);
     }
     return ArrayOfSelectedButtons;
-  };
-
-  const consultValues = async () => {
-    const consultApiSelectionRow = await consultValuesInTheApi(
-      ArrayOfSelectedButtons[0]
-    );
-    getTheValueOfSelectedButton(consultApiSelectionRow, arrayRow);
-    const consultApiSelectionColumn = await consultValuesInTheApi(
-      ArrayOfSelectedButtons[1]
-    );
-    getTheValueOfSelectedButton(consultApiSelectionColumn, arrayColumn);
-    const consultApiSelectionValues = await consultValuesInTheApi(
-      ArrayOfSelectedButtons[2]
-    );
-    getTheValueOfSelectedButton(consultApiSelectionValues, arrayValue);
-    return getArrObject(arrayRow, arrayColumn, arrayValue);
-  };
-
-  const generateReport = async () => {
-    if (disabledBtn) {
-      return;
-    }
-    setDisableBtn(true);
-    const objArray = await consultValues();
-    const resultObjArray = [];
-    objArray.forEach((el) => {
-      const objectIndex = resultObjArray.findIndex(
-        (obj) => obj.filas === el.filas && obj.columnas === el.columnas
-      );
-      if (objectIndex === -1) {
-        resultObjArray.push(el);
-      } else {
-        resultObjArray[objectIndex].valores += el.valores;
-      }
-    });
-    addCollectionResult(ArrayOfSelectedButtons, resultObjArray);
-    alertSuccess("Reporte Generado satisfactoriamente");
-    navigate("/report-generated");
   };
 
   const openModal = async () => {
@@ -113,6 +70,34 @@ const Container = () => {
       getValuesForCheckbox(resultApiColumn, setDataCheck);
     }
   };
+
+  const handleSelect = (e) => {
+    const valueCheckbox = e.target.value;
+    if (select.includes(valueCheckbox)) {
+      setSelect(select.filter((sel) => sel !== valueCheckbox));
+    } else {
+      setSelect([...select, valueCheckbox]);
+    }
+  };
+
+  const handleChangeSearch = (e) => {
+    setSearch(e.target.value);
+    const resSearch = dataCheck.filter((el) => {
+      const convertDataToString = el?.toString() || "";
+      if (convertDataToString.includes(e.target.value)) {
+        return el;
+      } else {
+        console.log("no hay resultados");
+      }
+    });
+    setDataCheck(resSearch);
+  };
+
+  const generateReport = async () => {
+    alertSuccess("Reporte Generado satisfactoriamente");
+    navigate("/report-generated");
+  };
+
   return (
     <div className="bottomContainer">
       <section className="itemsSelected">
@@ -195,10 +180,7 @@ const Container = () => {
           ariaHideApp={false} /*Esto no se recomienda hacer, revisar doc*/
         >
           <div className="containerModal">
-            <h5
-              className="titletable"
-              ref={(_subtitle) => (subtitle = _subtitle)}
-            >
+            <h5 className="title" ref={(_subtitle) => (subtitle = _subtitle)}>
               Hola
             </h5>
             <Icon
@@ -206,7 +188,39 @@ const Container = () => {
               className="close"
               onClick={closeModal}
             />
-            <Checkbox state={dataCheck}></Checkbox>
+            {/* <Checkbox state={dataCheck}></Checkbox> */}
+            <div>
+              <form action="">
+                <input
+                  type="search"
+                  value={search}
+                  //value={search == null ? "" : search}
+                  onChange={handleChangeSearch}
+                />
+                <br />
+                <label htmlFor="">Seleccionar Todo</label>
+                <input name="selectAll" type="checkbox" />
+                <div className="result">
+                  {dataCheck.length === 0 ? (
+                    <p>Cargando...</p>
+                  ) : (
+                    dataCheck.map((el, i) => {
+                      return (
+                        <div key={i}>
+                          <input
+                            name={el}
+                            type="checkbox"
+                            value={el}
+                            onChange={handleSelect}
+                          />
+                          <label htmlFor="">{el}</label>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </form>
+            </div>
           </div>
         </Modal>
       </section>

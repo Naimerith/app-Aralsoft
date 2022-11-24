@@ -69,7 +69,7 @@ export const getValuesForCheckbox = (values, state) => {
   values.map((el) => {
     arrayOfValues.push(el[0][1]);
     const arrayChekbook = [...new Set(arrayOfValues)];
-    arrayChekbook.sort()
+    arrayChekbook.sort();
     return state(arrayChekbook);
   });
 }
