@@ -34,7 +34,6 @@ const Container = () => {
   const [values, setValues] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [dataCheck, setDataCheck] = useState([]);
-  const [select, setSelect] = useState([]);
   const [search, setSearch] = useState("");
 
   const addToArrayOfSelectedButtons = (button) => {
@@ -71,26 +70,19 @@ const Container = () => {
     }
   };
 
-  const handleSelect = (e) => {
-    const valueCheckbox = e.target.value;
-    if (select.includes(valueCheckbox)) {
-      setSelect(select.filter((sel) => sel !== valueCheckbox));
-    } else {
-      setSelect([...select, valueCheckbox]);
-    }
-  };
-
   const handleChangeSearch = (e) => {
     setSearch(e.target.value);
-    const resSearch = dataCheck.filter((el) => {
-      const convertDataToString = el?.toString() || "";
-      if (convertDataToString.includes(e.target.value)) {
-        return el;
-      } else {
-        console.log("no hay resultados");
-      }
-    });
-    setDataCheck(resSearch);
+    if (search === "") {
+      return dataCheck;
+    } else {
+      const resSearch = dataCheck.filter((el) => {
+        const convertDataToString = el?.toString() || "";
+        if (convertDataToString.includes(e.target.value)) {
+          return el;
+        }
+      });
+      setDataCheck(resSearch);
+    }
   };
 
   const generateReport = async () => {
@@ -188,39 +180,11 @@ const Container = () => {
               className="close"
               onClick={closeModal}
             />
-            {/* <Checkbox state={dataCheck}></Checkbox> */}
-            <div>
-              <form action="">
-                <input
-                  type="search"
-                  value={search}
-                  //value={search == null ? "" : search}
-                  onChange={handleChangeSearch}
-                />
-                <br />
-                <label htmlFor="">Seleccionar Todo</label>
-                <input name="selectAll" type="checkbox" />
-                <div className="result">
-                  {dataCheck.length === 0 ? (
-                    <p>Cargando...</p>
-                  ) : (
-                    dataCheck.map((el, i) => {
-                      return (
-                        <div key={i}>
-                          <input
-                            name={el}
-                            type="checkbox"
-                            value={el}
-                            onChange={handleSelect}
-                          />
-                          <label htmlFor="">{el}</label>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-              </form>
-            </div>
+            <Checkbox
+              state={dataCheck}
+              handleChangeSearch={handleChangeSearch}
+              search={search}
+            ></Checkbox>
           </div>
         </Modal>
       </section>

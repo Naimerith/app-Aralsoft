@@ -1,22 +1,7 @@
 import React, { useState } from "react";
 
-const Checkbox = ({ state }) => {
+const Checkbox = ({ state, handleChangeSearch, search }) => {
   const [select, setSelect] = useState([]);
-  const [search, setSearch] = useState([]);
-
-  const handleChangeSearch = (e) => {
-    setSearch(e.target.value);
-    filterSearch(e.target.value);
-  };
-
-  const filterSearch = (searchTerm) => {
-    let resSearch = state.filter((el) => {
-      if (el.toString().includes(searchTerm)) {
-        return el;
-      }
-    });
-    console.log("aquiii", resSearch);
-  };
 
   const handleSelect = (e) => {
     const valueCheckbox = e.target.value;
@@ -30,7 +15,12 @@ const Checkbox = ({ state }) => {
   return (
     <div>
       <form action="">
-        <input type="search" value={search} onChange={handleChangeSearch} />
+        <input
+          type="search"
+          value={search === undefined ? "" : search}
+          placeholder="Buscar                         🔍"
+          onChange={handleChangeSearch}
+        />
         <br />
 
         <label htmlFor="">Seleccionar Todo</label>
