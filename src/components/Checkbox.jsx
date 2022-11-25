@@ -1,7 +1,13 @@
 import React, { useState } from "react";
+import { Icon } from "@iconify/react";
+import "../assets/styles/Checkbox.css";
 
-const Checkbox = ({ state, handleChangeSearch, search }) => {
+const Checkbox = ({ state, handleChangeSearch, search, closeModal }) => {
   const [select, setSelect] = useState([]);
+
+  const selectAll = (e) => {
+    console.log("diste click en seleccionar todo");
+  };
 
   const handleSelect = (e) => {
     const valueCheckbox = e.target.value;
@@ -13,31 +19,39 @@ const Checkbox = ({ state, handleChangeSearch, search }) => {
   };
 
   return (
-    <div>
+    <div className="containerFilter">
       <form action="">
-        <input
-          type="search"
-          value={search === undefined ? "" : search}
-          placeholder="Buscar                         🔍"
-          onChange={handleChangeSearch}
-        />
-        <br />
-
+        <div className="headerFilter">
+          <input
+            className="inputSearch"
+            type="search"
+            value={search === undefined ? "" : search}
+            placeholder="Buscar..."
+            onChange={handleChangeSearch}
+          />
+          <Icon
+            icon="mdi:close-circle-outline"
+            className="closeFilter"
+            onClick={closeModal}
+          />
+        </div>
         <label htmlFor="">Seleccionar Todo</label>
-        <input name="selectAll" type="checkbox" />
-        {state.map((el, i) => {
-          return (
-            <div key={i}>
-              <input
-                name={el}
-                type="checkbox"
-                value={el}
-                onChange={handleSelect}
-              />
-              <label htmlFor="">{el}</label>
-            </div>
-          );
-        })}
+        <input name="selectAll" type="checkbox" onChange={selectAll} />
+        <div className="options">
+          {state.map((el, i) => {
+            return (
+              <div key={i}>
+                <input
+                  name={el}
+                  type="checkbox"
+                  value={el}
+                  onChange={handleSelect}
+                />
+                <label htmlFor="">{el}</label>
+              </div>
+            );
+          })}
+        </div>
       </form>
     </div>
   );
