@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 import "../assets/styles/Checkbox.css";
 
-const Checkbox = ({ state, handleChangeSearch, search, closeModal }) => {
+const Checkbox = ({
+  state,
+  stateRow,
+  stateColumn,
+  handleChangeSearch,
+  search,
+  closeModal,
+}) => {
   const [select, setSelect] = useState([]);
 
   const selectAll = (e) => {
@@ -10,13 +17,15 @@ const Checkbox = ({ state, handleChangeSearch, search, closeModal }) => {
   };
 
   const handleSelect = (e) => {
-    const valueCheckbox = e.target.value;
+    console.log("hola");
+    /*const valueCheckbox = e.target.value;
     if (select.includes(valueCheckbox)) {
       setSelect(select.filter((sel) => sel !== valueCheckbox));
     } else {
       setSelect([...select, valueCheckbox]);
-    }
+    }*/
   };
+  console.log("aqui", select);
 
   return (
     <div className="containerFilter">
@@ -38,19 +47,33 @@ const Checkbox = ({ state, handleChangeSearch, search, closeModal }) => {
         <label htmlFor="">Seleccionar Todo</label>
         <input name="selectAll" type="checkbox" onChange={selectAll} />
         <div className="options">
-          {state.map((el, i) => {
-            return (
-              <div key={i}>
-                <input
-                  name={el}
-                  type="checkbox"
-                  value={el}
-                  onChange={handleSelect}
-                />
-                <label htmlFor="">{el}</label>
-              </div>
-            );
-          })}
+          {state === "fila"
+            ? stateRow.map((el, i) => {
+                return (
+                  <div key={i}>
+                    <input
+                      name={el}
+                      type="checkbox"
+                      value={el}
+                      onChange={handleSelect}
+                    />
+                    <label htmlFor="">{el}</label>
+                  </div>
+                );
+              })
+            : stateColumn.map((el, i) => {
+                return (
+                  <div key={i}>
+                    <input
+                      name={el}
+                      type="checkbox"
+                      value={el}
+                      onChange={handleSelect}
+                    />
+                    <label htmlFor="">{el}</label>
+                  </div>
+                );
+              })}
         </div>
       </form>
     </div>

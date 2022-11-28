@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
+
 import {
   consultValuesInTheApi,
   getValuesForCheckbox,
@@ -17,8 +18,10 @@ const Container = () => {
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [btnClick, setBtnClick] = useState("");
+  const [dataRow, setDataRow] = useState([]);
+  const [dataColumn, setDataColumn] = useState([]);
 
-  const [dataCheck, setDataCheck] = useState([]);
   const [search, setSearch] = useState("");
 
   const addToArrayOfSelectedButtons = (button) => {
@@ -30,33 +33,33 @@ const Container = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    setDataCheck([]);
+    setDataRow([]);
+    setDataColumn([]);
   };
-
-  const openFilter = () => {
+  const openModal = () => {
     setIsOpen(true);
   };
-
-  const btnToSelectOptions = async (state) => {
+  const openFilter = async (state) => {
+    openModal();
     if (state === row) {
       const fila = state.toString();
-      openFilter();
       const resultApiRow = await consultValuesInTheApi(fila);
-      getValuesForCheckbox(resultApiRow, setDataCheck);
+      getValuesForCheckbox(resultApiRow, setDataRow);
+      setBtnClick("fila");
     } else {
       const columna = state.toString();
-      openFilter();
       const resultApiColumn = await consultValuesInTheApi(columna);
-      getValuesForCheckbox(resultApiColumn, setDataCheck);
+      getValuesForCheckbox(resultApiColumn, setDataColumn);
+      setBtnClick("columna");
     }
   };
 
   const handleChangeSearch = (e) => {
     setSearch(e.target.value);
-    filterData(e.target.value);
+    //filterData(e.target.value);
   };
 
-  const filterData = (data) => {
+  /*const filterData = (data) => {
     if (!search) {
       return dataCheck;
     } else {
@@ -68,7 +71,7 @@ const Container = () => {
       });
       setDataCheck(resSearch);
     }
-  };
+  };*/
 
   const generateReport = async () => {
     alertSuccess("Reporte Generado satisfactoriamente");
@@ -93,7 +96,7 @@ const Container = () => {
                       className="btnSelect"
                       key={index}
                       ref={(button) => addToArrayOfSelectedButtons(button)}
-                      onClick={() => btnToSelectOptions(row)}
+                      onClick={() => openFilter(row)}
                     >
                       {item}
                     </button>
@@ -117,7 +120,7 @@ const Container = () => {
                         className="btnSelect"
                         key={index}
                         ref={(button) => addToArrayOfSelectedButtons(button)}
-                        onClick={() => btnToSelectOptions(column)}
+                        onClick={() => openFilter(column)}
                       >
                         {item}
                       </button>
@@ -150,7 +153,9 @@ const Container = () => {
         </article>
         <div className={isOpen ? "block" : "none"}>
           <Checkbox
-            state={dataCheck}
+            state={btnClick}
+            stateRow={dataRow}
+            stateColumn={dataColumn}
             handleChangeSearch={handleChangeSearch}
             search={search}
             closeModal={closeModal}
