@@ -56,22 +56,24 @@ const Container = () => {
 
   const handleChangeSearch = (e) => {
     setSearch(e.target.value);
-    //filterData(e.target.value);
+    filterData(dataRow, e.target.value, setDataRow);
+    filterData(dataColumn, e.target.value, setDataColumn);
   };
 
-  /*const filterData = (data) => {
-    if (!search) {
-      return dataCheck;
+  const filterData = (state, data, setState) => {
+    if (search === null) {
+      console.log("search esta vacio", search);
+      return state;
     } else {
-      const resSearch = dataCheck.filter((el) => {
+      const resSearch = state.filter((el) => {
         const convertDataToString = el?.toString() || "";
         if (convertDataToString.includes(data)) {
           return el;
         }
       });
-      setDataCheck(resSearch);
+      setState(resSearch);
     }
-  };*/
+  };
 
   const generateReport = async () => {
     alertSuccess("Reporte Generado satisfactoriamente");

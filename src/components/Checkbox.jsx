@@ -25,7 +25,7 @@ const Checkbox = ({
       setSelect([...select, valueCheckbox]);
     }*/
   };
-  console.log("aqui", select);
+  //console.log("aqui", select);
 
   return (
     <div className="containerFilter">
@@ -34,7 +34,7 @@ const Checkbox = ({
           <input
             className="inputSearch"
             type="search"
-            value={search === undefined ? "" : search}
+            value={search === null ? "" : search}
             placeholder="Buscar..."
             onChange={handleChangeSearch}
           />
