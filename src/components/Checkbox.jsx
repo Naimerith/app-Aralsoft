@@ -10,22 +10,33 @@ const Checkbox = ({
   search,
   closeModal,
 }) => {
-  const [select, setSelect] = useState([]);
+  const [selectColumn, setSelectColumn] = useState([]);
+  const [selectRow, setSelectRow] = useState([]);
 
   const selectAll = (e) => {
     console.log("diste click en seleccionar todo");
   };
 
-  const handleSelect = (e) => {
-    console.log("hola");
-    /*const valueCheckbox = e.target.value;
-    if (select.includes(valueCheckbox)) {
-      setSelect(select.filter((sel) => sel !== valueCheckbox));
+  const handleSelectColumn = (e) => {
+    //console.log("Column");
+    const valueCheckbox = e.target.value;
+    if (selectColumn.includes(valueCheckbox)) {
+      setSelectColumn(selectColumn.filter((sel) => sel !== valueCheckbox));
     } else {
-      setSelect([...select, valueCheckbox]);
-    }*/
+      setSelectColumn([...selectColumn, valueCheckbox]);
+    }
   };
-  //console.log("aqui", select);
+  //console.log("columna", selectColumn);
+  const handleSelectRow = (e) => {
+    //console.log("Fila");
+    const valueCheckbox = e.target.value;
+    if (selectRow.includes(valueCheckbox)) {
+      setSelectRow(selectRow.filter((sel) => sel !== valueCheckbox));
+    } else {
+      setSelectRow([...selectRow, valueCheckbox]);
+    }
+  };
+  //console.log("fila", selectRow);
 
   return (
     <div className="containerFilter">
@@ -55,7 +66,7 @@ const Checkbox = ({
                       name={el}
                       type="checkbox"
                       value={el}
-                      onChange={handleSelect}
+                      onChange={handleSelectRow}
                     />
                     <label htmlFor="">{el}</label>
                   </div>
@@ -68,7 +79,7 @@ const Checkbox = ({
                       name={el}
                       type="checkbox"
                       value={el}
-                      onChange={handleSelect}
+                      onChange={handleSelectColumn}
                     />
                     <label htmlFor="">{el}</label>
                   </div>

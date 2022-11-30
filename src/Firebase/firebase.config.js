@@ -15,13 +15,13 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-const collectionRef = collection(db, "tables");
+export const collectionRef = collection(db, "tables");
 
-export const addCollectionResult = async (key, value) => {
+export const addCollectionResult = async (namebtn) => {
   return await addDoc(collectionRef, {
-    report: key,
+    report: namebtn,
     fecha: Date.now(),
-    consultApi: value,
+    //consultApi: value,
     usuario: "",
     estatus: 'Reporte generado'
   });

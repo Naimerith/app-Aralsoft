@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-
+import { addCollectionResult } from "../Firebase/firebase.config";
 import {
   consultValuesInTheApi,
   getValuesForCheckbox,
@@ -61,24 +61,30 @@ const Container = () => {
   };
 
   const filterData = (state, data, setState) => {
-    if (search === null) {
-      console.log("search esta vacio", search);
-      return state;
-    } else {
-      const resSearch = state.filter((el) => {
-        const convertDataToString = el?.toString() || "";
-        if (convertDataToString.includes(data)) {
-          return el;
-        }
-      });
-      setState(resSearch);
-    }
+    const resSearch = state.filter((el) => {
+      const convertDataToString = el?.toString() || "";
+      if (convertDataToString.includes(data)) {
+        return el;
+      }
+    });
+    setState(resSearch);
+  };
+  const selectReport = [];
+  const nameOfSelectedButtons = () => {
+    const fila = row.toString();
+    const columna = column.toString();
+    const valores = values.toString();
+    selectReport.push(fila, columna, valores);
+    return selectReport;
   };
 
   const generateReport = async () => {
-    alertSuccess("Reporte Generado satisfactoriamente");
-    navigate("/report-generated");
+    //alertSuccess("Reporte Generado satisfactoriamente");
+    //navigate("/report-generated");
+    const resBtnOfReport = nameOfSelectedButtons();
+    await addCollectionResult(resBtnOfReport);
   };
+  useEffect(() => {}, []);
 
   return (
     <div className="bottomContainer">
