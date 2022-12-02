@@ -2,7 +2,6 @@ import React from "react";
 import "../assets/styles/Table.css";
 
 const Table = ({ table, id }) => {
-  // console.log(JSON.stringify(table));
   return (
     <div className="table-wrapper">
       <table className="containerTable" id={id}>

@@ -12,9 +12,7 @@ export const consultValuesInTheApi = async (position) => {
   return consultApiSelectionBtn;
 }
 
-
-
-/*Extraemos solo el value de la api*/
+/*Extraemos solo el value de la api para la lista de checkbox*/
 export const getTheValueOfSelectedButton = (getArr, newArr) => {
   getArr.map((el) => {
     return el.map((h) => {
@@ -63,7 +61,7 @@ export const getCollectionDataForTheTable = (state) => {
   return addValuesToTheTable;
 }
 
-/********************Funciones nuevas*********************************/
+/********************Lista de Check*********************************/
 export const getValuesForCheckbox = (values, state) => {
   let arrayOfValues = [];
   values.map((el) => {
@@ -73,7 +71,7 @@ export const getValuesForCheckbox = (values, state) => {
     return state(arrayChekbook);
   });
 }
-/********************Funciones nuevas*********************************/
+/********************Botones que estan dentro del contenedor*********************************/
 const selectReport = [];
 export const nameOfSelectedButtons = (stateR, stateC, stateV) => {
   const fila = stateR.toString();
@@ -83,7 +81,7 @@ export const nameOfSelectedButtons = (stateR, stateC, stateV) => {
   return selectReport;
 };
 
-/********************Funciones nuevas*********************************/
+/********************Filtrar del Buscador*********************************/
 export const filterData = (state, data, setState) => {
   const resSearch = state.filter((el) => {
     const convertDataToString = el?.toString() || "";
