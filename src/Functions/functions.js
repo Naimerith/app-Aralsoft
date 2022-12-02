@@ -26,13 +26,13 @@ export const getTheValueOfSelectedButton = (getArr, newArr) => {
 }
 
 /*Crea un objeto con el resultado obtenidos para la fila, la columna y el campo valores */
-export const getArrObject = (arrRow, arrColumn, arrValue) => {
+export const getArrObject = (arrRow, arrColumn) => {
   let arr = [];
   for (let i in arrRow) {
     arr.push({
       filas: arrRow[i],
       columnas: arrColumn[i],
-      valores: arrValue[i],
+      //valores: arrValue[i],
     });
   }
   return arr;
@@ -73,4 +73,23 @@ export const getValuesForCheckbox = (values, state) => {
     return state(arrayChekbook);
   });
 }
+/********************Funciones nuevas*********************************/
+const selectReport = [];
+export const nameOfSelectedButtons = (stateR, stateC, stateV) => {
+  const fila = stateR.toString();
+  const columna = stateC.toString();
+  const valores = stateV.toString();
+  selectReport.push(fila, columna, valores);
+  return selectReport;
+};
 
+/********************Funciones nuevas*********************************/
+export const filterData = (state, data, setState) => {
+  const resSearch = state.filter((el) => {
+    const convertDataToString = el?.toString() || "";
+    if (convertDataToString.includes(data)) {
+      return el;
+    }
+  });
+  setState(resSearch);
+};

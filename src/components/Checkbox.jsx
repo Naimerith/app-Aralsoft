@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
+import { getArrObject } from "../Functions/functions";
 import "../assets/styles/Checkbox.css";
 
 const Checkbox = ({
@@ -9,16 +10,17 @@ const Checkbox = ({
   handleChangeSearch,
   search,
   closeModal,
+  handleSelectRow,
+  handleSelectColumn,
 }) => {
-  const [selectColumn, setSelectColumn] = useState([]);
-  const [selectRow, setSelectRow] = useState([]);
+  // const [selectColumn, setSelectColumn] = useState([]);
+  //const [selectRow, setSelectRow] = useState([]);
 
   const selectAll = (e) => {
     console.log("diste click en seleccionar todo");
   };
 
-  const handleSelectColumn = (e) => {
-    //console.log("Column");
+  /*const handleSelectColumn = (e) => {
     const valueCheckbox = e.target.value;
     if (selectColumn.includes(valueCheckbox)) {
       setSelectColumn(selectColumn.filter((sel) => sel !== valueCheckbox));
@@ -26,9 +28,7 @@ const Checkbox = ({
       setSelectColumn([...selectColumn, valueCheckbox]);
     }
   };
-  //console.log("columna", selectColumn);
   const handleSelectRow = (e) => {
-    //console.log("Fila");
     const valueCheckbox = e.target.value;
     if (selectRow.includes(valueCheckbox)) {
       setSelectRow(selectRow.filter((sel) => sel !== valueCheckbox));
@@ -37,6 +37,11 @@ const Checkbox = ({
     }
   };
   //console.log("fila", selectRow);
+
+  const addToCollectionFB = () => {
+    const result = getArrObject(selectRow, selectColumn);
+    console.log("probando aqui a ver que trae", result);
+  };*/
 
   return (
     <div className="containerFilter">

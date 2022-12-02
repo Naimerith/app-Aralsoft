@@ -4,16 +4,20 @@ import { addCollectionResult } from "../Firebase/firebase.config";
 import {
   consultValuesInTheApi,
   getValuesForCheckbox,
+  getArrObject,
+  filterData,
+  nameOfSelectedButtons,
 } from "../Functions/functions";
+import { getData } from "../services/api_aralsoft";
 import { useNavigate } from "react-router-dom";
-import { alertSuccess } from "../Functions/sweetAlert";
+//import { alertSuccess } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
 import "../assets/styles/Container.css";
 import Checkbox from "./Checkbox";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
@@ -21,8 +25,9 @@ const Container = () => {
   const [btnClick, setBtnClick] = useState("");
   const [dataRow, setDataRow] = useState([]);
   const [dataColumn, setDataColumn] = useState([]);
-
   const [search, setSearch] = useState("");
+  const [selectColumn, setSelectColumn] = useState([]);
+  const [selectRow, setSelectRow] = useState([]);
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -31,11 +36,6 @@ const Container = () => {
     return ArrayOfSelectedButtons;
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setDataRow([]);
-    setDataColumn([]);
-  };
   const openModal = () => {
     setIsOpen(true);
   };
@@ -48,43 +48,65 @@ const Container = () => {
       setBtnClick("fila");
     } else {
       const columna = state.toString();
+      console.log(columna);
       const resultApiColumn = await consultValuesInTheApi(columna);
       getValuesForCheckbox(resultApiColumn, setDataColumn);
       setBtnClick("columna");
     }
   };
+  const closeModal = () => {
+    setIsOpen(false);
+    setDataRow([]);
+    setDataColumn([]);
+  };
 
+  /*****************************************************************************/
   const handleChangeSearch = (e) => {
     setSearch(e.target.value);
     filterData(dataRow, e.target.value, setDataRow);
     filterData(dataColumn, e.target.value, setDataColumn);
   };
 
-  const filterData = (state, data, setState) => {
-    const resSearch = state.filter((el) => {
-      const convertDataToString = el?.toString() || "";
-      if (convertDataToString.includes(data)) {
-        return el;
-      }
-    });
-    setState(resSearch);
+  /*****************************************************************************/
+  const handleSelectColumn = (e) => {
+    const valueCheckbox = e.target.value;
+    if (selectColumn.includes(valueCheckbox)) {
+      setSelectColumn(selectColumn.filter((sel) => sel !== valueCheckbox));
+    } else {
+      setSelectColumn([...selectColumn, valueCheckbox]);
+    }
   };
-  const selectReport = [];
+  const handleSelectRow = (e) => {
+    const valueCheckbox = e.target.value;
+    if (selectRow.includes(valueCheckbox)) {
+      setSelectRow(selectRow.filter((sel) => sel !== valueCheckbox));
+    } else {
+      setSelectRow([...selectRow, valueCheckbox]);
+    }
+  };
+
+  /*****************************************************************************/
+  /*const selectReport = [];
   const nameOfSelectedButtons = () => {
     const fila = row.toString();
     const columna = column.toString();
     const valores = values.toString();
     selectReport.push(fila, columna, valores);
     return selectReport;
-  };
+  };*/
 
   const generateReport = async () => {
     //alertSuccess("Reporte Generado satisfactoriamente");
     //navigate("/report-generated");
-    const resBtnOfReport = nameOfSelectedButtons();
+    const resBtnOfReport = nameOfSelectedButtons(row, column, values);
+    console.log("resBtnOfReport", resBtnOfReport);
     await addCollectionResult(resBtnOfReport);
+    //const result = getArrObject(selectRow, selectColumn);
+    //console.log("probando aqui a ver que trae", result);
   };
-  useEffect(() => {}, []);
+  console.log(row);
+  console.log(column);
+  console.log(values);
 
   return (
     <div className="bottomContainer">
@@ -167,6 +189,8 @@ const Container = () => {
             handleChangeSearch={handleChangeSearch}
             search={search}
             closeModal={closeModal}
+            handleSelectColumn={handleSelectColumn}
+            handleSelectRow={handleSelectRow}
           ></Checkbox>
         </div>
       </section>
