@@ -17,13 +17,31 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const collectionRef = collection(db, "tables");
 
-export const addCollectionResult = async (namebtn) => {
+export const addCollectionResult = async (id, nameRow, nameCol, nameVal) => {
   return await addDoc(collectionRef, {
-    report: namebtn,
-    fecha: Date.now(),
-    //consultApi: value,
-    usuario: "",
-    estatus: 'Reporte generado'
+    idReport: id,
+    nombreReport: 'Reporte' + '' + nameRow,
+    filas: {
+      fila1: {
+        campo: nameRow,
+        filtro: ['001', '002'],
+      },
+      fila2: {
+        campo: 'vende',
+        filtro: []
+      }
+    },
+    columnas: {
+      columna1: {
+        campo: nameCol,
+        filtro: ['colgate', 'quimicas', 'jabon'],
+      }
+    },
+    valores: {
+      valor1: {
+        campo: nameVal
+      }
+    }
   });
 }
 

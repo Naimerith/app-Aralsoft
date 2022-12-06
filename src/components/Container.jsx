@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useId } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Icon } from "@iconify/react";
 import { addCollectionResult } from "../Firebase/firebase.config";
@@ -27,9 +27,8 @@ const Container = () => {
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
-      ArrayOfSelectedButtons.push(button.textContent);
+      return ArrayOfSelectedButtons.push(button.textContent);
     }
-    return ArrayOfSelectedButtons;
   };
 
   /***************Filtro que consulta la api y trae todos los checkbox *********************/
@@ -45,11 +44,8 @@ const Container = () => {
       const consultApiSelectionBtn = datosFiltrados.map((el) => {
         const convertObjectToArray = Object.entries(el);
         return convertObjectToArray.filter((key) => key.includes(columna));
-        //console.log("convertObjectToArray", convertObjectToArray);
       });
-      console.log("consultApiSelectionBtn", consultApiSelectionBtn);
       getValuesForCheckbox(consultApiSelectionBtn, setDataColumn);
-
       setBtnClick("columna");
     }
   };
@@ -64,25 +60,25 @@ const Container = () => {
 
   const applyingAFilterToAFilter = async (e) => {
     const valueCheckbox = e.target.value;
-
     console.log("valueCheckbox", valueCheckbox);
     setChecked({
       ...checked,
       [e.target.value]: e.target.checked,
     });
+
     if (e.target.checked) {
       const resApi = await getData();
-      const resultadoLenguaje = resApi.filter(
-        (item) => item.dni === e.target.value
+      const resFilterData = resApi.filter(
+        (item) => item.ventasKey === e.target.value
       );
-      setDatosFiltrados([...datosFiltrados, ...resultadoLenguaje]);
-      console.log("resultadoLenguaje", resultadoLenguaje);
+      setDatosFiltrados([...datosFiltrados, ...resFilterData]);
+      console.log("resultadoif", resFilterData);
     } else {
-      const resultadoLenguaje = datosFiltrados.filter(
-        (item) => item.dni !== e.target.value
+      const resFilterData = datosFiltrados.filter(
+        (item) => item.ventasKey !== e.target.value
       );
-      setDatosFiltrados([...resultadoLenguaje]);
-      console.log("resultadoLenguajeelse", resultadoLenguaje);
+      setDatosFiltrados([...resFilterData]);
+      console.log("resultadoelse", resFilterData);
     }
   };
   /************************Buscador*****************************************************/
@@ -93,8 +89,10 @@ const Container = () => {
   };
 
   const generateReport = async () => {
-    const resBtnOfReport = nameOfSelectedButtons(row, column, values);
-    await addCollectionResult(resBtnOfReport);
+    const nameRow = row.toString();
+    const nameColumn = column.toString();
+    const nameValues = values.toString();
+    await addCollectionResult(nameRow, nameColumn, nameValues);
   };
 
   return (
@@ -104,9 +102,6 @@ const Container = () => {
           <div className="containerR">
             Filas
             <ReactSortable
-              accept={() => {
-                return row.length < 1;
-              }}
               list={row}
               setList={setRow}
               group={{ name: "selectedButton", pull: true }}
@@ -131,9 +126,6 @@ const Container = () => {
             <div className="containerR">
               Columnas
               <ReactSortable
-                accept={() => {
-                  return column.length < 1;
-                }}
                 list={column}
                 setList={setColumn}
                 group={{ name: "selectedButton", pull: true }}
@@ -157,9 +149,6 @@ const Container = () => {
             <div className="containerR">
               Valores
               <ReactSortable
-                accept={() => {
-                  return values.length < 1;
-                }}
                 list={values}
                 setList={setValues}
                 group={{ name: "selectedButton", pull: true }}

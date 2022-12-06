@@ -71,15 +71,7 @@ export const getValuesForCheckbox = (values, state) => {
     return state(arrayChekbook);
   });
 }
-/********************Botones que estan dentro del contenedor*********************************/
-const selectReport = [];
-export const nameOfSelectedButtons = (stateR, stateC, stateV) => {
-  const fila = stateR.toString();
-  const columna = stateC.toString();
-  const valores = stateV.toString();
-  selectReport.push(fila, columna, valores);
-  return selectReport;
-};
+
 
 /********************Filtrar del Buscador*********************************/
 export const filterData = (state, data, setState) => {
