@@ -16,25 +16,27 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const collectionRef = collection(db, "tables");
+export const colRef = collection(db, "Report");
+
 
 export const addCollectionResult = async (id, nameRow, nameCol, nameVal) => {
-  return await addDoc(collectionRef, {
+  return await addDoc(colRef, {
     idReport: id,
     nombreReport: 'Reporte' + '' + nameRow,
     filas: {
       fila1: {
         campo: nameRow,
-        filtro: ['001', '002'],
+        filtro: [],
       },
       fila2: {
-        campo: 'vende',
+        campo: '',
         filtro: []
       }
     },
     columnas: {
       columna1: {
         campo: nameCol,
-        filtro: ['colgate', 'quimicas', 'jabon'],
+        filtro: [],
       }
     },
     valores: {

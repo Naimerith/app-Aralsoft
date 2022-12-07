@@ -1,4 +1,4 @@
-import React, { useState, useId } from "react";
+import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { Icon } from "@iconify/react";
 import { addCollectionResult } from "../Firebase/firebase.config";
@@ -6,9 +6,7 @@ import {
   consultValuesInTheApi,
   getValuesForCheckbox,
   filterData,
-  nameOfSelectedButtons,
 } from "../Functions/functions";
-import { getData } from "../services/api_aralsoft";
 import ButtonApp from "./ButtonApp";
 import "../assets/styles/Container.css";
 
@@ -22,8 +20,9 @@ const Container = () => {
   const [dataRow, setDataRow] = useState([]);
   const [dataColumn, setDataColumn] = useState([]);
   const [search, setSearch] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [filterRow1, setFilterRow1] = useState([]);
   const [datosFiltrados, setDatosFiltrados] = useState([]);
+  const [counterId, setCounterId] = useState(1);
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -35,10 +34,11 @@ const Container = () => {
   const openFilter = async (state) => {
     setIsOpen(true);
     if (state === row) {
+      console.log("row", row);
       const fila = state.toString();
       const resultApiRow = await consultValuesInTheApi(fila);
       getValuesForCheckbox(resultApiRow, setDataRow);
-      setBtnClick("fila");
+      setBtnClick("fila1");
     } else {
       const columna = state.toString();
       const consultApiSelectionBtn = datosFiltrados.map((el) => {
@@ -52,47 +52,33 @@ const Container = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    setDataRow([]);
-    setDataColumn([]);
   };
 
-  /***************Filtro columnas dependiendo de la seleccion de la fila *********************/
-
-  const applyingAFilterToAFilter = async (e) => {
-    const valueCheckbox = e.target.value;
-    console.log("valueCheckbox", valueCheckbox);
-    setChecked({
-      ...checked,
-      [e.target.value]: e.target.checked,
-    });
-
-    if (e.target.checked) {
-      const resApi = await getData();
-      const resFilterData = resApi.filter(
-        (item) => item.ventasKey === e.target.value
-      );
-      setDatosFiltrados([...datosFiltrados, ...resFilterData]);
-      console.log("resultadoif", resFilterData);
-    } else {
-      const resFilterData = datosFiltrados.filter(
-        (item) => item.ventasKey !== e.target.value
-      );
-      setDatosFiltrados([...resFilterData]);
-      console.log("resultadoelse", resFilterData);
-    }
-  };
   /************************Buscador*****************************************************/
   const handleChangeSearch = (e) => {
     setSearch(e.target.value);
     filterData(dataRow, e.target.value, setDataRow);
     filterData(dataColumn, e.target.value, setDataColumn);
   };
+  /***************************************************************************************/
+
+  const reportID = () => {
+    setCounterId(counterId + 1);
+    return counterId;
+  };
+
+  let elementFiltered = [];
+  const applyingAFilterToAFilter = (e) => {
+    return elementFiltered.push(e.target.value);
+    //console.log(elementFiltered, "elementFiltered");
+  };
 
   const generateReport = async () => {
     const nameRow = row.toString();
     const nameColumn = column.toString();
     const nameValues = values.toString();
-    await addCollectionResult(nameRow, nameColumn, nameValues);
+    const resId = reportID();
+    //await addCollectionResult(resId, nameRow, nameColumn, nameValues);
   };
 
   return (
@@ -187,7 +173,7 @@ const Container = () => {
             <label htmlFor="">Seleccionar Todo</label>
             <input name="selectAll" type="checkbox" />
             <div className="options">
-              {btnClick === "fila"
+              {btnClick === "fila1"
                 ? dataRow.map((el, i) => {
                     return (
                       <div key={i}>
