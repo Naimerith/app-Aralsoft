@@ -12,41 +12,45 @@ import "../assets/styles/Container.css";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
+
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [btnClick, setBtnClick] = useState("");
   const [dataRow, setDataRow] = useState([]);
+  const [dataRow2, setDataRow2] = useState([]);
+
   const [dataColumn, setDataColumn] = useState([]);
   const [search, setSearch] = useState("");
   const [filterRow1, setFilterRow1] = useState([]);
   const [datosFiltrados, setDatosFiltrados] = useState([]);
   const [counterId, setCounterId] = useState(1);
+  //console.log(row, "row");
+  //console.log(ArrayOfSelectedButtons, "ArrayOfSelectedButtons");
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
-      return ArrayOfSelectedButtons.push(button.textContent);
+      ArrayOfSelectedButtons.push(button.textContent);
+      //console.log(ArrayOfSelectedButtons[3], "ArrayOfSelectedButtons");
     }
   };
 
   /***************Filtro que consulta la api y trae todos los checkbox *********************/
-  const openFilter = async (state) => {
+  const getValuesFromRowButtons = async (index) => {
+    const btn1 = ArrayOfSelectedButtons[0];
+    const btn2 = ArrayOfSelectedButtons[1];
     setIsOpen(true);
-    if (state === row) {
-      console.log("row", row);
-      const fila = state.toString();
-      const resultApiRow = await consultValuesInTheApi(fila);
-      getValuesForCheckbox(resultApiRow, setDataRow);
+    if (index === 0) {
+      const resultApiRow1 = await consultValuesInTheApi(btn1);
+      console.log(resultApiRow1, "resultApiRow1");
+      getValuesForCheckbox(resultApiRow1, setDataRow);
       setBtnClick("fila1");
-    } else {
-      const columna = state.toString();
-      const consultApiSelectionBtn = datosFiltrados.map((el) => {
-        const convertObjectToArray = Object.entries(el);
-        return convertObjectToArray.filter((key) => key.includes(columna));
-      });
-      getValuesForCheckbox(consultApiSelectionBtn, setDataColumn);
-      setBtnClick("columna");
+    } else if (index === 1) {
+      const resultApiRow2 = await consultValuesInTheApi(btn2);
+      console.log(resultApiRow2, "resultApiRow2");
+      getValuesForCheckbox(resultApiRow2, setDataRow);
+      setBtnClick("fila2");
     }
   };
 
@@ -67,18 +71,31 @@ const Container = () => {
     return counterId;
   };
 
-  let elementFiltered = [];
-  const applyingAFilterToAFilter = (e) => {
-    return elementFiltered.push(e.target.value);
-    //console.log(elementFiltered, "elementFiltered");
+  const obtainFilteredElements = (e) => {
+    const value = e.target.value;
+    const filterRow = value;
+    setFilterRow1((filterRow1) => [...filterRow1, filterRow]);
+    if (e.target.checked === false) {
+      const removeItem = filterRow1.filter((item) => item !== value);
+      setFilterRow1(removeItem);
+    }
   };
 
   const generateReport = async () => {
-    const nameRow = row.toString();
+    const nameRow1 = row[0].toString();
+    const nameRow2 = row[1].toString();
     const nameColumn = column.toString();
     const nameValues = values.toString();
     const resId = reportID();
-    //await addCollectionResult(resId, nameRow, nameColumn, nameValues);
+    await addCollectionResult(
+      resId,
+      nameRow1,
+      nameRow2,
+      nameColumn,
+      nameValues,
+      filterRow1
+    );
+    setFilterRow1([]);
   };
 
   return (
@@ -99,7 +116,7 @@ const Container = () => {
                       className="btnSelect"
                       key={index}
                       ref={(button) => addToArrayOfSelectedButtons(button)}
-                      onClick={() => openFilter(row)}
+                      onClick={() => getValuesFromRowButtons(index)}
                     >
                       {item}
                     </button>
@@ -123,7 +140,7 @@ const Container = () => {
                         className="btnSelect"
                         key={index}
                         ref={(button) => addToArrayOfSelectedButtons(button)}
-                        onClick={() => openFilter(column)}
+                        // onClick={() => openFilter(column)}
                       >
                         {item}
                       </button>
@@ -173,7 +190,7 @@ const Container = () => {
             <label htmlFor="">Seleccionar Todo</label>
             <input name="selectAll" type="checkbox" />
             <div className="options">
-              {btnClick === "fila1"
+              {btnClick === "fila1" || btnClick === "fila2"
                 ? dataRow.map((el, i) => {
                     return (
                       <div key={i}>
@@ -181,7 +198,7 @@ const Container = () => {
                           name={el}
                           type="checkbox"
                           value={el}
-                          onChange={applyingAFilterToAFilter}
+                          onChange={obtainFilteredElements}
                         />
                         <label htmlFor="">{el}</label>
                       </div>
