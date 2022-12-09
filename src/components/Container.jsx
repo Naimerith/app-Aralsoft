@@ -19,20 +19,17 @@ const Container = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [btnClick, setBtnClick] = useState("");
   const [dataRow, setDataRow] = useState([]);
-  const [dataRow2, setDataRow2] = useState([]);
 
   const [dataColumn, setDataColumn] = useState([]);
   const [search, setSearch] = useState("");
   const [filterRow1, setFilterRow1] = useState([]);
-  const [datosFiltrados, setDatosFiltrados] = useState([]);
+  const [filterRow2, setFilterRow2] = useState([]);
+
   const [counterId, setCounterId] = useState(1);
-  //console.log(row, "row");
-  //console.log(ArrayOfSelectedButtons, "ArrayOfSelectedButtons");
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
       ArrayOfSelectedButtons.push(button.textContent);
-      //console.log(ArrayOfSelectedButtons[3], "ArrayOfSelectedButtons");
     }
   };
 
@@ -43,12 +40,10 @@ const Container = () => {
     setIsOpen(true);
     if (index === 0) {
       const resultApiRow1 = await consultValuesInTheApi(btn1);
-      console.log(resultApiRow1, "resultApiRow1");
       getValuesForCheckbox(resultApiRow1, setDataRow);
       setBtnClick("fila1");
     } else if (index === 1) {
       const resultApiRow2 = await consultValuesInTheApi(btn2);
-      console.log(resultApiRow2, "resultApiRow2");
       getValuesForCheckbox(resultApiRow2, setDataRow);
       setBtnClick("fila2");
     }
@@ -72,12 +67,22 @@ const Container = () => {
   };
 
   const obtainFilteredElements = (e) => {
-    const value = e.target.value;
-    const filterRow = value;
-    setFilterRow1((filterRow1) => [...filterRow1, filterRow]);
-    if (e.target.checked === false) {
-      const removeItem = filterRow1.filter((item) => item !== value);
-      setFilterRow1(removeItem);
+    if (btnClick === "fila1") {
+      const value1 = e.target.value;
+      const filterRowBtn1 = value1;
+      setFilterRow1((filterRow1) => [...filterRow1, filterRowBtn1]);
+      if (e.target.checked === false) {
+        const removeItem1 = filterRow1.filter((item) => item !== value1);
+        setFilterRow1(removeItem1);
+      }
+    } else if (btnClick === "fila2") {
+      const value2 = e.target.value;
+      const filterRowBtn2 = value2;
+      setFilterRow2((filterRow2) => [...filterRow2, filterRowBtn2]);
+      if (e.target.checked === false) {
+        const removeItem2 = filterRow2.filter((item) => item !== value2);
+        setFilterRow2(removeItem2);
+      }
     }
   };
 
@@ -93,7 +98,8 @@ const Container = () => {
       nameRow2,
       nameColumn,
       nameValues,
-      filterRow1
+      filterRow1,
+      filterRow2
     );
     setFilterRow1([]);
   };
