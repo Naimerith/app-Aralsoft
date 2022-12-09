@@ -7,6 +7,7 @@ import {
   getValuesForCheckbox,
   filterData,
 } from "../Functions/functions";
+import { alertError } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
 import "../assets/styles/Container.css";
 
@@ -37,15 +38,19 @@ const Container = () => {
   const getValuesFromRowButtons = async (index) => {
     const btn1 = ArrayOfSelectedButtons[0];
     const btn2 = ArrayOfSelectedButtons[1];
+    const limitRow = row.length <= 2;
     setIsOpen(true);
-    if (index === 0) {
+    if (limitRow && index === 0) {
       const resultApiRow1 = await consultValuesInTheApi(btn1);
       getValuesForCheckbox(resultApiRow1, setDataRow);
       setBtnClick("fila1");
-    } else if (index === 1) {
+    } else if (limitRow && index === 1) {
       const resultApiRow2 = await consultValuesInTheApi(btn2);
       getValuesForCheckbox(resultApiRow2, setDataRow);
       setBtnClick("fila2");
+    } else {
+      alertError("Solo puedes seleccionar 2 opciones");
+      setIsOpen(false);
     }
   };
 
@@ -102,6 +107,7 @@ const Container = () => {
       filterRow2
     );
     setFilterRow1([]);
+    setFilterRow2([]);
   };
 
   return (
