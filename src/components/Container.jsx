@@ -20,12 +20,10 @@ const Container = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [btnClick, setBtnClick] = useState("");
   const [dataRow, setDataRow] = useState([]);
-
   const [dataColumn, setDataColumn] = useState([]);
   const [search, setSearch] = useState("");
   const [filterRow1, setFilterRow1] = useState([]);
   const [filterRow2, setFilterRow2] = useState([]);
-
   const [counterId, setCounterId] = useState(1);
 
   const addToArrayOfSelectedButtons = (button) => {
@@ -50,6 +48,26 @@ const Container = () => {
       setBtnClick("fila2");
     } else {
       alertError("Solo puedes seleccionar 2 opciones");
+      setIsOpen(false);
+    }
+  };
+
+  const getValuesFromColumnsButtons = async (index) => {
+    const limitColumn = column.length === 1;
+    setIsOpen(true);
+    let btnCol = "";
+    if (limitColumn && row.length === 1 && index === 0) {
+      btnCol = ArrayOfSelectedButtons[1];
+      const resultApiColumn1 = await consultValuesInTheApi(btnCol);
+      getValuesForCheckbox(resultApiColumn1, setDataColumn);
+      setBtnClick("column");
+    } else if (limitColumn && row.length === 2 && index === 0) {
+      btnCol = ArrayOfSelectedButtons[2];
+      const resultApiColumn2 = await consultValuesInTheApi(btnCol);
+      getValuesForCheckbox(resultApiColumn2, setDataColumn);
+      setBtnClick("column");
+    } else {
+      alertError("Solo puedes seleccionar 1 opción");
       setIsOpen(false);
     }
   };
@@ -153,6 +171,7 @@ const Container = () => {
                         key={index}
                         ref={(button) => addToArrayOfSelectedButtons(button)}
                         // onClick={() => openFilter(column)}
+                        onClick={() => getValuesFromColumnsButtons(index)}
                       >
                         {item}
                       </button>
