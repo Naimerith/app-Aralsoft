@@ -1,47 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Icon } from "@iconify/react";
-import { getArrObject } from "../Functions/functions";
 import "../assets/styles/Checkbox.css";
 
 const Checkbox = ({
-  state,
-  stateRow,
-  stateColumn,
-  handleChangeSearch,
   search,
   closeModal,
-  handleSelectRow,
-  handleSelectColumn,
+  handleChangeSearch,
+  dataColumn,
+  dataRow,
+  btnClick,
+  obtainFilteredElements,
 }) => {
-  // const [selectColumn, setSelectColumn] = useState([]);
-  //const [selectRow, setSelectRow] = useState([]);
-
-  const selectAll = (e) => {
-    console.log("diste click en seleccionar todo");
-  };
-
-  /*const handleSelectColumn = (e) => {
-    const valueCheckbox = e.target.value;
-    if (selectColumn.includes(valueCheckbox)) {
-      setSelectColumn(selectColumn.filter((sel) => sel !== valueCheckbox));
-    } else {
-      setSelectColumn([...selectColumn, valueCheckbox]);
-    }
-  };
-  const handleSelectRow = (e) => {
-    const valueCheckbox = e.target.value;
-    if (selectRow.includes(valueCheckbox)) {
-      setSelectRow(selectRow.filter((sel) => sel !== valueCheckbox));
-    } else {
-      setSelectRow([...selectRow, valueCheckbox]);
-    }
-  };
-  //console.log("fila", selectRow);
-
-  const addToCollectionFB = () => {
-    const result = getArrObject(selectRow, selectColumn);
-    console.log("probando aqui a ver que trae", result);
-  };*/
+  let mssg = "vacio";
 
   return (
     <div className="containerFilter">
@@ -61,32 +31,34 @@ const Checkbox = ({
           />
         </div>
         <label htmlFor="">Seleccionar Todo</label>
-        <input name="selectAll" type="checkbox" onChange={selectAll} />
+        <input name="selectAll" type="checkbox" className="check" />
         <div className="options">
-          {state === "fila"
-            ? stateRow.map((el, i) => {
+          {btnClick === "fila1" || btnClick === "fila2"
+            ? dataRow.map((el, i) => {
                 return (
                   <div key={i}>
                     <input
                       name={el}
                       type="checkbox"
-                      value={el}
-                      onChange={handleSelectRow}
+                      className="check"
+                      value={el === null ? mssg : el}
+                      onChange={obtainFilteredElements}
                     />
-                    <label htmlFor="">{el}</label>
+                    <label htmlFor="">{el === null ? mssg : el}</label>
                   </div>
                 );
               })
-            : stateColumn.map((el, i) => {
+            : dataColumn.map((el, i) => {
                 return (
                   <div key={i}>
                     <input
                       name={el}
                       type="checkbox"
-                      value={el}
-                      onChange={handleSelectColumn}
+                      className="check"
+                      value={el === null ? mssg : el}
+                      onChange={obtainFilteredElements}
                     />
-                    <label htmlFor="">{el}</label>
+                    <label htmlFor="">{el === null ? mssg : el}</label>
                   </div>
                 );
               })}

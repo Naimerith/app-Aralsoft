@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { Icon } from "@iconify/react";
 import { addCollectionResult } from "../Firebase/firebase.config";
 import {
   consultValuesInTheApi,
@@ -10,7 +9,7 @@ import {
 import { alertError } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
 import "../assets/styles/Container.css";
-import { getData } from "../services/api_aralsoft";
+import Checkbox from "./Checkbox";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
@@ -26,10 +25,11 @@ const Container = () => {
   const [filterRow1, setFilterRow1] = useState([]);
   const [filterRow2, setFilterRow2] = useState([]);
   const [filterCol, setFilterCol] = useState([]);
-
   const [counterId, setCounterId] = useState(1);
 
-  console.log(filterCol, "filterCol");
+  const limitColumn = column.length === 1;
+  const limitRow = row.length <= 2;
+  const limitValues = values.length === 1;
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -41,7 +41,6 @@ const Container = () => {
   const getValuesFromRowButtons = async (index) => {
     const btn1 = ArrayOfSelectedButtons[0];
     const btn2 = ArrayOfSelectedButtons[1];
-    const limitRow = row.length <= 2;
     setIsOpen(true);
     if (limitRow && index === 0) {
       const resultApiRow1 = await consultValuesInTheApi(btn1);
@@ -58,7 +57,6 @@ const Container = () => {
   };
 
   const getValuesFromColumnsButtons = async (index) => {
-    const limitColumn = column.length === 1;
     setIsOpen(true);
     setBtnClick("column");
     let btnCol = "";
@@ -128,17 +126,22 @@ const Container = () => {
     const nameColumn = column.toString();
     const nameValues = values.toString();
     const resId = reportID();
-    await addCollectionResult(
-      resId,
-      nameRow1,
-      nameRow2,
-      nameColumn,
-      nameValues,
-      filterRow1,
-      filterRow2
-    );
+    limitColumn && limitRow && limitValues
+      ? await addCollectionResult(
+          resId,
+          nameRow1,
+          nameRow2,
+          nameColumn,
+          nameValues,
+          filterRow1,
+          filterRow2,
+          filterCol
+        )
+      : alertError("No se puede generar el reporte");
+
     setFilterRow1([]);
     setFilterRow2([]);
+    setFilterCol([]);
   };
 
   return (
@@ -183,7 +186,6 @@ const Container = () => {
                         className="btnSelect"
                         key={index}
                         ref={(button) => addToArrayOfSelectedButtons(button)}
-                        // onClick={() => openFilter(column)}
                         onClick={() => getValuesFromColumnsButtons(index)}
                       >
                         {item}
@@ -216,60 +218,15 @@ const Container = () => {
           </div>
         </article>
         <div className={isOpen ? "block" : "none"}>
-          <form action="">
-            <div className="headerFilter">
-              <input
-                className="inputSearch"
-                type="search"
-                value={search === null ? "" : search}
-                placeholder="Buscar..."
-                onChange={handleChangeSearch}
-              />
-              <Icon
-                icon="mdi:close-circle-outline"
-                className="closeFilter"
-                onClick={closeModal}
-              />
-            </div>
-            <label htmlFor="">Seleccionar Todo</label>
-            <input
-              name="selectAll"
-              type="checkbox"
-              className="check"
-              //onChange={selectAllChecksByClicking}
-            />
-            <div className="options">
-              {btnClick === "fila1" || btnClick === "fila2"
-                ? dataRow.map((el, i) => {
-                    return (
-                      <div key={i}>
-                        <input
-                          name={el}
-                          type="checkbox"
-                          className="check"
-                          value={el}
-                          onChange={obtainFilteredElements}
-                        />
-                        <label htmlFor="">{el}</label>
-                      </div>
-                    );
-                  })
-                : dataColumn.map((el, i) => {
-                    return (
-                      <div key={i}>
-                        <input
-                          name={el}
-                          type="checkbox"
-                          className="check"
-                          value={el}
-                          onChange={obtainFilteredElements}
-                        />
-                        <label htmlFor="">{el}</label>
-                      </div>
-                    );
-                  })}
-            </div>
-          </form>
+          <Checkbox
+            search={search}
+            closeModal={closeModal}
+            handleChangeSearch={handleChangeSearch}
+            obtainFilteredElements={obtainFilteredElements}
+            dataRow={dataRow}
+            dataColumn={dataColumn}
+            btnClick={btnClick}
+          ></Checkbox>
         </div>
       </section>
       <section>

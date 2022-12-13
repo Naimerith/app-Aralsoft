@@ -19,7 +19,7 @@ export const collectionRef = collection(db, "tables");
 export const colRef = collection(db, "Report");
 
 
-export const addCollectionResult = async (id, nameRow1, nameRow2, nameCol, nameVal, filterRow1, filterRow2) => {
+export const addCollectionResult = async (id, nameRow1, nameRow2, nameCol, nameVal, filterRow1, filterRow2, filterCol) => {
   return await addDoc(colRef, {
     idReport: id,
     nombreReport: `Reporte de ${nameRow1} y ${nameRow2}`,
@@ -36,7 +36,7 @@ export const addCollectionResult = async (id, nameRow1, nameRow2, nameCol, nameV
     columnas: {
       columna1: {
         campo: nameCol,
-        filtro: [],
+        filtro: filterCol,
       }
     },
     valores: {
