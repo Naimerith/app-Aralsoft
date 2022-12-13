@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { addCollectionResult } from "../Firebase/firebase.config";
+import {
+  addFilteredResultsToTheCollection,
+  addUnfilteredResultsToTheCollection,
+} from "../Firebase/firebase.config";
 import {
   consultValuesInTheApi,
   getValuesForCheckbox,
@@ -20,6 +23,7 @@ const Container = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [btnClick, setBtnClick] = useState("");
   const [dataRow, setDataRow] = useState([]);
+
   const [dataColumn, setDataColumn] = useState([]);
   const [search, setSearch] = useState("");
   const [filterRow1, setFilterRow1] = useState([]);
@@ -73,9 +77,41 @@ const Container = () => {
       setIsOpen(false);
     }
   };
+  //console.log(dataRow, "dataRow");
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const obtainFilteredElements = (e) => {
+    if (btnClick === "fila1") {
+      const value1 = e.target.value;
+      const filterRowBtn1 = value1;
+      filterRow1 === []
+        ? setDataRow(dataRow)
+        : setFilterRow1((filterRow1) => [...filterRow1, filterRowBtn1]);
+      if (e.target.checked === false) {
+        const removeItem1 = filterRow1.filter((item) => item !== value1);
+        setFilterRow1(removeItem1);
+      }
+    } else if (btnClick === "fila2") {
+      const value2 = e.target.value;
+      const filterRowBtn2 = value2;
+      filterRow2 === []
+        ? setDataRow(dataRow)
+        : setFilterRow2((filterRow2) => [...filterRow2, filterRowBtn2]);
+      if (e.target.checked === false) {
+        const removeItem2 = filterRow2.filter((item) => item !== value2);
+        setFilterRow2(removeItem2);
+      }
+    }
+    if (btnClick === "column") {
+      const value3 = e.target.value;
+      const filterColBtn = value3;
+      filterCol === []
+        ? setDataColumn(dataColumn)
+        : setFilterCol((filterCol) => [...filterCol, filterColBtn]);
+      if (e.target.checked === false) {
+        const removeItem3 = filterCol.filter((item) => item !== value3);
+        setFilterCol(removeItem3);
+      }
+    }
   };
 
   /************************Buscador*****************************************************/
@@ -86,38 +122,12 @@ const Container = () => {
   };
   /***************************************************************************************/
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   const reportID = () => {
     setCounterId(counterId + 1);
     return counterId;
-  };
-
-  const obtainFilteredElements = (e) => {
-    if (btnClick === "fila1") {
-      const value1 = e.target.value;
-      const filterRowBtn1 = value1;
-      setFilterRow1((filterRow1) => [...filterRow1, filterRowBtn1]);
-      if (e.target.checked === false) {
-        const removeItem1 = filterRow1.filter((item) => item !== value1);
-        setFilterRow1(removeItem1);
-      }
-    } else if (btnClick === "fila2") {
-      const value2 = e.target.value;
-      const filterRowBtn2 = value2;
-      setFilterRow2((filterRow2) => [...filterRow2, filterRowBtn2]);
-      if (e.target.checked === false) {
-        const removeItem2 = filterRow2.filter((item) => item !== value2);
-        setFilterRow2(removeItem2);
-      }
-    }
-    if (btnClick === "column") {
-      const value3 = e.target.value;
-      const filterColBtn = value3;
-      setFilterCol((filterCol) => [...filterCol, filterColBtn]);
-      if (e.target.checked === false) {
-        const removeItem3 = filterCol.filter((item) => item !== value3);
-        setFilterCol(removeItem3);
-      }
-    }
   };
 
   const generateReport = async () => {
@@ -126,8 +136,19 @@ const Container = () => {
     const nameColumn = column.toString();
     const nameValues = values.toString();
     const resId = reportID();
+    /* filterRow1 || filterRow2 || filterCol === []
+      ? await addUnfilteredResultsToTheCollection(
+          resId,
+          nameRow1,
+          nameRow2,
+          nameColumn,
+          nameValues,
+          dataRow,
+          dataColumn
+        )
+      : alertError("probando");*/
     limitColumn && limitRow && limitValues
-      ? await addCollectionResult(
+      ? await addFilteredResultsToTheCollection(
           resId,
           nameRow1,
           nameRow2,
@@ -139,9 +160,9 @@ const Container = () => {
         )
       : alertError("No se puede generar el reporte");
 
-    setFilterRow1([]);
-    setFilterRow2([]);
-    setFilterCol([]);
+    // setFilterRow1([]);
+    // setFilterRow2([]);
+    //setFilterCol([]);
   };
 
   return (
