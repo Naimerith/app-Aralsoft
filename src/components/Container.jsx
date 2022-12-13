@@ -10,6 +10,7 @@ import {
 import { alertError } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
 import "../assets/styles/Container.css";
+import { getData } from "../services/api_aralsoft";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
@@ -24,7 +25,11 @@ const Container = () => {
   const [search, setSearch] = useState("");
   const [filterRow1, setFilterRow1] = useState([]);
   const [filterRow2, setFilterRow2] = useState([]);
+  const [filterCol, setFilterCol] = useState([]);
+
   const [counterId, setCounterId] = useState(1);
+
+  console.log(filterCol, "filterCol");
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -55,17 +60,16 @@ const Container = () => {
   const getValuesFromColumnsButtons = async (index) => {
     const limitColumn = column.length === 1;
     setIsOpen(true);
+    setBtnClick("column");
     let btnCol = "";
     if (limitColumn && row.length === 1 && index === 0) {
       btnCol = ArrayOfSelectedButtons[1];
-      const resultApiColumn1 = await consultValuesInTheApi(btnCol);
-      getValuesForCheckbox(resultApiColumn1, setDataColumn);
-      setBtnClick("column");
+      const resultApiColumn = await consultValuesInTheApi(btnCol);
+      getValuesForCheckbox(resultApiColumn, setDataColumn);
     } else if (limitColumn && row.length === 2 && index === 0) {
       btnCol = ArrayOfSelectedButtons[2];
-      const resultApiColumn2 = await consultValuesInTheApi(btnCol);
-      getValuesForCheckbox(resultApiColumn2, setDataColumn);
-      setBtnClick("column");
+      const resultApiColumn = await consultValuesInTheApi(btnCol);
+      getValuesForCheckbox(resultApiColumn, setDataColumn);
     } else {
       alertError("Solo puedes seleccionar 1 opción");
       setIsOpen(false);
@@ -105,6 +109,15 @@ const Container = () => {
       if (e.target.checked === false) {
         const removeItem2 = filterRow2.filter((item) => item !== value2);
         setFilterRow2(removeItem2);
+      }
+    }
+    if (btnClick === "column") {
+      const value3 = e.target.value;
+      const filterColBtn = value3;
+      setFilterCol((filterCol) => [...filterCol, filterColBtn]);
+      if (e.target.checked === false) {
+        const removeItem3 = filterCol.filter((item) => item !== value3);
+        setFilterCol(removeItem3);
       }
     }
   };
@@ -219,7 +232,12 @@ const Container = () => {
               />
             </div>
             <label htmlFor="">Seleccionar Todo</label>
-            <input name="selectAll" type="checkbox" />
+            <input
+              name="selectAll"
+              type="checkbox"
+              className="check"
+              //onChange={selectAllChecksByClicking}
+            />
             <div className="options">
               {btnClick === "fila1" || btnClick === "fila2"
                 ? dataRow.map((el, i) => {
@@ -228,6 +246,7 @@ const Container = () => {
                         <input
                           name={el}
                           type="checkbox"
+                          className="check"
                           value={el}
                           onChange={obtainFilteredElements}
                         />
@@ -238,7 +257,13 @@ const Container = () => {
                 : dataColumn.map((el, i) => {
                     return (
                       <div key={i}>
-                        <input name={el} type="checkbox" value={el} />
+                        <input
+                          name={el}
+                          type="checkbox"
+                          className="check"
+                          value={el}
+                          onChange={obtainFilteredElements}
+                        />
                         <label htmlFor="">{el}</label>
                       </div>
                     );
