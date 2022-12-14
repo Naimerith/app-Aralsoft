@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonListContainer from "../components/ButtonListContainer";
-import "../assets/styles/CreateReport.css";
 import Container from "../components/Container";
+import "../assets/styles/CreateReport.css";
 
 const CreateReport = () => {
   return (

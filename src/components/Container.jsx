@@ -77,7 +77,6 @@ const Container = () => {
       setIsOpen(false);
     }
   };
-  //console.log(dataRow, "dataRow");
 
   const obtainFilteredElements = (e) => {
     if (btnClick === "fila1") {

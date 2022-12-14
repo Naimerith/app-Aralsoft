@@ -22,6 +22,7 @@ export const colRef = collection(db, "Report");
 export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, nameCol, nameVal, filterRow1, filterRow2, filterCol) => {
   return await addDoc(colRef, {
     idReport: id,
+    fechaReport: new Date(),
     nombreReport: `Reporte de ${nameRow1} y ${nameRow2}`,
     filas: {
       fila1: {
@@ -50,6 +51,7 @@ export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, 
 export const addUnfilteredResultsToTheCollection = async (id, nameRow1, nameRow2, nameCol, nameVal, dataRow, dataColumn) => {
   return await addDoc(colRef, {
     idReport: id,
+    fechaReport: new Date(),
     nombreReport: `Reporte de ${nameRow1} y ${nameRow2}`,
     filas: {
       fila1: {
@@ -78,7 +80,7 @@ export const addUnfilteredResultsToTheCollection = async (id, nameRow1, nameRow2
 
 export const getLastDocumentOfTheCollection = async (state) => {
   const q = query(
-    collectionRef,
+    colRef,
     limit(1),
     orderBy("fecha", "desc")
   );
@@ -90,7 +92,7 @@ export const getLastDocumentOfTheCollection = async (state) => {
 
 export const getCollectionTables = async (state) => {
   const tables = [];
-  const q = query(collectionRef, orderBy("fecha", "desc"));
+  const q = query(colRef, orderBy("fecha", "desc"));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     const newDate = new Date(doc.data().fecha);
@@ -105,11 +107,11 @@ export const getCollectionTables = async (state) => {
 };
 
 export const deleteReportFb = async (id) => {
-  await deleteDoc(doc(collectionRef, id));
+  await deleteDoc(doc(colRef, id));
 }
 
 export const getReport = async (id) => {
-  const result = await getDoc(doc(collectionRef, id));
+  const result = await getDoc(doc(colRef, id));
   return result.data();
 }
 

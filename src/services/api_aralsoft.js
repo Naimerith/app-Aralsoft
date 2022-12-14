@@ -30,7 +30,6 @@ export const getData = async () => {
       'token': 'a2ca9ff273fd7a4c0b0dadce6d076524c28f6675d262acfa4738c90caa8b8f40'
     }
   };
-
   const response = await axios(config);
   const responseData = await response.data.data;
   return responseData
