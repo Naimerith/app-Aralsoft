@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
+import { getData } from "../services/api_aralsoft";
 import {
   addFilteredResultsToTheCollection,
   addUnfilteredResultsToTheCollection,
@@ -8,6 +9,7 @@ import {
   consultValuesInTheApi,
   getValuesForCheckbox,
   filterData,
+  example,
 } from "../Functions/functions";
 import { alertError } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
@@ -20,20 +22,31 @@ const Container = () => {
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
   const [values, setValues] = useState([]);
+
   const [isOpen, setIsOpen] = useState(false);
   const [btnClick, setBtnClick] = useState("");
+
   const [dataRow, setDataRow] = useState([]);
 
   const [dataColumn, setDataColumn] = useState([]);
+  const [dataValues, setDataValues] = useState([]);
+
   const [search, setSearch] = useState("");
+
   const [filterRow1, setFilterRow1] = useState([]);
   const [filterRow2, setFilterRow2] = useState([]);
   const [filterCol, setFilterCol] = useState([]);
+
   const [counterId, setCounterId] = useState(1);
 
-  const limitColumn = column.length === 1;
   const limitRow = row.length <= 2;
+  const limitColumn = column.length === 1;
   const limitValues = values.length === 1;
+
+  const reportID = () => {
+    setCounterId(counterId + 1);
+    return counterId;
+  };
 
   const addToArrayOfSelectedButtons = (button) => {
     if (button != null) {
@@ -75,6 +88,19 @@ const Container = () => {
     } else {
       alertError("Solo puedes seleccionar 1 opción");
       setIsOpen(false);
+    }
+  };
+
+  const getValuesFromValuesButtons = async (index) => {
+    let btnVal = "";
+    if (limitValues && typeValues && row.length === 1 && index === 0) {
+      btnVal = ArrayOfSelectedButtons[2];
+      const resultApiValues = await consultValuesInTheApi(btnVal);
+      return setDataValues(resultApiValues);
+    } else if (limitValues && typeValues && row.length === 2 && index === 0) {
+      btnVal = ArrayOfSelectedButtons[3];
+      const resultApiValues = await consultValuesInTheApi(btnVal);
+      return setDataValues(resultApiValues);
     }
   };
 
@@ -124,44 +150,59 @@ const Container = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  const reportID = () => {
-    setCounterId(counterId + 1);
-    return counterId;
+
+  /***************************************************************************************/
+
+  const reportUnfiltered = async () => {
+    if (row.length === 1) {
+      const resId = reportID();
+      const btnRow1 = ArrayOfSelectedButtons[0];
+      const btnCol = ArrayOfSelectedButtons[1];
+      const btnVal = ArrayOfSelectedButtons[2];
+      const btnRow2 = "";
+      const consultApiRow2 = [];
+      const consultApiRow1 = await example(btnRow1);
+      const consultApiCol = await example(btnCol);
+      const consultApiVal = await example(btnVal);
+      await addUnfilteredResultsToTheCollection(
+        resId,
+        btnRow1,
+        btnRow2,
+        btnCol,
+        btnVal,
+        consultApiRow1,
+        consultApiRow2,
+        consultApiCol,
+        consultApiVal
+      );
+    } else if (row.length === 2) {
+      const resId = reportID();
+      const btnRow1 = ArrayOfSelectedButtons[0];
+      const btnRow2 = ArrayOfSelectedButtons[1];
+      const btnCol = ArrayOfSelectedButtons[2];
+      const btnVal = ArrayOfSelectedButtons[3];
+      const consultApiRow1 = await example(btnRow1);
+      const consultApiRow2 = await example(btnRow2);
+      const consultApiCol = await example(btnCol);
+      const consultApiVal = await example(btnVal);
+      await addUnfilteredResultsToTheCollection(
+        resId,
+        btnRow1,
+        btnRow2,
+        btnCol,
+        btnVal,
+        consultApiRow1,
+        consultApiRow2,
+        consultApiCol,
+        consultApiVal
+      );
+    } else {
+      alertError("No se ha generado el reporte");
+    }
   };
 
   const generateReport = async () => {
-    const nameRow1 = row[0].toString();
-    const nameRow2 = row[1].toString();
-    const nameColumn = column.toString();
-    const nameValues = values.toString();
-    const resId = reportID();
-    /* filterRow1 || filterRow2 || filterCol === []
-      ? await addUnfilteredResultsToTheCollection(
-          resId,
-          nameRow1,
-          nameRow2,
-          nameColumn,
-          nameValues,
-          dataRow,
-          dataColumn
-        )
-      : alertError("probando");*/
-    limitColumn && limitRow && limitValues
-      ? await addFilteredResultsToTheCollection(
-          resId,
-          nameRow1,
-          nameRow2,
-          nameColumn,
-          nameValues,
-          filterRow1,
-          filterRow2,
-          filterCol
-        )
-      : alertError("No se puede generar el reporte");
-
-    // setFilterRow1([]);
-    // setFilterRow2([]);
-    //setFilterCol([]);
+    reportUnfiltered();
   };
 
   return (
@@ -229,6 +270,7 @@ const Container = () => {
                         className="btnSelect"
                         key={index}
                         ref={(button) => addToArrayOfSelectedButtons(button)}
+                        onChange={() => getValuesFromValuesButtons(index)}
                       >
                         {item}
                       </button>

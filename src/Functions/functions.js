@@ -83,3 +83,26 @@ export const filterData = (state, data, setState) => {
   });
   setState(resSearch);
 };
+
+
+export const example = async (position, state) => {
+  const resApi = await getData();
+  const btnRow1 = position;
+  const consultApiSelectionBtn = resApi.map((el) => {
+    const convertObjectToArray = Object.entries(el);
+    convertObjectToArray.filter((key) => key.includes(btnRow1));
+    return convertObjectToArray;
+  });
+  let arrayOfValues = [];
+  consultApiSelectionBtn.map((el) => {
+    el.map((el) => {
+      if (el.includes(btnRow1)) {
+        arrayOfValues.push(el[1]);
+      }
+    });
+  });
+  const arrayChekbook = [...new Set(arrayOfValues)];
+  arrayChekbook.sort();
+  //console.log(arrayChekbook, "arrayChekbook")
+  return arrayChekbook
+};
