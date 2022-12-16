@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import { getData } from "../services/api_aralsoft";
 import {
   addFilteredResultsToTheCollection,
   addUnfilteredResultsToTheCollection,
@@ -54,6 +53,12 @@ const Container = () => {
     }
   };
 
+  let nameRow1 = ArrayOfSelectedButtons[0];
+  let nameRow2 = ArrayOfSelectedButtons[1];
+  let nameCol = ArrayOfSelectedButtons[2];
+  let nameVal = ArrayOfSelectedButtons[3];
+  // let resId = reportID();
+
   /***************Filtro que consulta la api y trae todos los checkbox *********************/
   const getValuesFromRowButtons = async (index) => {
     const btn1 = ArrayOfSelectedButtons[0];
@@ -93,11 +98,11 @@ const Container = () => {
 
   const getValuesFromValuesButtons = async (index) => {
     let btnVal = "";
-    if (limitValues && typeValues && row.length === 1 && index === 0) {
+    if (limitValues && row.length === 1 && index === 0) {
       btnVal = ArrayOfSelectedButtons[2];
       const resultApiValues = await consultValuesInTheApi(btnVal);
       return setDataValues(resultApiValues);
-    } else if (limitValues && typeValues && row.length === 2 && index === 0) {
+    } else if (limitValues && row.length === 2 && index === 0) {
       btnVal = ArrayOfSelectedButtons[3];
       const resultApiValues = await consultValuesInTheApi(btnVal);
       return setDataValues(resultApiValues);
@@ -156,20 +161,20 @@ const Container = () => {
   const reportUnfiltered = async () => {
     if (row.length === 1) {
       const resId = reportID();
-      const btnRow1 = ArrayOfSelectedButtons[0];
+      /* const btnRow1 = ArrayOfSelectedButtons[0];
       const btnCol = ArrayOfSelectedButtons[1];
-      const btnVal = ArrayOfSelectedButtons[2];
+      const btnVal = ArrayOfSelectedButtons[2];*/
       const btnRow2 = "";
       const consultApiRow2 = [];
-      const consultApiRow1 = await example(btnRow1);
-      const consultApiCol = await example(btnCol);
-      const consultApiVal = await example(btnVal);
+      const consultApiRow1 = await example(nameRow1);
+      const consultApiCol = await example(nameCol);
+      const consultApiVal = await example(nameVal);
       await addUnfilteredResultsToTheCollection(
         resId,
-        btnRow1,
+        nameRow1,
         btnRow2,
-        btnCol,
-        btnVal,
+        nameCol,
+        nameVal,
         consultApiRow1,
         consultApiRow2,
         consultApiCol,
@@ -177,20 +182,20 @@ const Container = () => {
       );
     } else if (row.length === 2) {
       const resId = reportID();
-      const btnRow1 = ArrayOfSelectedButtons[0];
+      /*const btnRow1 = ArrayOfSelectedButtons[0];
       const btnRow2 = ArrayOfSelectedButtons[1];
       const btnCol = ArrayOfSelectedButtons[2];
-      const btnVal = ArrayOfSelectedButtons[3];
-      const consultApiRow1 = await example(btnRow1);
-      const consultApiRow2 = await example(btnRow2);
-      const consultApiCol = await example(btnCol);
-      const consultApiVal = await example(btnVal);
+      const btnVal = ArrayOfSelectedButtons[3];*/
+      const consultApiRow1 = await example(nameRow1);
+      const consultApiRow2 = await example(nameRow2);
+      const consultApiCol = await example(nameCol);
+      const consultApiVal = await example(nameVal);
       await addUnfilteredResultsToTheCollection(
         resId,
-        btnRow1,
-        btnRow2,
-        btnCol,
-        btnVal,
+        nameRow1,
+        nameRow2,
+        nameCol,
+        nameVal,
         consultApiRow1,
         consultApiRow2,
         consultApiCol,
@@ -202,7 +207,26 @@ const Container = () => {
   };
 
   const generateReport = async () => {
-    reportUnfiltered();
+    const resId = reportID();
+
+    if (
+      filterRow1.length === 0 &&
+      filterRow2.length === 0 &&
+      filterCol.length === 0
+    ) {
+      reportUnfiltered();
+    } else {
+      await addFilteredResultsToTheCollection(
+        resId,
+        nameRow1,
+        nameRow2,
+        nameCol,
+        nameVal,
+        filterRow1,
+        filterRow2,
+        filterCol
+      );
+    }
   };
 
   return (
