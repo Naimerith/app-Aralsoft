@@ -8,15 +8,17 @@ import {
   consultValuesInTheApi,
   getValuesForCheckbox,
   filterData,
-  example,
+  querTheApiForAllElements,
 } from "../Functions/functions";
-import { alertError } from "../Functions/sweetAlert";
+import { alertError, alertSuccess } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
 import "../assets/styles/Container.css";
 import Checkbox from "./Checkbox";
+import { useNavigate } from "react-router-dom";
 
 const Container = () => {
   let ArrayOfSelectedButtons = [];
+  const navigate = useNavigate();
 
   const [row, setRow] = useState([]);
   const [column, setColumn] = useState([]);
@@ -152,17 +154,18 @@ const Container = () => {
 
   /***************************************************************************************/
 
-  const reportUnfiltered = async () => {
+  const unfilteredReport = async () => {
     if (row.length === 1) {
       const nameRow1 = ArrayOfSelectedButtons[0];
       const nameCol = ArrayOfSelectedButtons[1];
       const nameVal = ArrayOfSelectedButtons[2];
       const resId = reportID();
-      const consultApiRow1 = await example(nameRow1);
+      console.log(resId);
+      const consultApiRow1 = await querTheApiForAllElements(nameRow1);
       const btnRow2 = "";
       const consultApiRow2 = [];
-      const consultApiCol = await example(nameCol);
-      const consultApiVal = await example(nameVal);
+      const consultApiCol = await querTheApiForAllElements(nameCol);
+      const consultApiVal = await querTheApiForAllElements(nameVal);
       await addUnfilteredResultsToTheCollection(
         resId,
         nameRow1,
@@ -176,14 +179,16 @@ const Container = () => {
       );
     } else if (row.length === 2) {
       const resId = reportID();
+      console.log(resId);
+
       const nameRow1 = ArrayOfSelectedButtons[0];
       const nameRow2 = ArrayOfSelectedButtons[1];
       const nameCol = ArrayOfSelectedButtons[2];
       const nameVal = ArrayOfSelectedButtons[3];
-      const consultApiRow1 = await example(nameRow1);
-      const consultApiRow2 = await example(nameRow2);
-      const consultApiCol = await example(nameCol);
-      const consultApiVal = await example(nameVal);
+      const consultApiRow1 = await querTheApiForAllElements(nameRow1);
+      const consultApiRow2 = await querTheApiForAllElements(nameRow2);
+      const consultApiCol = await querTheApiForAllElements(nameCol);
+      const consultApiVal = await querTheApiForAllElements(nameVal);
       await addUnfilteredResultsToTheCollection(
         resId,
         nameRow1,
@@ -200,20 +205,34 @@ const Container = () => {
     }
   };
 
-  const generateReport = async () => {
-    //await reportUnfiltered();
-    const resId = reportID();
-    const nameRow1 = ArrayOfSelectedButtons[0];
-    const nameRow2 = ArrayOfSelectedButtons[1];
-    const nameCol = ArrayOfSelectedButtons[2];
-    const nameVal = ArrayOfSelectedButtons[3];
-    if (
-      filterRow1.length === 0 &&
-      filterRow2.length === 0 &&
-      filterCol.length === 0
-    ) {
-      await reportUnfiltered();
-    } else {
+  const filteredReport = async () => {
+    if (row.length === 1) {
+      const nameRow1 = ArrayOfSelectedButtons[0];
+      const nameCol = ArrayOfSelectedButtons[1];
+      const nameVal = ArrayOfSelectedButtons[2];
+      const resId = reportID();
+      console.log(resId);
+
+      const btnRow2 = "";
+      const filterRow2 = [];
+      await addFilteredResultsToTheCollection(
+        resId,
+        nameRow1,
+        btnRow2,
+        nameCol,
+        nameVal,
+        filterRow1,
+        filterRow2,
+        filterCol
+      );
+    } else if (row.length === 2) {
+      const resId = reportID();
+      console.log(resId);
+
+      const nameRow1 = ArrayOfSelectedButtons[0];
+      const nameRow2 = ArrayOfSelectedButtons[1];
+      const nameCol = ArrayOfSelectedButtons[2];
+      const nameVal = ArrayOfSelectedButtons[3];
       await addFilteredResultsToTheCollection(
         resId,
         nameRow1,
@@ -224,6 +243,26 @@ const Container = () => {
         filterRow2,
         filterCol
       );
+    } else {
+      alertError("No se ha generado el reporte");
+    }
+  };
+
+  const generateReport = async () => {
+    if (
+      filterRow1.length === 0 &&
+      filterRow2.length === 0 &&
+      filterCol.length === 0
+    ) {
+      await unfilteredReport();
+      navigate("/report-generated");
+      alertSuccess("Reporte generado");
+      setCounterId(counterId + 1);
+    } else {
+      await filteredReport();
+      navigate("/report-generated");
+      alertSuccess("Reporte generado");
+      setCounterId(counterId + 1);
     }
   };
 

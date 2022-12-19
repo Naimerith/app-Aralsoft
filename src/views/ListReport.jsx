@@ -4,10 +4,7 @@ import {
   getCollectionTables,
   deleteReportFb,
   getReport,
-  colRef,
-  db,
 } from "../Firebase/firebase.config";
-import { getDocs, query, orderBy, collection } from "firebase/firestore";
 import { getCollectionDataForTheTable } from "../Functions/functions";
 import Modal from "react-modal";
 import Table from "../components/Table";

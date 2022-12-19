@@ -9,7 +9,7 @@ export const alertSuccess = (text) => {
     icon: "success",
     title: text,
     showConfirmButton: false,
-    timer: 1000,
+    timer: 500,
     width: "25em",
   });
 }

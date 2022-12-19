@@ -85,7 +85,7 @@ export const filterData = (state, data, setState) => {
 };
 
 
-export const example = async (position, state) => {
+export const querTheApiForAllElements = async (position) => {
   const resApi = await getData();
   const btnRow1 = position;
   const consultApiSelectionBtn = resApi.map((el) => {
@@ -103,6 +103,5 @@ export const example = async (position, state) => {
   });
   const arrayChekbook = [...new Set(arrayOfValues)];
   arrayChekbook.sort();
-  //console.log(arrayChekbook, "arrayChekbook")
   return arrayChekbook
 };

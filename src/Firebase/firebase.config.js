@@ -96,10 +96,8 @@ export const getCollectionTables = async (state) => {
   const tables = [];
   const q = query(colRef, orderBy("fechaReport", "desc"));
   const querySnapshot = await getDocs(q);
-  console.log(querySnapshot, "querySnapshot")
   querySnapshot.forEach((doc) => {
     const newDate = new Date(doc.data().fechaReport);
-    console.log(newDate, "newDate")
     const converteDate = newDate.toLocaleString();
     tables.push({
       ...doc.data(),
