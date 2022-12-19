@@ -4,7 +4,10 @@ import {
   getCollectionTables,
   deleteReportFb,
   getReport,
+  colRef,
+  db,
 } from "../Firebase/firebase.config";
+import { getDocs, query, orderBy, collection } from "firebase/firestore";
 import { getCollectionDataForTheTable } from "../Functions/functions";
 import Modal from "react-modal";
 import Table from "../components/Table";
@@ -34,6 +37,8 @@ const ListReport = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [data, setData] = useState([]);
   const [report, setReport] = useState([]);
+
+  console.log(listTable);
 
   const deleteReport = async (id) => {
     MySwal.fire({
@@ -94,7 +99,7 @@ const ListReport = () => {
                 height={50}
                 color="#0e3a73"
               />
-              <p className="dateTable">Creado el: {el.fecha}</p>
+              <p className="dateTable">Creado el: {el.fechaReport}</p>
               <div className="icons-bottoms">
                 <Icon
                   icon="ant-design:folder-open-outlined"

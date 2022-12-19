@@ -22,8 +22,8 @@ export const colRef = collection(db, "Report");
 export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, nameCol, nameVal, filterRow1, filterRow2, filterCol) => {
   return await addDoc(colRef, {
     idReport: id,
-    fechaReport: new Date(),
-    nombreReport: `Reporte de ${nameRow1} y ${nameRow2}`,
+    fechaReport: Date.now(),
+    nombreReport: nameRow2 === "" ? `Reporte de ${nameRow1}` : `Reporte de ${nameRow1} y ${nameRow2}`,
     filas: {
       fila1: {
         campo: nameRow1,
@@ -51,8 +51,8 @@ export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, 
 export const addUnfilteredResultsToTheCollection = async (id, nameRow1, nameRow2, nameCol, nameVal, dataRow, dataRow2, dataColumn, dataValues) => {
   return await addDoc(colRef, {
     idReport: id,
-    fechaReport: new Date(),
-    nombreReport: `Reporte de ${nameRow1} y ${nameRow2}`,
+    fechaReport: Date.now(),
+    nombreReport: nameRow2 === "" ? `Reporte de ${nameRow1}` : `Reporte de ${nameRow1} y ${nameRow2}`,
     filas: {
       fila1: {
         campo: nameRow1,
@@ -90,17 +90,21 @@ export const getLastDocumentOfTheCollection = async (state) => {
   });
 };
 
+
+
 export const getCollectionTables = async (state) => {
   const tables = [];
-  const q = query(collectionRef, orderBy("fecha", "desc"));
+  const q = query(colRef, orderBy("fechaReport", "desc"));
   const querySnapshot = await getDocs(q);
+  console.log(querySnapshot, "querySnapshot")
   querySnapshot.forEach((doc) => {
-    const newDate = new Date(doc.data().fecha);
+    const newDate = new Date(doc.data().fechaReport);
+    console.log(newDate, "newDate")
     const converteDate = newDate.toLocaleString();
     tables.push({
       ...doc.data(),
       id: doc.id,
-      fecha: converteDate,
+      fechaReport: converteDate,
     });
     return state(tables);
   });
