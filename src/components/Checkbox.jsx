@@ -11,7 +11,7 @@ const Checkbox = ({
   btnClick,
   obtainFilteredElements,
 }) => {
-  let mssg = "vacio";
+  let mssg = "Sin datos";
 
   return (
     <div className="containerFilter">
