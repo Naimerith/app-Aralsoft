@@ -80,13 +80,13 @@ export const addUnfilteredResultsToTheCollection = async (id, nameRow1, nameRow2
 
 export const getLastDocumentOfTheCollection = async (state) => {
   const q = query(
-    collectionRef,
+    colRef,
     limit(1),
-    orderBy("fecha", "desc")
+    orderBy("fechaReport", "desc")
   );
   const lastDocument = await getDocs(q);
   lastDocument.forEach((doc) => {
-    return state(doc.data().consultApi);
+    return state(doc.data());
   });
 };
 
