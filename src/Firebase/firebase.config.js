@@ -27,17 +27,17 @@ export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, 
     filas: {
       fila1: {
         campo: nameRow1,
-        filtro: filterRow1,
+        data: filterRow1,
       },
       fila2: {
         campo: nameRow2,
-        filtro: filterRow2
+        data: filterRow2
       }
     },
     columnas: {
       columna1: {
         campo: nameCol,
-        filtro: filterCol,
+        data: filterCol,
       }
     },
     valores: {
