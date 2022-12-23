@@ -40,9 +40,9 @@ const Container = () => {
 
   const [counterId, setCounterId] = useState(1);
 
-  const limitRow = row.length <= 2;
-  const limitColumn = column.length === 1;
-  const limitValues = values.length === 1;
+  const limitRow = row.length <= 5;
+  const limitColumn = column.length <= 1;
+  const limitValues = values.length <= 5;
 
   const reportID = () => {
     setCounterId(counterId + 1);
@@ -69,8 +69,8 @@ const Container = () => {
       getValuesForCheckbox(resultApiRow2, setDataRow);
       setBtnClick("fila2");
     } else {
-      alertError("Solo puedes seleccionar 2 opciones");
-      setIsOpen(false);
+      //alertError("Solo puedes seleccionar 2 opciones");
+      setIsOpen(true);
     }
   };
 
@@ -86,9 +86,6 @@ const Container = () => {
       btnCol = ArrayOfSelectedButtons[2];
       const resultApiColumn = await consultValuesInTheApi(btnCol);
       getValuesForCheckbox(resultApiColumn, setDataColumn);
-    } else {
-      alertError("Solo puedes seleccionar 1 opción");
-      setIsOpen(false);
     }
   };
 
@@ -154,57 +151,6 @@ const Container = () => {
 
   /***************************************************************************************/
 
-  const unfilteredReport = async () => {
-    if (row.length === 1) {
-      const nameRow1 = ArrayOfSelectedButtons[0];
-      const nameCol = ArrayOfSelectedButtons[1];
-      const nameVal = ArrayOfSelectedButtons[2];
-      const resId = reportID();
-      console.log(resId);
-      const consultApiRow1 = await querTheApiForAllElements(nameRow1);
-      const btnRow2 = "";
-      const consultApiRow2 = [];
-      const consultApiCol = await querTheApiForAllElements(nameCol);
-      const consultApiVal = await querTheApiForAllElements(nameVal);
-      await addUnfilteredResultsToTheCollection(
-        resId,
-        nameRow1,
-        btnRow2,
-        nameCol,
-        nameVal,
-        consultApiRow1,
-        consultApiRow2,
-        consultApiCol,
-        consultApiVal
-      );
-    } else if (row.length === 2) {
-      const resId = reportID();
-      console.log(resId);
-
-      const nameRow1 = ArrayOfSelectedButtons[0];
-      const nameRow2 = ArrayOfSelectedButtons[1];
-      const nameCol = ArrayOfSelectedButtons[2];
-      const nameVal = ArrayOfSelectedButtons[3];
-      const consultApiRow1 = await querTheApiForAllElements(nameRow1);
-      const consultApiRow2 = await querTheApiForAllElements(nameRow2);
-      const consultApiCol = await querTheApiForAllElements(nameCol);
-      const consultApiVal = await querTheApiForAllElements(nameVal);
-      await addUnfilteredResultsToTheCollection(
-        resId,
-        nameRow1,
-        nameRow2,
-        nameCol,
-        nameVal,
-        consultApiRow1,
-        consultApiRow2,
-        consultApiCol,
-        consultApiVal
-      );
-    } else {
-      alertError("No se ha generado el reporte");
-    }
-  };
-
   const filteredReport = async () => {
     if (row.length === 1) {
       const nameRow1 = ArrayOfSelectedButtons[0];
@@ -212,7 +158,6 @@ const Container = () => {
       const nameVal = ArrayOfSelectedButtons[2];
       const resId = reportID();
       console.log(resId);
-
       const btnRow2 = "";
       const filterRow2 = [];
       await addFilteredResultsToTheCollection(
@@ -228,7 +173,6 @@ const Container = () => {
     } else if (row.length === 2) {
       const resId = reportID();
       console.log(resId);
-
       const nameRow1 = ArrayOfSelectedButtons[0];
       const nameRow2 = ArrayOfSelectedButtons[1];
       const nameCol = ArrayOfSelectedButtons[2];
@@ -243,27 +187,15 @@ const Container = () => {
         filterRow2,
         filterCol
       );
-    } else {
-      alertError("No se ha generado el reporte");
     }
   };
 
   const generateReport = async () => {
-    if (
-      filterRow1.length === 0 &&
-      filterRow2.length === 0 &&
-      filterCol.length === 0
-    ) {
-      await unfilteredReport();
-      navigate("/report-generated");
-      alertSuccess("Reporte generado");
-      setCounterId(counterId + 1);
-    } else {
-      await filteredReport();
-      navigate("/report-generated");
-      alertSuccess("Reporte generado");
-      setCounterId(counterId + 1);
-    }
+    console.log("bien");
+    await filteredReport();
+    navigate("/report-generated");
+    alertSuccess("Reporte generado");
+    setCounterId(counterId + 1);
   };
 
   return (

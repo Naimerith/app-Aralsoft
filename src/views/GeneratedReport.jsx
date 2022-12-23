@@ -13,7 +13,7 @@ const GeneratedReport = () => {
         <table className="containerTable">
           <thead>
             <tr>
-              <th>{data?.filas?.fila1?.campo}</th>
+              {/* <th>{data?.filas?.fila1?.campo}</th> */}
               <th>{data?.filas?.fila2?.campo}</th>
               {data?.columnas?.columna1?.data.map((columns, i) =>
                 columns === "" ? <th key={i}></th> : <th key={i}>{columns}</th>

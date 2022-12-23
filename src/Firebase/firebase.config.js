@@ -27,56 +27,39 @@ export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, 
     filas: {
       fila1: {
         campo: nameRow1,
-        data: filterRow1,
+        filtro: filterRow1,
       },
       fila2: {
         campo: nameRow2,
-        data: filterRow2
+        filtro: filterRow2
+      },
+      fila3: {
+        campo: "",
+        filtro: []
+      },
+      fila4: {
+        campo: "",
+        filtro: []
+      },
+      fila5: {
+        campo: "",
+        filtro: []
       }
     },
     columnas: {
       columna1: {
         campo: nameCol,
-        data: filterCol,
+        filtro: filterCol,
       }
     },
     valores: {
       valor1: {
-        campo: nameVal
+        filtro: nameVal
       }
     }
   });
 }
 
-export const addUnfilteredResultsToTheCollection = async (id, nameRow1, nameRow2, nameCol, nameVal, dataRow, dataRow2, dataColumn, dataValues) => {
-  return await addDoc(colRef, {
-    idReport: id,
-    fechaReport: Date.now(),
-    nombreReport: nameRow2 === "" ? `Reporte de ${nameRow1}` : `Reporte de ${nameRow1} y ${nameRow2}`,
-    filas: {
-      fila1: {
-        campo: nameRow1,
-        data: dataRow,
-      },
-      fila2: {
-        campo: nameRow2,
-        data: dataRow2,
-      }
-    },
-    columnas: {
-      columna1: {
-        campo: nameCol,
-        data: dataColumn,
-      }
-    },
-    valores: {
-      valor1: {
-        campo: nameVal,
-        data: dataValues
-      }
-    }
-  });
-}
 
 export const getLastDocumentOfTheCollection = async (state) => {
   const q = query(
