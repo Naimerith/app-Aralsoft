@@ -33,11 +33,7 @@ const Checkbox = ({
         <label htmlFor="">Seleccionar Todo</label>
         <input name="selectAll" type="checkbox" className="check" />
         <div className="options">
-          {btnClick === "fila1" ||
-          btnClick === "fila2" ||
-          btnClick === "fila3" ||
-          btnClick === "fila4" ||
-          btnClick === "fila5"
+          {btnClick === "fila1" || btnClick === "fila2"
             ? dataRow.map((el, i) => {
                 return (
                   <div key={i}>

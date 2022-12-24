@@ -13,24 +13,18 @@ const GeneratedReport = () => {
         <table className="containerTable">
           <thead>
             <tr>
-              <th>{data?.filas?.fila1?.campo}</th>
+              {/* <th>{data?.filas?.fila1?.campo}</th> */}
               <th>{data?.filas?.fila2?.campo}</th>
-              <th>{data?.filas?.fila3?.campo}</th>
-              <th>{data?.filas?.fila4?.campo}</th>
-              <th>{data?.filas?.fila5?.campo}</th>
-              {data?.columnas?.columna1?.filtro.map((columns, i) =>
+              {data?.columnas?.columna1?.data.map((columns, i) =>
                 columns === "" ? <th key={i}></th> : <th key={i}>{columns}</th>
               )}
             </tr>
           </thead>
           <tbody>
-            {data?.filas?.fila1?.filtro.map((rows, i) => (
+            {data?.filas?.fila1?.data.map((rows, i) => (
               <tr key={i}>
                 <td>{rows}</td>
-                <td>{data?.filas?.fila2?.filtro[i]}</td>
-                <td>{data?.filas?.fila3?.filtro[i]}</td>
-                <td>{data?.filas?.fila4?.filtro[i]}</td>
-                <td>{data?.filas?.fila5?.filtro[i]}</td>
+                <td>{data?.filas?.fila2?.data[i]}</td>
               </tr>
             ))}
           </tbody>
