@@ -35,6 +35,14 @@
   height: 150px;
   width: 100%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: flex-start;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+.check {
+  margin: 0 5px;
 }
 
 .options::-webkit-scrollbar {
@@ -56,4 +64,15 @@
 
 .options::-webkit-scrollbar-track {
   border-radius: 10px;
+}
+
+@media screen and (max-width: 767px) {
+  .containerFilter {
+    font-size: 10px;
+    height: 90%;
+  }
+  input[type="checkbox"] {
+    width: 10px;
+    height: 10px;
+  }
 }
