@@ -19,7 +19,7 @@ export const collectionRef = collection(db, "tables");
 export const colRef = collection(db, "Report");
 
 
-export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, nameCol, nameVal, filterRow1, filterRow2, filterCol) => {
+export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, nameRow3, nameRow4, nameRow5, nameCol, nameVal1, nameVal2, nameVal3, nameVal4, nameVal5, filterRow1, filterRow2, filterRow3, filterRow4, filterRow5, filterCol) => {
   return await addDoc(colRef, {
     idReport: id,
     fechaReport: Date.now(),
@@ -30,31 +30,43 @@ export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, 
         filtro: filterRow1,
       },
       fila2: {
-        campo: nameRow2,
-        filtro: filterRow2
+        campo: nameRow2 === undefined ? "" : nameRow2,
+        filtro: filterRow2 === undefined ? [] : filterRow2,
       },
       fila3: {
-        campo: "",
-        filtro: []
+        campo: nameRow3 === undefined ? "" : nameRow3,
+        filtro: filterRow3 === undefined ? [] : filterRow3,
       },
       fila4: {
-        campo: "",
-        filtro: []
+        campo: nameRow4 === undefined ? "" : nameRow4,
+        filtro: filterRow4 === undefined ? [] : filterRow4,
       },
       fila5: {
-        campo: "",
-        filtro: []
+        campo: nameRow5 === undefined ? "" : nameRow5,
+        filtro: filterRow5 === undefined ? [] : filterRow5,
       }
     },
     columnas: {
       columna1: {
         campo: nameCol,
-        filtro: filterCol,
+        filtro: filterCol === undefined ? [] : filterCol,
       }
     },
     valores: {
       valor1: {
-        filtro: nameVal
+        campo: nameVal1
+      },
+      valor2: {
+        campo: nameVal2 === undefined ? "" : nameVal2,
+      },
+      valor3: {
+        campo: nameVal3 === undefined ? "" : nameVal3,
+      },
+      valor4: {
+        campo: nameVal4 === undefined ? "" : nameVal4,
+      },
+      valor5: {
+        campo: nameVal5 === undefined ? "" : nameVal5,
       }
     }
   });

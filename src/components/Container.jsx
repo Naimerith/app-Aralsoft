@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { ReactSortable } from "react-sortablejs";
-import {
-  addFilteredResultsToTheCollection,
-  addUnfilteredResultsToTheCollection,
-} from "../Firebase/firebase.config";
+import { addFilteredResultsToTheCollection } from "../Firebase/firebase.config";
 import {
   consultValuesInTheApi,
   getValuesForCheckbox,
   filterData,
-  querTheApiForAllElements,
 } from "../Functions/functions";
 import { alertError, alertSuccess } from "../Functions/sweetAlert";
 import ButtonApp from "./ButtonApp";
@@ -17,7 +13,9 @@ import Checkbox from "./Checkbox";
 import { useNavigate } from "react-router-dom";
 
 const Container = () => {
-  let ArrayOfSelectedButtons = [];
+  let arrayRow = [];
+  let btncolumn = "";
+  let arrayValues = [];
   const navigate = useNavigate();
 
   const [row, setRow] = useState([]);
@@ -26,79 +24,87 @@ const Container = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [btnClick, setBtnClick] = useState("");
+  const [counterId, setCounterId] = useState(1);
+  const [search, setSearch] = useState("");
 
   const [dataRow, setDataRow] = useState([]);
-
   const [dataColumn, setDataColumn] = useState([]);
-  const [dataValues, setDataValues] = useState([]);
-
-  const [search, setSearch] = useState("");
 
   const [filterRow1, setFilterRow1] = useState([]);
   const [filterRow2, setFilterRow2] = useState([]);
+  const [filterRow3, setFilterRow3] = useState([]);
+  const [filterRow4, setFilterRow4] = useState([]);
+  const [filterRow5, setFilterRow5] = useState([]);
   const [filterCol, setFilterCol] = useState([]);
 
-  const [counterId, setCounterId] = useState(1);
-
-  const limitRow = row.length <= 5;
+  const limitRow = row.length > 0 && row.length <= 5;
   const limitColumn = column.length <= 1;
-  const limitValues = values.length <= 5;
+  const limitValues = values.length > 0 && values.length <= 5;
 
   const reportID = () => {
     setCounterId(counterId + 1);
     return counterId;
   };
 
-  const addToArrayOfSelectedButtons = (button) => {
+  const addToMatrixTheButtonsAddedInRows = (button) => {
     if (button != null) {
-      ArrayOfSelectedButtons.push(button.textContent);
+      arrayRow.push(button.textContent);
+    }
+  };
+  const addToMatrixTheButtonsAddedInColumn = (button) => {
+    if (button != null) {
+      btncolumn = button.textContent;
+    }
+  };
+  const addToMatrixTheButtonsAddedInValues = (button) => {
+    if (button != null) {
+      arrayValues.push(button.textContent);
     }
   };
 
   /***************Filtro que consulta la api y trae todos los checkbox *********************/
   const getValuesFromRowButtons = async (index) => {
-    const btn1 = ArrayOfSelectedButtons[0];
-    const btn2 = ArrayOfSelectedButtons[1];
     setIsOpen(true);
     if (limitRow && index === 0) {
-      const resultApiRow1 = await consultValuesInTheApi(btn1);
+      const resultApiRow1 = await consultValuesInTheApi(arrayRow[0]);
       getValuesForCheckbox(resultApiRow1, setDataRow);
       setBtnClick("fila1");
     } else if (limitRow && index === 1) {
-      const resultApiRow2 = await consultValuesInTheApi(btn2);
+      const resultApiRow2 = await consultValuesInTheApi(arrayRow[1]);
       getValuesForCheckbox(resultApiRow2, setDataRow);
       setBtnClick("fila2");
+    } else if (limitRow && index === 2) {
+      const resultApiRow3 = await consultValuesInTheApi(arrayRow[2]);
+      getValuesForCheckbox(resultApiRow3, setDataRow);
+      setBtnClick("fila3");
+    } else if (limitRow && index === 3) {
+      const resultApiRow4 = await consultValuesInTheApi(arrayRow[3]);
+      getValuesForCheckbox(resultApiRow4, setDataRow);
+      setBtnClick("fila4");
+    } else if (limitRow && index === 4) {
+      const resultApiRow5 = await consultValuesInTheApi(arrayRow[4]);
+      getValuesForCheckbox(resultApiRow5, setDataRow);
+      setBtnClick("fila5");
     } else {
-      //alertError("Solo puedes seleccionar 2 opciones");
-      setIsOpen(true);
+      alertError(
+        "Solo puedes insertar un máximo 5 botones en el contenedor de filas"
+      );
+      setIsOpen(false);
     }
   };
-
   const getValuesFromColumnsButtons = async (index) => {
+    console.log(btncolumn, "btncolumn");
     setIsOpen(true);
     setBtnClick("column");
-    let btnCol = "";
-    if (limitColumn && row.length === 1 && index === 0) {
-      btnCol = ArrayOfSelectedButtons[1];
-      const resultApiColumn = await consultValuesInTheApi(btnCol);
+    if (limitColumn && index === 0) {
+      const resultApiColumn = await consultValuesInTheApi(btncolumn);
+      console.log(resultApiColumn, "resultApiColumn");
       getValuesForCheckbox(resultApiColumn, setDataColumn);
-    } else if (limitColumn && row.length === 2 && index === 0) {
-      btnCol = ArrayOfSelectedButtons[2];
-      const resultApiColumn = await consultValuesInTheApi(btnCol);
-      getValuesForCheckbox(resultApiColumn, setDataColumn);
-    }
-  };
-
-  const getValuesFromValuesButtons = async (index) => {
-    let btnVal = "";
-    if (limitValues && row.length === 1 && index === 0) {
-      btnVal = ArrayOfSelectedButtons[2];
-      const resultApiValues = await consultValuesInTheApi(btnVal);
-      return setDataValues(resultApiValues);
-    } else if (limitValues && row.length === 2 && index === 0) {
-      btnVal = ArrayOfSelectedButtons[3];
-      const resultApiValues = await consultValuesInTheApi(btnVal);
-      return setDataValues(resultApiValues);
+    } else {
+      alertError(
+        "Solo puedes insertar máximo 1 botón en el contenedor de columnas"
+      );
+      setIsOpen(false);
     }
   };
 
@@ -114,6 +120,7 @@ const Container = () => {
         setFilterRow1(removeItem1);
       }
     } else if (btnClick === "fila2") {
+      console.log(e.target.checked, "e.target.checked");
       const value2 = e.target.value;
       const filterRowBtn2 = value2;
       filterRow2 === []
@@ -122,6 +129,36 @@ const Container = () => {
       if (e.target.checked === false) {
         const removeItem2 = filterRow2.filter((item) => item !== value2);
         setFilterRow2(removeItem2);
+      }
+    } else if (btnClick === "fila3") {
+      const value3 = e.target.value;
+      const filterRowBtn3 = value3;
+      filterRow3 === []
+        ? setDataRow(dataRow)
+        : setFilterRow3((filterRow3) => [...filterRow3, filterRowBtn3]);
+      if (e.target.checked === false) {
+        const removeItem3 = filterRow3.filter((item) => item !== value3);
+        setFilterRow3(removeItem3);
+      }
+    } else if (btnClick === "fila4") {
+      const value4 = e.target.value;
+      const filterRowBtn4 = value4;
+      filterRow4 === []
+        ? setDataRow(dataRow)
+        : setFilterRow4((filterRow4) => [...filterRow4, filterRowBtn4]);
+      if (e.target.checked === false) {
+        const removeItem3 = filterRow4.filter((item) => item !== value4);
+        setFilterRow4(removeItem3);
+      }
+    } else if (btnClick === "fila5") {
+      const value5 = e.target.value;
+      const filterRowBtn5 = value5;
+      filterRow5 === []
+        ? setDataRow(dataRow)
+        : setFilterRow5((filterRow5) => [...filterRow5, filterRowBtn5]);
+      if (e.target.checked === false) {
+        const removeItem3 = filterRow5.filter((item) => item !== value5);
+        setFilterRow5(removeItem3);
       }
     }
     if (btnClick === "column") {
@@ -150,52 +187,35 @@ const Container = () => {
   };
 
   /***************************************************************************************/
-
-  const filteredReport = async () => {
-    if (row.length === 1) {
-      const nameRow1 = ArrayOfSelectedButtons[0];
-      const nameCol = ArrayOfSelectedButtons[1];
-      const nameVal = ArrayOfSelectedButtons[2];
-      const resId = reportID();
-      console.log(resId);
-      const btnRow2 = "";
-      const filterRow2 = [];
-      await addFilteredResultsToTheCollection(
-        resId,
-        nameRow1,
-        btnRow2,
-        nameCol,
-        nameVal,
-        filterRow1,
-        filterRow2,
-        filterCol
-      );
-    } else if (row.length === 2) {
-      const resId = reportID();
-      console.log(resId);
-      const nameRow1 = ArrayOfSelectedButtons[0];
-      const nameRow2 = ArrayOfSelectedButtons[1];
-      const nameCol = ArrayOfSelectedButtons[2];
-      const nameVal = ArrayOfSelectedButtons[3];
-      await addFilteredResultsToTheCollection(
-        resId,
-        nameRow1,
-        nameRow2,
-        nameCol,
-        nameVal,
-        filterRow1,
-        filterRow2,
-        filterCol
-      );
-    }
-  };
-
   const generateReport = async () => {
-    console.log("bien");
-    await filteredReport();
-    navigate("/report-generated");
-    alertSuccess("Reporte generado");
-    setCounterId(counterId + 1);
+    const resId = reportID();
+    if (limitRow && limitColumn && limitValues) {
+      console.log("si funciono");
+      await addFilteredResultsToTheCollection(
+        resId,
+        arrayRow[0],
+        arrayRow[1],
+        arrayRow[2],
+        arrayRow[3],
+        arrayRow[4],
+        btncolumn,
+        arrayValues[0],
+        arrayValues[1],
+        arrayValues[2],
+        arrayValues[3],
+        arrayValues[4],
+        filterRow1,
+        filterRow2,
+        filterRow3,
+        filterRow4,
+        filterRow5,
+        filterCol
+      );
+      alertSuccess("Reporte generado con éxito");
+      navigate(`/report/${resId}`);
+    } else {
+      alertError("No se pudo generar el reporte");
+    }
   };
 
   return (
@@ -215,7 +235,7 @@ const Container = () => {
                     <button
                       className="btnSelect"
                       key={index}
-                      ref={(button) => addToArrayOfSelectedButtons(button)}
+                      ref={(button) => addToMatrixTheButtonsAddedInRows(button)}
                       onClick={() => getValuesFromRowButtons(index)}
                     >
                       {item}
@@ -239,7 +259,9 @@ const Container = () => {
                       <button
                         className="btnSelect"
                         key={index}
-                        ref={(button) => addToArrayOfSelectedButtons(button)}
+                        ref={(button) =>
+                          addToMatrixTheButtonsAddedInColumn(button)
+                        }
                         onClick={() => getValuesFromColumnsButtons(index)}
                       >
                         {item}
@@ -262,8 +284,9 @@ const Container = () => {
                       <button
                         className="btnSelect"
                         key={index}
-                        ref={(button) => addToArrayOfSelectedButtons(button)}
-                        onChange={() => getValuesFromValuesButtons(index)}
+                        ref={(button) =>
+                          addToMatrixTheButtonsAddedInValues(button)
+                        }
                       >
                         {item}
                       </button>
@@ -274,7 +297,7 @@ const Container = () => {
         </article>
         <div className={isOpen ? "block" : "none"}>
           <Checkbox
-            search={search}
+            // search={search}
             closeModal={closeModal}
             handleChangeSearch={handleChangeSearch}
             obtainFilteredElements={obtainFilteredElements}
