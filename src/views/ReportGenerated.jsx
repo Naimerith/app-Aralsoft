@@ -13,7 +13,6 @@ const ReportGenerated = () => {
   const [data, setData] = useState([]);
 
   const reportGenerated = getCollectionDataForTheTable(data);
-  console.log(reportGenerated);
 
   const saveReport = async () => {
     console.log("diste click a guardar");

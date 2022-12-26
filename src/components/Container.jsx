@@ -93,12 +93,10 @@ const Container = () => {
     }
   };
   const getValuesFromColumnsButtons = async (index) => {
-    console.log(btncolumn, "btncolumn");
     setIsOpen(true);
     setBtnClick("column");
     if (limitColumn && index === 0) {
       const resultApiColumn = await consultValuesInTheApi(btncolumn);
-      console.log(resultApiColumn, "resultApiColumn");
       getValuesForCheckbox(resultApiColumn, setDataColumn);
     } else {
       alertError(
@@ -120,7 +118,6 @@ const Container = () => {
         setFilterRow1(removeItem1);
       }
     } else if (btnClick === "fila2") {
-      console.log(e.target.checked, "e.target.checked");
       const value2 = e.target.value;
       const filterRowBtn2 = value2;
       filterRow2 === []
@@ -184,13 +181,13 @@ const Container = () => {
 
   const closeModal = () => {
     setIsOpen(false);
+    setBtnClick("");
   };
 
   /***************************************************************************************/
   const generateReport = async () => {
     const resId = reportID();
     if (limitRow && limitColumn && limitValues) {
-      console.log("si funciono");
       await addFilteredResultsToTheCollection(
         resId,
         arrayRow[0],
@@ -212,7 +209,7 @@ const Container = () => {
         filterCol
       );
       alertSuccess("Reporte generado con éxito");
-      navigate(`/report/${resId}`);
+      navigate("/report");
     } else {
       alertError("No se pudo generar el reporte");
     }
@@ -297,7 +294,7 @@ const Container = () => {
         </article>
         <div className={isOpen ? "block" : "none"}>
           <Checkbox
-            // search={search}
+            search={search}
             closeModal={closeModal}
             handleChangeSearch={handleChangeSearch}
             obtainFilteredElements={obtainFilteredElements}

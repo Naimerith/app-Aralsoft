@@ -35,8 +35,6 @@ const ListReport = () => {
   const [data, setData] = useState([]);
   const [report, setReport] = useState([]);
 
-  console.log(listTable);
-
   const deleteReport = async (id) => {
     MySwal.fire({
       title: "Está seguro?",
@@ -73,7 +71,6 @@ const ListReport = () => {
   };
 
   const closeModal = () => {
-    console.log("diste click a cerrar");
     setIsOpen(false);
   };
 

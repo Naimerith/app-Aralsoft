@@ -23,18 +23,6 @@ export const getTheValueOfSelectedButton = (getArr, newArr) => {
   return newArr
 }
 
-/*Crea un objeto con el resultado obtenidos para la fila, la columna y el campo valores */
-export const getArrObject = (arrRow, arrColumn) => {
-  let arr = [];
-  for (let i in arrRow) {
-    arr.push({
-      filas: arrRow[i],
-      columnas: arrColumn[i],
-      //valores: arrValue[i],
-    });
-  }
-  return arr;
-};
 
 /*Pintamos los datos guardados en la colección dentro de la tabla  */
 export const getCollectionDataForTheTable = (state) => {
@@ -85,7 +73,7 @@ export const filterData = (state, data, setState) => {
 };
 
 
-export const querTheApiForAllElements = async (position) => {
+export const queryTheApiForAllElements = async (position) => {
   const resApi = await getData();
   const btnRow1 = position;
   const consultApiSelectionBtn = resApi.map((el) => {
