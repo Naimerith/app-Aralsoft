@@ -72,17 +72,18 @@ export const getValuesForCheckbox = (values, state) => {
   setState(resSearch);
 };*/
 
+
 export const filterData = (state, data, setState) => {
   if (data === '') {
-    setState(state); // Establece el estado con la lista original de elementos
+    setState(state);
   } else {
-    // Convierte el valor del campo de entrada y el contenido de cada elemento a minúsculas
     const lowerCaseData = data.toLowerCase();
     const lowerCaseState = state.map((el) => el.toLowerCase());
     const resSearch = lowerCaseState.filter((el) => {
       if (el.includes(lowerCaseData)) {
         return el;
       }
+
     });
     setState(resSearch);
   }
@@ -92,7 +93,7 @@ export const filterData = (state, data, setState) => {
 
 
 
-export const queryTheApiForAllElements = async (position) => {
+/*export const queryTheApiForAllElements = async (position) => {
   const resApi = await getData();
   const btnRow1 = position;
   const consultApiSelectionBtn = resApi.map((el) => {
@@ -111,4 +112,4 @@ export const queryTheApiForAllElements = async (position) => {
   const arrayChekbook = [...new Set(arrayOfValues)];
   arrayChekbook.sort();
   return arrayChekbook
-};
+};*/

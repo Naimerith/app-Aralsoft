@@ -2,12 +2,10 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CreateReport from './views/CreateReport';
 import ListReport from './views/ListReport';
-import ReportGenerated from './views/ReportGenerated'; //viejo
 import Footer from './shared/Footer';
 import Header from './shared/Header';
 import Login from './components/Login';
 import GeneratedReport from './views/GeneratedReport';
-
 
 function App() {
   return (

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 import { ReactSortable } from "react-sortablejs";
 import { addFilteredResultsToTheCollection } from "../Firebase/firebase.config";
 import {
@@ -37,9 +39,9 @@ const Container = () => {
   const [filterRow5, setFilterRow5] = useState([]);
   const [filterCol, setFilterCol] = useState([]);
 
-  const limitRow = row.length > 0 && row.length <= 5;
-  const limitColumn = column.length <= 1;
-  const limitValues = values.length > 0 && values.length <= 5;
+  const limitRow = row.length > 0 && row.length <= 5 && typeof string;
+  const limitColumn = column.length <= 1 && typeof string;
+  const limitValues = values.length > 0 && values.length <= 5 && typeof Number;
 
   const reportID = () => {
     setCounterId(counterId + 1);
@@ -219,77 +221,85 @@ const Container = () => {
     <div className="bottomContainer">
       <section className="itemsSelected">
         <div className="containerVertical">
-          <div className="containerR">
-            Filas
-            <ReactSortable
-              list={row}
-              setList={setRow}
-              group={{ name: "selectedButton", pull: true }}
-            >
-              {!row
-                ? "Cargando..."
-                : row.map((item, index) => (
-                    <button
-                      className="btnSelect"
-                      key={index}
-                      ref={(button) => addToMatrixTheButtonsAddedInRows(button)}
-                      onClick={() => getValuesFromRowButtons(index)}
-                    >
-                      {item}
-                    </button>
-                  ))}
-            </ReactSortable>
-          </div>
+          <Tippy content="Sólo puedes insertar botones con datos tipo texto">
+            <div className="containerR">
+              Filas
+              <ReactSortable
+                list={row}
+                setList={setRow}
+                group={{ name: "selectedButton", pull: true }}
+              >
+                {!row
+                  ? "Cargando..."
+                  : row.map((item, index) => (
+                      <button
+                        className="btnSelect"
+                        key={index}
+                        ref={(button) =>
+                          addToMatrixTheButtonsAddedInRows(button)
+                        }
+                        onClick={() => getValuesFromRowButtons(index)}
+                      >
+                        {item}
+                      </button>
+                    ))}
+              </ReactSortable>
+            </div>
+          </Tippy>
         </div>
         <article className="container_col_val">
           <div className="containerHorizontal">
-            <div className="containerR">
-              Columnas
-              <ReactSortable
-                list={column}
-                setList={setColumn}
-                group={{ name: "selectedButton", pull: true }}
-              >
-                {!column
-                  ? "Cargando..."
-                  : column.map((item, index) => (
-                      <button
-                        className="btnSelect"
-                        key={index}
-                        ref={(button) =>
-                          addToMatrixTheButtonsAddedInColumn(button)
-                        }
-                        onClick={() => getValuesFromColumnsButtons(index)}
-                      >
-                        {item}
-                      </button>
-                    ))}
-              </ReactSortable>
-            </div>
+            <Tippy content="Sólo puedes insertar botones con datos tipo texto">
+              <div className="containerR">
+                Columnas
+                <ReactSortable
+                  list={column}
+                  setList={setColumn}
+                  group={{ name: "selectedButton", pull: true }}
+                >
+                  {!column
+                    ? "Cargando..."
+                    : column.map((item, index) => (
+                        <button
+                          className="btnSelect"
+                          key={index}
+                          ref={(button) =>
+                            addToMatrixTheButtonsAddedInColumn(button)
+                          }
+                          onClick={() => getValuesFromColumnsButtons(index)}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                </ReactSortable>
+              </div>
+            </Tippy>
           </div>
           <div className="containerHorizontal">
-            <div className="containerR">
-              Valores
-              <ReactSortable
-                list={values}
-                setList={setValues}
-                group={{ name: "selectedButton", pull: true }}
-              >
-                {!values
-                  ? "Cargando..."
-                  : values.map((item, index) => (
-                      <button
-                        className="btnSelect"
-                        key={index}
-                        ref={(button) =>
-                          addToMatrixTheButtonsAddedInValues(button)
-                        }
-                      >
-                        {item}
-                      </button>
-                    ))}
-              </ReactSortable>
-            </div>
+            <Tippy content="Sólo puedes insertar botones con datos tipo numérico: precioUnitario, cantidad, soles, totalSoles, artUnidPres, valorVenta,PorcentajeDcto,valorDscto">
+              <div className="containerR">
+                Valores
+                <ReactSortable
+                  list={values}
+                  setList={setValues}
+                  group={{ name: "selectedButton", pull: true }}
+                >
+                  {!values
+                    ? "Cargando..."
+                    : values.map((item, index) => (
+                        <button
+                          className="btnSelect"
+                          key={index}
+                          ref={(button) =>
+                            addToMatrixTheButtonsAddedInValues(button)
+                          }
+                        >
+                          {item}
+                        </button>
+                      ))}
+                </ReactSortable>
+              </div>
+            </Tippy>
           </div>
         </article>
         <div className={isOpen ? "block" : "none"}>

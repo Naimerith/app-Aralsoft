@@ -23,7 +23,7 @@ export const addFilteredResultsToTheCollection = async (id, nameRow1, nameRow2, 
   return await addDoc(colRef, {
     idReport: id,
     fechaReport: Date.now(),
-    nombreReport: nameRow2 === "" ? `Reporte de ${nameRow1}` : `Reporte de ${nameRow1} y ${nameRow2}`,
+    nombreReport: nameRow2 && nameRow3 && nameRow4 && nameRow5 === "" ? `Reporte de ${nameRow1}` : `Reporte de ${nameRow1} y ${nameRow2}`,
     filas: {
       fila1: {
         campo: nameRow1,
