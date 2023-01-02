@@ -302,7 +302,7 @@ const Container = () => {
             </Tippy>
           </div>
         </article>
-        <div className={isOpen ? "block" : "none"}>
+        <div className={isOpen ? "block" : "hide"}>
           <Checkbox
             search={search}
             closeModal={closeModal}

@@ -1,72 +1,47 @@
-import React, { useState, useEffect } from "react";
-import { getLastDocumentOfTheCollection } from "../Firebase/firebase.config";
+import React from "react";
+import Report from "../components/Report";
+import ButtonApp from "../components/ButtonApp";
+import { Icon } from "@iconify/react";
+import { useNavigate } from "react-router-dom";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import "../assets/styles/ReportGenerated.css";
 
 const GeneratedReport = () => {
-  const [data, setData] = useState(null);
-  console.log(data, "data");
+  const navigate = useNavigate();
+  const saveReport = async () => {
+    console.log("diste click a guardar");
+  };
 
-  useEffect(() => {
-    getLastDocumentOfTheCollection(setData);
-  }, []);
   return (
     <div className="container-ReportGenerated">
-      <div className="table-wrapper">
-        <h5>{data?.nombreReport}</h5>
-        <table className="containerTable">
-          <thead>
-            <tr>
-              <th>{data?.filas?.fila1.campo}</th>
-              <th className={data?.filas?.fila2.campo === "" ? "none" : ""}>
-                {data?.filas?.fila2.campo}
-              </th>
-              <th className={data?.filas?.fila3.campo === "" ? "none" : ""}>
-                {data?.filas?.fila3.campo}
-              </th>
-              <th className={data?.filas?.fila4.campo === "" ? "none" : ""}>
-                {data?.filas?.fila4.campo}
-              </th>
-              <th className={data?.filas?.fila5.campo === "" ? "none" : ""}>
-                {data?.filas?.fila5.campo}
-              </th>
-              {data?.columnas?.columna1.filtro.map((columns, i) => {
-                return columns === "" ? (
-                  <th key={i}></th>
-                ) : (
-                  <th key={i}>{columns}</th>
-                );
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <tr>
-                {data?.filas?.fila1.filtro.map((rows, i) => (
-                  <tr key={i}>{rows}</tr>
-                ))}
-              </tr>
-              <td className={data?.filas?.fila2.campo === "" ? "none" : ""}>
-                {data?.filas?.fila2.filtro.map((rows2, i) => (
-                  <tr key={i}>{rows2}</tr>
-                ))}
-              </td>
-              <td className={data?.filas?.fila3.campo === "" ? "none" : ""}>
-                {data?.filas?.fila3.filtro.map((rows3, i) => (
-                  <tr key={i}>{rows3}</tr>
-                ))}
-              </td>
-              <td className={data?.filas?.fila4.campo === "" ? "none" : ""}>
-                {data?.filas?.fila4.filtro.map((rows4, i) => (
-                  <tr key={i}>{rows4}</tr>
-                ))}
-              </td>
-              <td className={data?.filas?.fila5.campo === "" ? "none" : ""}>
-                {data?.filas?.fila5.filtro.map((rows5, i) => (
-                  <tr key={i}>{rows5}</tr>
-                ))}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <Report />
+      <div className="containerBtns">
+        <ButtonApp
+          icon={
+            <Icon icon="fluent:form-new-20-regular" width="23" height="23" />
+          }
+          name="Nuevo Reporte"
+          onClick={() => navigate("/new-report")}
+        />
+        <ButtonApp
+          icon={
+            <Icon
+              icon="fluent:document-save-24-filled"
+              width="20"
+              height="20"
+            />
+          }
+          name="Guardar"
+          onClick={() => saveReport()}
+        />
+        {/* <ReactHTMLTableToExcel
+          id="table-xls-button"
+          className="generateReport"
+          table="table-to-xls"
+          filename="table"
+          sheet="report"
+          buttonText="⇯ Exportar"
+        /> */}
       </div>
     </div>
   );

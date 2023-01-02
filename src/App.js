@@ -20,6 +20,7 @@ function App() {
           <Route path='/new-report' element={<CreateReport />}></Route>
           <Route path='/lists-report' element={<ListReport />}></Route>
           <Route path='/report' element={<GeneratedReport />}></Route>
+
         </Routes>
       </BrowserRouter>
     </div >

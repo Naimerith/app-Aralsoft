@@ -11,7 +11,7 @@ const Checkbox = ({
   btnClick,
   obtainFilteredElements,
 }) => {
-  let mssg = "Sin datos";
+  let mssg = "Sin datos para mostrar";
 
   return (
     <div className="containerFilter">
@@ -44,7 +44,7 @@ const Checkbox = ({
                     <input
                       name={el}
                       type="checkbox"
-                      className="check"
+                      className={el === null ? "hide" : "check"}
                       value={el === null ? mssg : el}
                       onChange={obtainFilteredElements}
                     />
@@ -58,7 +58,7 @@ const Checkbox = ({
                     <input
                       name={el}
                       type="checkbox"
-                      className="check"
+                      className={el === null ? "hide" : "check"}
                       value={el === null ? mssg : el}
                       onChange={obtainFilteredElements}
                     />
